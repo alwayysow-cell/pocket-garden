@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Pocket Garden — Твой карманный сад</title>
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Nunito & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-sky-top: #131b2e;
+      --bg-sky-bottom: #1e2d3d;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .font-display {
+      font-family: 'Nunito', sans-serif;
+    }
+
+    /* Cozy bobbing animation for ripe fruits */
+    @keyframes floatBob {
+      0%, 100% { transform: translateY(0px) scale(var(--fruit-scale, 1)); }
+      50% { transform: translateY(-5px) scale(calc(var(--fruit-scale, 1) * 1.03)); }
+    }
+
+    @keyframes swayPlant {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.75; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes rainbowHue {
+      0% { filter: hue-rotate(0deg) saturate(1.4) drop-shadow(0 0 8px rgba(255, 100, 220, 0.85)); }
+      50% { filter: hue-rotate(180deg) saturate(1.6) drop-shadow(0 0 12px rgba(100, 240, 255, 0.95)); }
+      100% { filter: hue-rotate(360deg) saturate(1.4) drop-shadow(0 0 8px rgba(255, 100, 220, 0.85)); }
+    }
+
+    @keyframes electricJitter {
+      0%, 100% { transform: translateY(0) scale(var(--fruit-scale, 1)); }
+      25% { transform: translate(-1.5px, -3px) scale(var(--fruit-scale, 1)); }
+      75% { transform: translate(1.5px, -4px) scale(var(--fruit-scale, 1)); }
+    }
+
+    .ripe-fruit {
+      animation: floatBob 2.6s ease-in-out infinite;
+      transform-origin: bottom center;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .growing-plant {
+      animation: swayPlant 3.4s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+
+    /* Mutation Visual Filters & Auras */
+    .mut-gold {
+      filter: sepia(0.85) saturate(2.6) brightness(1.15) drop-shadow(0 0 9px rgba(250, 204, 21, 0.9));
+    }
+
+    .mut-rainbow {
+      animation: floatBob 2.4s ease-in-out infinite, rainbowHue 3.5s linear infinite;
+    }
+
+    .mut-wet {
+      filter: drop-shadow(0 0 7px rgba(56, 189, 248, 0.85)) brightness(1.06);
+    }
+
+    .mut-frozen {
+      filter: hue-rotate(165deg) saturate(1.5) brightness(1.2) drop-shadow(0 0 10px rgba(103, 232, 249, 0.95));
+    }
+
+    .mut-shocked {
+      animation: electricJitter 1.4s ease-in-out infinite;
+      filter: brightness(1.25) contrast(1.15) drop-shadow(0 0 11px rgba(250, 204, 21, 0.95)) drop-shadow(0 0 16px rgba(192, 132, 252, 0.9));
+    }
+
+    .mut-starlit {
+      filter: saturate(1.4) brightness(1.2) drop-shadow(0 0 12px rgba(244, 114, 182, 0.95)) drop-shadow(0 0 20px rgba(129, 140, 248, 0.9));
+    }
+
+    /* Hide scrollbar for horizontal seed hotbar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Soil texture gradient */
+    .soil-plot {
+      background: radial-gradient(circle at 50% 35%, #4a3525 0%, #332217 75%, #24170f 100%);
+      box-shadow: inset 0 3px 8px rgba(0,0,0,0.55), 0 2px 4px rgba(0,0,0,0.35);
+    }
+
+    .soil-plot-wet {
+      background: radial-gradient(circle at 50% 35%, #372821 0%, #231814 75%, #170f0c 100%);
+      box-shadow: inset 0 3px 10px rgba(14, 165, 233, 0.25), 0 2px 4px rgba(0,0,0,0.45);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex justify-center bg-[#090d16]">
+
+  <!-- Mobile-First App Container -->
+  <div id="app" class="w-full max-w-[480px] min-h-screen flex flex-col relative bg-gradient-to-b from-[#131c31] via-[#172338] to-[#111927] shadow-2xl border-x border-slate-800/70 overflow-hidden">
+
+    <!-- Toast Notification Banner -->
+    <div id="toast-container" class="fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-[440px] pointer-events-none flex flex-col gap-2"></div>
+
+    <!-- Top Header: Player Profile, Coins, Weather Widget -->
+    <header class="px-3.5 pt-3 pb-2.5 bg-slate-900/75 backdrop-blur-md border-b border-slate-700/50 z-20">
+      <div class="flex items-center justify-between gap-2">
+        <!-- Player Greeting & Reset -->
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-lg shadow-md shrink-0">
+            🌱
+          </div>
+          <div class="truncate">
+            <div class="flex items-center gap-1.5">
+              <span id="player-name" class="font-display font-extrabold text-sm text-white truncate">Садовод</span>
+              <button onclick="openResetModal()" title="Настройки / Сброс" class="text-slate-400 hover:text-slate-200 text-xs px-1.5 py-0.5 rounded-lg bg-slate-800/80 border border-slate-700/60 transition">
+                ⚙️
+              </button>
+            </div>
+            <div class="text-[11px] text-emerald-300/90 font-medium">Pocket Garden</div>
+          </div>
+        </div>
+
+        <!-- Coins Pill -->
+        <div class="flex items-center gap-1.5 bg-amber-500/15 border border-amber-400/35 px-3 py-1.5 rounded-2xl shadow-inner shrink-0">
+          <span class="text-base">🪙</span>
+          <span id="coin-balance" class="font-display font-black text-amber-300 text-sm tracking-wide">50</span>
+        </div>
+      </div>
+
+      <!-- Weather & Restock Status Bar -->
+      <div class="mt-2.5 flex items-center justify-between gap-2 bg-slate-800/70 border border-slate-700/60 rounded-2xl px-3 py-1.5">
+        <div class="flex items-center gap-2 min-w-0">
+          <span id="weather-icon" class="text-xl leading-none">☀️</span>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+              <span id="weather-name" class="font-display font-bold text-xs text-white">Ясно</span>
+              <span id="weather-timer" class="text-[10px] font-semibold px-1.5 py-0.2 rounded-md bg-slate-700/90 text-slate-300">45с</span>
+            </div>
+            <p id="weather-desc" class="text-[10px] text-slate-300 truncate">Обычный рост растений</p>
+          </div>
+        </div>
+
+        <!-- Totem Button (Cycle Weather for Testing / Gameplay) -->
+        <button onclick="cycleWeatherManually()" class="shrink-0 flex items-center gap-1 bg-indigo-500/20 hover:bg-indigo-500/30 active:scale-95 border border-indigo-400/40 text-indigo-200 text-[11px] font-semibold px-2.5 py-1.5 rounded-xl transition">
+          <span>🔮</span>
+          <span>Тотем</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Scrollable Content Area -->
+    <main class="flex-1 overflow-y-auto pb-24">
+
+      <!-- TAB 1: GARDEN VIEW -->
+      <section id="view-garden" class="p-3.5 flex flex-col gap-3">
+
+        <!-- Garden Environment Frame with Canvas Overlay -->
+        <div id="garden-stage" class="relative rounded-3xl p-3 border border-emerald-500/25 shadow-xl overflow-visible transition-colors duration-700 bg-gradient-to-b from-[#1a2e2b] via-[#1c332a] to-[#172921]">
+          
+          <!-- Ambient Sky & Meadow Header inside Stage -->
+          <div class="flex items-center justify-between mb-2.5 px-1 relative z-10">
+            <span class="text-[11px] font-semibold text-emerald-200/80 flex items-center gap-1">
+              <span>🏡</span> Участок (12 грядок)
+            </span>
+            <button onclick="harvestAllRipe()" id="btn-harvest-all" class="hidden text-[11px] font-bold bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 px-2.5 py-1 rounded-xl shadow-md transition">
+              ✨ Собрать всё
+            </button>
+          </div>
+
+          <!-- 3x4 Garden Grid (12 Plots) -->
+          <div id="garden-grid" class="grid grid-cols-3 gap-2.5 relative z-10">
+            <!-- Plots rendered via JS -->
+          </div>
+
+          <!-- Live Weather & Floating Popups HTML5 Canvas Overlay -->
+          <canvas id="fx-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20 rounded-3xl"></canvas>
+        </div>
+
+        <!-- Seed Hotbar (Quick Planting) -->
+        <div class="bg-slate-900/80 border border-slate-700/60 rounded-2xl p-2.5 shadow-lg">
+          <div class="flex items-center justify-between mb-2 px-1">
+            <span class="text-xs font-display font-bold text-slate-200 flex items-center gap-1.5">
+              <span>🌰</span> Мешочек семян
+            </span>
+            <button onclick="switchTab('shop')" class="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300">
+              + Купить в лавке →
+            </button>
+          </div>
+          <div id="seed-hotbar" class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+            <!-- Seed pills rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Quick Legend / Helper Tip -->
+        <div class="bg-slate-800/40 border border-slate-700/40 rounded-2xl p-2.5 text-[11px] text-slate-300 leading-relaxed flex items-start gap-2">
+          <span class="text-base leading-none mt-0.5">💡</span>
+          <div>
+            Выбери семя снизу и нажми на пустую грядку. Плоды могут вырасти <span class="text-amber-300 font-semibold">Гигантскими</span> и поймать редкие <span class="text-purple-300 font-semibold">мутации от погоды</span>!
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: SEED SHOP (ЛАВКА СЕМЯН) -->
+      <section id="view-shop" class="hidden p-3.5 flex flex-col gap-3">
+        <!-- Shop Header & FOMO Timer -->
+        <div class="bg-gradient-to-r from-emerald-900/60 to-teal-900/60 border border-emerald-500/30 rounded-3xl p-3.5 shadow-lg">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-display font-extrabold text-base text-white flex items-center gap-1.5">
+                <span>🏪</span> Лавка Сэма
+              </h2>
+              <p class="text-xs text-emerald-200/80 mt-0.5">Редкие семена завозят малыми партиями!</p>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] uppercase tracking-wider text-emerald-300/80 font-bold">Новый завоз</div>
+              <div id="shop-timer" class="font-display font-black text-lg text-amber-300 leading-tight">01:00</div>
+            </div>
+          </div>
+
+          <div class="mt-3 pt-2.5 border-t border-emerald-500/20 flex items-center justify-between">
+            <span class="text-[11px] text-slate-300">Не хочется ждать завоз?</span>
+            <button onclick="restockShop(true)" class="bg-amber-500/20 hover:bg-amber-500/30 active:scale-95 border border-amber-400/40 text-amber-200 text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1">
+              <span>🔄</span> Обновить завоз
+            </button>
+          </div>
+        </div>
+
+        <!-- Shop Items List -->
+        <div id="shop-list" class="flex flex-col gap-2.5">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 3: BACKPACK & SELL STALL (РЮКЗАК И СКУПЩИК) -->
+      <section id="view-backpack" class="hidden p-3.5 flex flex-col gap-3">
+        <!-- Sell Stall Banner -->
+        <div class="bg-gradient-to-r from-amber-900/50 to-orange-900/50 border border-amber-500/30 rounded-3xl p-3.5 shadow-lg">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h2 class="font-display font-extrabold text-base text-white flex items-center gap-1.5">
+                <span>🧺</span> Скупщик урожая
+              </h2>
+              <p class="text-xs text-amber-200/80 mt-0.5">
+                В рюкзаке: <span id="inv-count" class="font-bold text-white">0</span> шт.
+              </p>
+            </div>
+            <button onclick="sellAllHarvest()" id="btn-sell-all" class="bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 active:scale-95 text-slate-950 font-display font-extrabold text-xs px-3.5 py-2.5 rounded-2xl shadow-lg transition disabled:opacity-40 disabled:pointer-events-none">
+              Продать всё (<span id="sell-all-value">0</span> 🪙)
+            </button>
+          </div>
+        </div>
+
+        <!-- Harvested Items Grid/List -->
+        <div id="inventory-list" class="flex flex-col gap-2">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-slate-900/90 backdrop-blur-lg border-t border-slate-800 px-3 py-2 flex items-center justify-around z-30">
+      <button onclick="switchTab('garden')" id="nav-garden" class="nav-btn flex-1 flex flex-col items-center py-1.5 rounded-2xl text-emerald-400 bg-emerald-500/15 transition">
+        <span class="text-xl leading-none">🌱</span>
+        <span class="text-[11px] font-display font-bold mt-1">Сад</span>
+      </button>
+
+      <button onclick="switchTab('shop')" id="nav-shop" class="nav-btn flex-1 flex flex-col items-center py-1.5 rounded-2xl text-slate-400 hover:text-slate-200 transition relative">
+        <span class="text-xl leading-none">🏪</span>
+        <span class="text-[11px] font-display font-bold mt-1">Лавка</span>
+        <span id="shop-rare-dot" class="hidden absolute top-1.5 right-1/4 w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+      </button>
+
+      <button onclick="switchTab('backpack')" id="nav-backpack" class="nav-btn flex-1 flex flex-col items-center py-1.5 rounded-2xl text-slate-400 hover:text-slate-200 transition relative">
+        <span class="text-xl leading-none">🎒</span>
+        <span class="text-[11px] font-display font-bold mt-1">Рюкзак</span>
+        <span id="inv-badge" class="hidden absolute top-1 right-1/4 min-w-[18px] h-[18px] px-1 rounded-full bg-amber-500 text-slate-950 font-display font-black text-[10px] flex items-center justify-center">0</span>
+      </button>
+    </nav>
+
+    <!-- Custom Reset Modal (No alert/confirm used) -->
+    <div id="reset-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 w-full max-w-[340px] shadow-2xl">
+        <h3 class="font-display font-extrabold text-lg text-white">Сбросить прогресс?</h3>
+        <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+          Весь сад, монеты и собранный урожай будут удалены, и игра начнется заново с 50 монетами.
+        </p>
+        <div class="mt-4 flex gap-2.5">
+          <button onclick="closeResetModal()" class="flex-1 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs transition">
+            Отмена
+          </button>
+          <button onclick="confirmResetGame()" class="flex-1 py-2.5 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition">
+            Сбросить
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /**
+     * ============================================================================
+     * 1. TELEGRAM WEBAPP SDK INITIALIZATION & HAPTICS
+     * ============================================================================
+     */
+    const tg = window.Telegram?.WebApp;
+    let playerName = 'Садовод';
+
+    try {
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        if (tg.initDataUnsafe?.user?.first_name) {
+          playerName = tg.initDataUnsafe.user.first_name;
+        }
+        // Match Telegram header color if supported
+        if (tg.setHeaderColor) tg.setHeaderColor('#0f172a');
+        if (tg.setBackgroundColor) tg.setBackgroundColor('#090d16');
+      }
+    } catch (e) {
+      console.warn('Telegram WebApp SDK fallback mode:', e);
+    }
+
+    function triggerHaptic(style = 'light') {
+      try {
+        if (tg?.HapticFeedback) {
+          if (style === 'success' || style === 'warning' || style === 'error') {
+            tg.HapticFeedback.notificationOccurred(style);
+          } else {
+            tg.HapticFeedback.impactOccurred(style);
+          }
+        }
+      } catch (e) {
+        // Ignore haptic errors outside Telegram
+      }
+    }
+
+    /**
+     * ============================================================================
+     * 2. GAME CATALOG: CROPS, RARITIES, WEATHER & MUTATIONS
+     * ============================================================================
+     */
+    const CROPS = {
+      carrot: {
+        id: 'carrot',
+        name: 'Морковь',
+        icon: '🥕',
+        seedIcon: '🌱',
+        rarity: 'Обычный',
+        rarityColor: 'text-slate-300 bg-slate-700/70 border-slate-500/40',
+        seedCost: 10,
+        baseSell: 18,
+        baseWeight: 0.4, // kg
+        growTime: 6, // seconds
+        multiHarvest: false,
+        shopChance: 1.0, // Always available
+        stockRange: [5, 10]
+      },
+      strawberry: {
+        id: 'strawberry',
+        name: 'Клубника',
+        icon: '🍓',
+        seedIcon: '🌿',
+        rarity: 'Обычный',
+        rarityColor: 'text-slate-300 bg-slate-700/70 border-slate-500/40',
+        seedCost: 25,
+        baseSell: 45,
+        baseWeight: 0.25,
+        growTime: 9,
+        multiHarvest: false,
+        shopChance: 0.95,
+        stockRange: [4, 8]
+      },
+      blueberry: {
+        id: 'blueberry',
+        name: 'Куст черники',
+        icon: '🫐',
+        seedIcon: '🪴',
+        rarity: 'Необычный',
+        rarityColor: 'text-sky-300 bg-sky-900/60 border-sky-500/40',
+        seedCost: 75,
+        baseSell: 32,
+        baseWeight: 0.35,
+        growTime: 11,
+        regrowTime: 8,
+        multiHarvest: true,
+        shopChance: 0.75,
+        stockRange: [2, 4]
+      },
+      watermelon: {
+        id: 'watermelon',
+        name: 'Арбуз',
+        icon: '🍉',
+        seedIcon: '🌱',
+        rarity: 'Редкий',
+        rarityColor: 'text-purple-300 bg-purple-900/60 border-purple-500/40',
+        seedCost: 160,
+        baseSell: 310,
+        baseWeight: 6.5,
+        growTime: 15,
+        multiHarvest: false,
+        shopChance: 0.55,
+        stockRange: [1, 3]
+      },
+      mango: {
+        id: 'mango',
+        name: 'Дерево манго',
+        icon: '🥭',
+        seedIcon: '🌳',
+        rarity: 'Эпический',
+        rarityColor: 'text-pink-300 bg-pink-900/60 border-pink-500/40',
+        seedCost: 420,
+        baseSell: 185,
+        baseWeight: 1.2,
+        growTime: 18,
+        regrowTime: 12,
+        multiHarvest: true,
+        shopChance: 0.40,
+        stockRange: [1, 2]
+      },
+      dragonfruit: {
+        id: 'dragonfruit',
+        name: 'Драконий фрукт',
+        icon: '🐉',
+        seedIcon: '🌵',
+        rarity: 'Легендарный',
+        rarityColor: 'text-amber-300 bg-amber-900/60 border-amber-500/40',
+        seedCost: 1100,
+        baseSell: 490,
+        baseWeight: 2.4,
+        growTime: 22,
+        regrowTime: 15,
+        multiHarvest: true,
+        shopChance: 0.25,
+        stockRange: [1, 2]
+      },
+      moonlotus: {
+        id: 'moonlotus',
+        name: 'Лунный лотос',
+        icon: '🪷',
+        seedIcon: '✨',
+        rarity: 'Мифический',
+        rarityColor: 'text-indigo-200 bg-indigo-900/70 border-indigo-400/60',
+        seedCost: 3000,
+        baseSell: 1450,
+        baseWeight: 3.8,
+        growTime: 28,
+        regrowTime: 18,
+        multiHarvest: true,
+        shopChance: 0.15,
+        stockRange: [1, 1]
+      }
+    };
+
+    const MUTATIONS = {
+      gold: {
+        id: 'gold',
+        label: 'Gold x5',
+        mult: 5,
+        badgeClass: 'bg-amber-400/25 text-amber-200 border-amber-400/60',
+        cssClass: 'mut-gold'
+      },
+      rainbow: {
+        id: 'rainbow',
+        label: 'Rainbow x20',
+        mult: 20,
+        badgeClass: 'bg-fuchsia-500/25 text-pink-200 border-pink-400/60',
+        cssClass: 'mut-rainbow'
+      },
+      wet: {
+        id: 'wet',
+        label: 'Wet x2',
+        mult: 2,
+        badgeClass: 'bg-sky-400/25 text-sky-200 border-sky-400/60',
+        cssClass: 'mut-wet'
+      },
+      frozen: {
+        id: 'frozen',
+        label: 'Frozen x10',
+        mult: 10,
+        badgeClass: 'bg-cyan-300/25 text-cyan-100 border-cyan-300/70',
+        cssClass: 'mut-frozen'
+      },
+      shocked: {
+        id: 'shocked',
+        label: 'Shocked x50',
+        mult: 50,
+        badgeClass: 'bg-yellow-400/30 text-yellow-200 border-purple-400/80',
+        cssClass: 'mut-shocked'
+      },
+      starlit: {
+        id: 'starlit',
+        label: 'Starlit x100',
+        mult: 100,
+        badgeClass: 'bg-indigo-500/30 text-indigo-100 border-pink-400/80',
+        cssClass: 'mut-starlit'
+      }
+    };
+
+    const WEATHERS = [
+      {
+        id: 'sunny',
+        name: 'Ясно',
+        icon: '☀️',
+        desc: 'Спокойный солнечный день',
+        growthMult: 1.0,
+        stageBg: 'from-[#1a2e2b] via-[#1c332a] to-[#172921]',
+        weight: 35
+      },
+      {
+        id: 'rain',
+        name: 'Дождь',
+        icon: '🌧️',
+        desc: '+25% рост • Шанс мутации [Wet x2]',
+        growthMult: 1.25,
+        stageBg: 'from-[#162638] via-[#192c3d] to-[#13222b]',
+        weight: 28
+      },
+      {
+        id: 'frost',
+        name: 'Заморозки',
+        icon: '❄️',
+        desc: 'Превращает [Wet] в [Frozen x10]',
+        growthMult: 0.9,
+        stageBg: 'from-[#182d42] via-[#1c364d] to-[#152838]',
+        weight: 16
+      },
+      {
+        id: 'thunder',
+        name: 'Гроза',
+        icon: '⛈️',
+        desc: 'Молнии дают [Shocked x50]!',
+        growthMult: 1.3,
+        stageBg: 'from-[#1e1b38] via-[#231f42] to-[#16192b]',
+        weight: 13
+      },
+      {
+        id: 'starfall',
+        name: 'Звездопад',
+        icon: '🌠',
+        desc: 'Космический шанс [Starlit x100]!',
+        growthMult: 1.15,
+        stageBg: 'from-[#1b1636] via-[#261b47] to-[#14172b]',
+        weight: 8
+      }
+    ];
+
+    /**
+     * ============================================================================
+     * 3. STATE & PERSISTENCE (LOCALSTORAGE)
+     * ============================================================================
+     */
+    const SAVE_KEY = 'pocket_garden_save_v1';
+    const WEATHER_DURATION = 45; // seconds
+    const SHOP_RESTOCK_DURATION = 60; // seconds
+
+    function createInitialState() {
+      return {
+        coins: 50,
+        selectedSeed: 'carrot',
+        seeds: {
+          carrot: 3,
+          strawberry: 1,
+          blueberry: 0,
+          watermelon: 0,
+          mango: 0,
+          dragonfruit: 0,
+          moonlotus: 0
+        },
+        plots: Array.from({ length: 12 }, (_, idx) => ({
+          id: idx,
+          cropId: null,
+          plantedAt: null,
+          progress: 0, // 0 to 1
+          isRipe: false,
+          hasHarvestedOnce: false,
+          weightMult: 1.0,
+          mutations: [] // e.g. ['gold', 'wet']
+        })),
+        inventory: [], // { uid, cropId, weightKg, weightMult, mutations, value }
+        shopStock: {},
+        shopNextRestock: Date.now() + SHOP_RESTOCK_DURATION * 1000,
+        weatherId: 'sunny',
+        weatherEndsAt: Date.now() + WEATHER_DURATION * 1000,
+        lastTick: Date.now()
+      };
+    }
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (!raw) {
+          const fresh = createInitialState();
+          generateShopStock(fresh, false);
+          return fresh;
+        }
+        const parsed = JSON.parse(raw);
+        // Merge safely with defaults
+        const base = createInitialState();
+        const merged = { ...base, ...parsed };
+        if (!merged.shopStock || Object.keys(merged.shopStock).length === 0) {
+          generateShopStock(merged, false);
+        }
+        return merged;
+      } catch (e) {
+        console.error('Failed to load save:', e);
+        const fresh = createInitialState();
+        generateShopStock(fresh, false);
+        return fresh;
+      }
+    }
+
+    function saveState() {
+      try {
+        state.lastTick = Date.now();
+        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('Save failed:', e);
+      }
+    }
+
+    /**
+     * ============================================================================
+     * 4. CORE MECHANICS: WEIGHT ROLLS, MUTATIONS & SHOP RESTOCK
+     * ============================================================================
+     */
+    function rollFruitTraits(plot) {
+      // 1. Weight Multiplier Roll (Gigantism)
+      const r = Math.random();
+      let weightMult = 1.0;
+      if (r < 0.04) {
+        // 4% GIANT (3.0x - 6.0x)
+        weightMult = +(3.0 + Math.random() * 3.0).toFixed(2);
+      } else if (r < 0.24) {
+        // 20% Big (1.6x - 2.9x)
+        weightMult = +(1.6 + Math.random() * 1.3).toFixed(2);
+      } else {
+        // 76% Normal (0.8x - 1.5x)
+        weightMult = +(0.8 + Math.random() * 0.7).toFixed(2);
+      }
+      plot.weightMult = weightMult;
+
+      // 2. Base Spawn Mutations (Gold 5%, Rainbow 1%)
+      const muts = [];
+      const mRoll = Math.random();
+      if (mRoll < 0.01) {
+        muts.push('rainbow');
+      } else if (mRoll < 0.06) {
+        muts.push('gold');
+      }
+      plot.mutations = muts;
+    }
+
+    function calculateFruitPrice(cropId, weightMult, mutations) {
+      const crop = CROPS[cropId];
+      if (!crop) return 0;
+      let mult = 1;
+      for (const mKey of mutations) {
+        if (MUTATIONS[mKey]) {
+          mult *= MUTATIONS[mKey].mult;
+        }
+      }
+      // Weight scales value slightly super-linearly for giants
+      const weightFactor = Math.pow(weightMult, 1.15);
+      return Math.max(1, Math.round(crop.baseSell * weightFactor * mult));
+    }
+
+    function generateShopStock(targetState = state, notifyRare = true) {
+      const stock = {};
+      let rareArrived = [];
+
+      for (const key of Object.keys(CROPS)) {
+        const crop = CROPS[key];
+        if (Math.random() <= crop.shopChance) {
+          const [minS, maxS] = crop.stockRange;
+          const qty = Math.floor(Math.random() * (maxS - minS + 1)) + minS;
+          stock[key] = qty;
+          if (crop.seedCost >= 160 && qty > 0) {
+            rareArrived.push(`${crop.icon} ${crop.name}`);
+          }
+        } else {
+          stock[key] = 0;
+        }
+      }
+
+      targetState.shopStock = stock;
+      targetState.shopNextRestock = Date.now() + SHOP_RESTOCK_DURATION * 1000;
+
+      if (notifyRare && rareArrived.length > 0) {
+        showToast(`🚨 В лавку завезли: ${rareArrived.join(', ')}!`, 'amber');
+        const dot = document.getElementById('shop-rare-dot');
+        if (dot) dot.classList.remove('hidden');
+      }
+    }
+
+    function restockShop(manual = false) {
+      generateShopStock(state, true);
+      if (manual) {
+        triggerHaptic('medium');
+        showToast('🔄 Ассортимент лавки обновлен!', 'emerald');
+      }
+      saveState();
+      renderShop();
+    }
+
+    /**
+     * ============================================================================
+     * 5. WEATHER & MUTATION ENGINE
+     * ============================================================================
+     */
+    function pickRandomWeather(excludeId) {
+      const pool = WEATHERS.filter(w => w.id !== excludeId);
+      const totalWeight = pool.reduce((sum, w) => sum + w.weight, 0);
+      let r = Math.random() * totalWeight;
+      for (const w of pool) {
+        if (r < w.weight) return w.id;
+        r -= w.weight;
+      }
+      return pool[0].id;
+    }
+
+    function setWeather(newWeatherId, announce = true) {
+      state.weatherId = newWeatherId;
+      state.weatherEndsAt = Date.now() + WEATHER_DURATION * 1000;
+      const w = WEATHERS.find(item => item.id === newWeatherId) || WEATHERS[0];
+
+      // Update Garden Stage background
+      const stage = document.getElementById('garden-stage');
+      if (stage) {
+        stage.className = `relative rounded-3xl p-3 border border-emerald-500/25 shadow-xl overflow-visible transition-colors duration-700 bg-gradient-to-b ${w.stageBg}`;
+      }
+
+      if (announce) {
+        showToast(`${w.icon} Погода сменилась: ${w.name}`, 'indigo');
+      }
+      updateWeatherUI();
+      saveState();
+    }
+
+    function cycleWeatherManually() {
+      triggerHaptic('medium');
+      const idx = WEATHERS.findIndex(w => w.id === state.weatherId);
+      const next = WEATHERS[(idx + 1) % WEATHERS.length];
+      setWeather(next.id, true);
+    }
+
+    function applyWeatherEffectsTick() {
+      const wId = state.weatherId;
+      const activePlots = state.plots.filter(p => p.cropId && p.progress > 0.25);
+      if (activePlots.length === 0) return;
+
+      if (wId === 'rain') {
+        // Chance to apply Wet x2 to a random growing/ripe plant
+        if (Math.random() < 0.22) {
+          const target = activePlots[Math.floor(Math.random() * activePlots.length)];
+          if (!target.mutations.includes('wet') && !target.mutations.includes('frozen')) {
+            target.mutations.push('wet');
+            spawnPlotPopup(target.id, '💧 Wet x2!', '#38bdf8');
+            renderGarden();
+          }
+        }
+      } else if (wId === 'frost') {
+        // Turns Wet fruits into Frozen x10, or small chance to freeze directly
+        const wetPlots = activePlots.filter(p => p.mutations.includes('wet'));
+        if (wetPlots.length > 0 && Math.random() < 0.35) {
+          const target = wetPlots[Math.floor(Math.random() * wetPlots.length)];
+          target.mutations = target.mutations.filter(m => m !== 'wet');
+          if (!target.mutations.includes('frozen')) {
+            target.mutations.push('frozen');
+            spawnPlotPopup(target.id, '❄️ Frozen x10!', '#67e8f9');
+            renderGarden();
+          }
+        }
+      } else if (wId === 'thunder') {
+        // Periodic lightning strikes!
+        if (Math.random() < 0.24) {
+          const target = activePlots[Math.floor(Math.random() * activePlots.length)];
+          triggerLightningStrike(target.id);
+          if (!target.mutations.includes('shocked')) {
+            target.mutations.push('shocked');
+            spawnPlotPopup(target.id, '⚡ SHOCKED x50!', '#fde047');
+            triggerHaptic('heavy');
+            renderGarden();
+          }
+        }
+      } else if (wId === 'starfall') {
+        // Cosmic Starlit x100 chance
+        if (Math.random() < 0.18) {
+          const target = activePlots[Math.floor(Math.random() * activePlots.length)];
+          if (!target.mutations.includes('starlit')) {
+            target.mutations.push('starlit');
+            spawnShootingStarHit(target.id);
+            spawnPlotPopup(target.id, '🌠 STARLIT x100!', '#f472b6');
+            triggerHaptic('heavy');
+            renderGarden();
+          }
+        }
+      }
+    }
+
+    /**
+     * ============================================================================
+     * 6. PLAYER ACTIONS: PLANT, HARVEST, BUY, SELL
+     * ============================================================================
+     */
+    function selectSeed(cropId) {
+      state.selectedSeed = cropId;
+      triggerHaptic('light');
+      renderHotbar();
+    }
+
+    function handlePlotTap(plotId) {
+      const plot = state.plots[plotId];
+      if (!plot) return;
+
+      // Case 1: Plot is Ripe -> Harvest!
+      if (plot.cropId && plot.isRipe) {
+        harvestPlot(plotId);
+        return;
+      }
+
+      // Case 2: Plot is Occupied & Still Growing -> Show progress toast
+      if (plot.cropId && !plot.isRipe) {
+        const crop = CROPS[plot.cropId];
+        const pct = Math.floor(plot.progress * 100);
+        triggerHaptic('light');
+        spawnPlotPopup(plotId, `${crop.icon} ${pct}%`, '#cbd5e1');
+        return;
+      }
+
+      // Case 3: Plot is Empty -> Plant selected seed
+      const seedId = state.selectedSeed;
+      if (!seedId || (state.seeds[seedId] || 0) <= 0) {
+        // Find any available seed in bag
+        const fallback = Object.keys(state.seeds).find(k => state.seeds[k] > 0);
+        if (fallback) {
+          state.selectedSeed = fallback;
+          renderHotbar();
+          showToast(`Выбрано семя: ${CROPS[fallback].name}`, 'slate');
+        } else {
+          triggerHaptic('warning');
+          showToast('Нет семян! Загляни в Лавку 🏪', 'amber');
+        }
+        return;
+      }
+
+      // Plant the seed
+      state.seeds[seedId] -= 1;
+      plot.cropId = seedId;
+      plot.plantedAt = Date.now();
+      plot.progress = 0;
+      plot.isRipe = false;
+      plot.hasHarvestedOnce = false;
+      rollFruitTraits(plot);
+
+      triggerHaptic('medium');
+      spawnPlotPopup(plotId, `🌱 Посажено!`, '#6ee7b7');
+
+      if (plot.weightMult >= 3.0) {
+        showToast(`🤩 Ого! Растет ГИГАНТСКИЙ плод (${plot.weightMult}x)!`, 'amber');
+      }
+
+      saveState();
+      renderGarden();
+      renderHotbar();
+    }
+
+    function harvestPlot(plotId, silent = false) {
+      const plot = state.plots[plotId];
+      if (!plot || !plot.cropId || !plot.isRipe) return false;
+
+      const crop = CROPS[plot.cropId];
+      const weightKg = +(crop.baseWeight * plot.weightMult).toFixed(2);
+      const value = calculateFruitPrice(plot.cropId, plot.weightMult, plot.mutations);
+
+      const item = {
+        uid: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        cropId: plot.cropId,
+        weightKg,
+        weightMult: plot.weightMult,
+        mutations: [...plot.mutations],
+        value
+      };
+
+      state.inventory.push(item);
+
+      // Floating feedback
+      const label = plot.weightMult >= 3.0
+        ? `+${crop.icon} ГИГАНТ (${weightKg} кг)!`
+        : `+${crop.icon} ${weightKg} кг`;
+      spawnPlotPopup(plotId, label, '#fde047');
+
+      if (!silent) {
+        triggerHaptic(plot.weightMult >= 3.0 || plot.mutations.length > 0 ? 'success' : 'medium');
+      }
+
+      // Multi-harvest perennial vs Single-harvest
+      if (crop.multiHarvest) {
+        plot.progress = 0;
+        plot.isRipe = false;
+        plot.hasHarvestedOnce = true;
+        rollFruitTraits(plot); // Roll fresh weight & base mutations for next fruit!
+      } else {
+        plot.cropId = null;
+        plot.plantedAt = null;
+        plot.progress = 0;
+        plot.isRipe = false;
+        plot.hasHarvestedOnce = false;
+        plot.weightMult = 1.0;
+        plot.mutations = [];
+      }
+
+      saveState();
+      renderGarden();
+      updateInventoryBadges();
+      return true;
+    }
+
+    function harvestAllRipe() {
+      let count = 0;
+      for (const plot of state.plots) {
+        if (plot.cropId && plot.isRipe) {
+          if (harvestPlot(plot.id, true)) count++;
+        }
+      }
+      if (count > 0) {
+        triggerHaptic('success');
+        showToast(`🧺 Собрано плодов: ${count} шт.`, 'emerald');
+      }
+    }
+
+    function buySeed(cropId) {
+      const crop = CROPS[cropId];
+      const stock = state.shopStock[cropId] || 0;
+      if (!crop || stock <= 0) {
+        triggerHaptic('warning');
+        return;
+      }
+      if (state.coins < crop.seedCost) {
+        triggerHaptic('error');
+        showToast('Недостаточно монет 🪙', 'rose');
+        return;
+      }
+
+      state.coins -= crop.seedCost;
+      state.shopStock[cropId] -= 1;
+      state.seeds[cropId] = (state.seeds[cropId] || 0) + 1;
+      state.selectedSeed = cropId;
+
+      triggerHaptic('medium');
+      animateCoins();
+      saveState();
+      renderShop();
+      renderHotbar();
+    }
+
+    function sellSingleItem(uid) {
+      const idx = state.inventory.findIndex(item => item.uid === uid);
+      if (idx === -1) return;
+      const item = state.inventory[idx];
+      state.coins += item.value;
+      state.inventory.splice(idx, 1);
+
+      triggerHaptic('medium');
+      animateCoins();
+      saveState();
+      renderBackpack();
+      updateInventoryBadges();
+    }
+
+    function sellAllHarvest() {
+      if (state.inventory.length === 0) return;
+      const total = state.inventory.reduce((sum, item) => sum + item.value, 0);
+      const count = state.inventory.length;
+      state.coins += total;
+      state.inventory = [];
+
+      triggerHaptic('success');
+      showToast(`💰 Продано ${count} шт. за +${total.toLocaleString('ru-RU')} 🪙`, 'amber');
+      animateCoins();
+      saveState();
+      renderBackpack();
+      updateInventoryBadges();
+    }
+
+    /**
+     * ============================================================================
+     * 7. GAME LOOP (GROWTH, TIMERS, OFFLINE CATCH-UP)
+     * ============================================================================
+     */
+    function processOfflineProgress() {
+      const now = Date.now();
+      const elapsedSec = Math.max(0, (now - (state.lastTick || now)) / 1000);
+      if (elapsedSec > 2) {
+        for (const plot of state.plots) {
+          if (plot.cropId && !plot.isRipe) {
+            const crop = CROPS[plot.cropId];
+            const duration = plot.hasHarvestedOnce ? (crop.regrowTime || crop.growTime) : crop.growTime;
+            plot.progress = Math.min(1, plot.progress + elapsedSec / duration);
+            if (plot.progress >= 1) {
+              plot.isRipe = true;
+            }
+          }
+        }
+      }
+      if (now >= state.shopNextRestock) {
+        generateShopStock(state, false);
+      }
+      if (now >= state.weatherEndsAt) {
+        setWeather(pickRandomWeather(state.weatherId), false);
+      }
+    }
+
+    let weatherEffectCounter = 0;
+
+    setInterval(() => {
+      const now = Date.now();
+      const weatherObj = WEATHERS.find(w => w.id === state.weatherId) || WEATHERS[0];
+      let anyPlotChanged = false;
+
+      // 1. Update crop growth
+      for (const plot of state.plots) {
+        if (plot.cropId && !plot.isRipe) {
+          const crop = CROPS[plot.cropId];
+          const duration = plot.hasHarvestedOnce ? (crop.regrowTime || crop.growTime) : crop.growTime;
+          const step = (0.25 * weatherObj.growthMult) / duration; // 250ms tick
+          plot.progress = Math.min(1, plot.progress + step);
+          if (plot.progress >= 1) {
+            plot.isRipe = true;
+          }
+          anyPlotChanged = true;
+        }
+      }
+
+      if (anyPlotChanged) {
+        renderGarden();
+      }
+
+      // 2. Weather timer & periodic mutation rolls
+      const weatherRem = Math.max(0, Math.ceil((state.weatherEndsAt - now) / 1000));
+      const wTimerEl = document.getElementById('weather-timer');
+      if (wTimerEl) wTimerEl.textContent = `${weatherRem}с`;
+
+      if (now >= state.weatherEndsAt) {
+        setWeather(pickRandomWeather(state.weatherId), true);
+      }
+
+      weatherEffectCounter++;
+      if (weatherEffectCounter % 8 === 0) { // Every 2 seconds
+        applyWeatherEffectsTick();
+      }
+
+      // 3. Shop restock countdown
+      const shopRem = Math.max(0, Math.ceil((state.shopNextRestock - now) / 1000));
+      const sTimerEl = document.getElementById('shop-timer');
+      if (sTimerEl) {
+        const mins = String(Math.floor(shopRem / 60)).padStart(2, '0');
+        const secs = String(shopRem % 60).padStart(2, '0');
+        sTimerEl.textContent = `${mins}:${secs}`;
+      }
+
+      if (now >= state.shopNextRestock) {
+        generateShopStock(state, true);
+        renderShop();
+        saveState();
+      }
+    }, 250);
+
+    // Periodic auto-save every 5 seconds
+    setInterval(saveState, 5000);
+
+    /**
+     * ============================================================================
+     * 8. UI RENDERING & NAVIGATION
+     * ============================================================================
+     */
+    let currentTab = 'garden';
+
+    function switchTab(tab) {
+      currentTab = tab;
+      triggerHaptic('light');
+
+      ['garden', 'shop', 'backpack'].forEach(t => {
+        const view = document.getElementById(`view-${t}`);
+        const nav = document.getElementById(`nav-${t}`);
+        if (t === tab) {
+          view.classList.remove('hidden');
+          nav.classList.add('text-emerald-400', 'bg-emerald-500/15');
+          nav.classList.remove('text-slate-400');
+        } else {
+          view.classList.add('hidden');
+          nav.classList.remove('text-emerald-400', 'bg-emerald-500/15');
+          nav.classList.add('text-slate-400');
+        }
+      });
+
+      if (tab === 'shop') {
+        const dot = document.getElementById('shop-rare-dot');
+        if (dot) dot.classList.add('hidden');
+        renderShop();
+      } else if (tab === 'backpack') {
+        renderBackpack();
+      } else {
+        renderGarden();
+        renderHotbar();
+      }
+    }
+
+    function animateCoins() {
+      const el = document.getElementById('coin-balance');
+      if (!el) return;
+      el.textContent = state.coins.toLocaleString('ru-RU');
+      el.classList.add('scale-110', 'text-white');
+      setTimeout(() => el.classList.remove('scale-110', 'text-white'), 180);
+    }
+
+    function updateWeatherUI() {
+      const w = WEATHERS.find(item => item.id === state.weatherId) || WEATHERS[0];
+      document.getElementById('weather-icon').textContent = w.icon;
+      document.getElementById('weather-name').textContent = w.name;
+      document.getElementById('weather-desc').textContent = w.desc;
+    }
+
+    function updateInventoryBadges() {
+      const count = state.inventory.length;
+      const badge = document.getElementById('inv-badge');
+      if (badge) {
+        if (count > 0) {
+          badge.textContent = count > 99 ? '99+' : count;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+    }
+
+    function renderGarden() {
+      const grid = document.getElementById('garden-grid');
+      if (!grid) return;
+
+      const isRainy = state.weatherId === 'rain' || state.weatherId === 'thunder';
+      let ripeCount = 0;
+
+      grid.innerHTML = state.plots.map(plot => {
+        if (!plot.cropId) {
+          return `
+            <button onclick="handlePlotTap(${plot.id})" data-plot="${plot.id}"
+              class="aspect-square rounded-2xl ${isRainy ? 'soil-plot-wet' : 'soil-plot'} border border-amber-900/40 hover:border-emerald-400/50 active:scale-95 transition flex flex-col items-center justify-center relative group">
+              <span class="text-amber-200/20 group-hover:text-emerald-300/60 text-xl font-bold transition">+</span>
+            </button>
+          `;
+        }
+
+        const crop = CROPS[plot.cropId];
+        if (plot.isRipe) ripeCount++;
+
+        // Calculate visual scale from weightMult (0.8x -> 0.85, 6.0x -> 1.65)
+        const visualScale = Math.min(1.68, Math.max(0.85, 0.72 + plot.weightMult * 0.16));
+        const mutClasses = plot.mutations.map(m => MUTATIONS[m]?.cssClass || '').join(' ');
+        const isGiant = plot.weightMult >= 3.0;
+        const isBig = plot.weightMult >= 1.6 && plot.weightMult < 3.0;
+
+        // Mutation badges (up to 2 compact dots/icons)
+        const mutBadges = plot.mutations.map(m => {
+          const info = MUTATIONS[m];
+          return info ? `<span class="text-[8px] font-extrabold px-1 rounded border ${info.badgeClass} leading-tight">${info.label.split(' ')[0]}</span>` : '';
+        }).join('');
+
+        let stageVisual = '';
+        if (!plot.isRipe) {
+          const pct = Math.floor(plot.progress * 100);
+          const sproutEmoji = plot.hasHarvestedOnce
+            ? crop.seedIcon
+            : (plot.progress < 0.45 ? '🌱' : crop.seedIcon);
+          stageVisual = `
+            <div class="growing-plant text-2xl select-none">${sproutEmoji}</div>
+            <div class="w-4/5 h-1.5 bg-black/50 rounded-full overflow-hidden mt-1.5 border border-white/10">
+              <div class="h-full bg-emerald-400 transition-all duration-200" style="width: ${pct}%"></div>
+            </div>
+          `;
+        } else {
+          stageVisual = `
+            <div class="ripe-fruit text-3xl select-none ${mutClasses} ${isGiant ? 'z-30' : 'z-10'}"
+                 style="--fruit-scale: ${visualScale};">
+              ${crop.icon}
+            </div>
+            <span class="mt-0.5 text-[9px] font-display font-extrabold px-1.5 py-0.2 rounded-full bg-emerald-500 text-slate-950 shadow">
+              Собрать
+            </span>
+          `;
+        }
+
+        return `
+          <button onclick="handlePlotTap(${plot.id})" data-plot="${plot.id}"
+            class="aspect-square rounded-2xl ${isRainy ? 'soil-plot-wet' : 'soil-plot'} border ${plot.isRipe ? 'border-emerald-400/75 shadow-[0_0_12px_rgba(52,211,153,0.25)]' : 'border-amber-900/50'} active:scale-95 transition flex flex-col items-center justify-center relative overflow-visible">
+            
+            <!-- Top Badges: Giant / Perennial / Mutations -->
+            <div class="absolute top-1 left-1 right-1 flex flex-wrap justify-between items-start gap-0.5 pointer-events-none z-20">
+              ${isGiant ? `<span class="text-[8px] font-black px-1 rounded bg-amber-400 text-slate-950 shadow">ГИГАНТ</span>` : (isBig ? `<span class="text-[8px] font-bold px-1 rounded bg-amber-500/30 text-amber-200">BIG</span>` : '<span></span>')}
+              ${crop.multiHarvest ? `<span class="text-[9px] opacity-80" title="Многоразовый куст">♻️</span>` : ''}
+            </div>
+
+            ${stageVisual}
+
+            <!-- Bottom Mutation Tags -->
+            ${mutBadges ? `<div class="absolute -bottom-1.5 left-0 right-0 flex justify-center gap-0.5 flex-wrap z-20 pointer-events-none">${mutBadges}</div>` : ''}
+          </button>
+        `;
+      }).join('');
+
+      const harvestAllBtn = document.getElementById('btn-harvest-all');
+      if (harvestAllBtn) {
+        if (ripeCount >= 2) {
+          harvestAllBtn.classList.remove('hidden');
+          harvestAllBtn.textContent = `✨ Собрать всё (${ripeCount})`;
+        } else {
+          harvestAllBtn.classList.add('hidden');
+        }
+      }
+    }
+
+    function renderHotbar() {
+      const bar = document.getElementById('seed-hotbar');
+      if (!bar) return;
+
+      const entries = Object.values(CROPS);
+      bar.innerHTML = entries.map(crop => {
+        const count = state.seeds[crop.id] || 0;
+        const isSelected = state.selectedSeed === crop.id;
+        return `
+          <button onclick="selectSeed('${crop.id}')"
+            class="shrink-0 flex items-center gap-2 px-3 py-2 rounded-2xl border transition active:scale-95 ${
+              isSelected
+                ? 'bg-emerald-500/20 border-emerald-400 text-white shadow-md'
+                : count > 0
+                  ? 'bg-slate-800/80 border-slate-700 text-slate-200'
+                  : 'bg-slate-800/30 border-slate-800 text-slate-500 opacity-60'
+            }">
+            <span class="text-xl leading-none">${crop.icon}</span>
+            <div class="text-left">
+              <div class="text-[11px] font-display font-bold leading-tight">${crop.name}</div>
+              <div class="text-[10px] font-semibold ${count > 0 ? 'text-emerald-300' : 'text-slate-500'}">
+                ${count} шт.
+              </div>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderShop() {
+      const list = document.getElementById('shop-list');
+      if (!list) return;
+
+      list.innerHTML = Object.values(CROPS).map(crop => {
+        const stock = state.shopStock[crop.id] || 0;
+        const canAfford = state.coins >= crop.seedCost;
+        const outOfStock = stock <= 0;
+
+        return `
+          <div class="bg-slate-900/80 border ${outOfStock ? 'border-slate-800/70 opacity-65' : 'border-slate-700/70'} rounded-2xl p-3 flex items-center justify-between gap-3 shadow-md">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-2xl shrink-0 relative">
+                ${crop.icon}
+                ${crop.multiHarvest ? `<span class="absolute -bottom-1 -right-1 text-[10px] bg-emerald-500/20 border border-emerald-400/50 rounded-full px-1">♻️</span>` : ''}
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-display font-extrabold text-sm text-white">${crop.name}</span>
+                  <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md border ${crop.rarityColor}">${crop.rarity}</span>
+                </div>
+                <div class="text-[11px] text-slate-400 mt-0.5">
+                  ${crop.multiHarvest ? 'Многоразовый куст' : 'Одноразовый'} • Рост ${crop.growTime}с
+                </div>
+                <div class="text-[11px] font-semibold mt-0.5 ${stock > 0 ? 'text-emerald-300' : 'text-rose-400'}">
+                  ${stock > 0 ? `В наличии: ${stock} шт.` : 'Нет в этом завозе'}
+                </div>
+              </div>
+            </div>
+
+            <button onclick="buySeed('${crop.id}')" ${outOfStock || !canAfford ? 'disabled' : ''}
+              class="shrink-0 px-3.5 py-2.5 rounded-2xl font-display font-extrabold text-xs transition active:scale-95 ${
+                outOfStock
+                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                  : canAfford
+                    ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg'
+                    : 'bg-slate-800 border border-slate-700 text-slate-400 opacity-70 cursor-not-allowed'
+              }">
+              ${outOfStock ? 'Раскуплено' : `${crop.seedCost} 🪙`}
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderBackpack() {
+      const list = document.getElementById('inventory-list');
+      const countEl = document.getElementById('inv-count');
+      const totalEl = document.getElementById('sell-all-value');
+      const sellAllBtn = document.getElementById('btn-sell-all');
+      if (!list) return;
+
+      // Sort by highest value first
+      const sorted = [...state.inventory].sort((a, b) => b.value - a.value);
+      const totalValue = sorted.reduce((sum, item) => sum + item.value, 0);
+
+      if (countEl) countEl.textContent = sorted.length;
+      if (totalEl) totalEl.textContent = totalValue.toLocaleString('ru-RU');
+      if (sellAllBtn) sellAllBtn.disabled = sorted.length === 0;
+
+      if (sorted.length === 0) {
+        list.innerHTML = `
+          <div class="bg-slate-900/50 border border-slate-800 rounded-3xl p-8 text-center">
+            <div class="text-4xl mb-2">🧺</div>
+            <div class="font-display font-bold text-sm text-slate-300">Рюкзак пока пуст</div>
+            <p class="text-xs text-slate-500 mt-1">Вырасти урожай на грядках и возвращайся к скупщику!</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = sorted.map(item => {
+        const crop = CROPS[item.cropId];
+        const isGiant = item.weightMult >= 3.0;
+        const mutTags = item.mutations.map(m => {
+          const info = MUTATIONS[m];
+          return info ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md border ${info.badgeClass}">${info.label}</span>` : '';
+        }).join('');
+
+        return `
+          <div class="bg-slate-900/80 border border-slate-700/70 rounded-2xl p-3 flex items-center justify-between gap-2.5">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-11 h-11 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-2xl shrink-0">
+                ${crop.icon}
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="font-display font-extrabold text-sm text-white">${crop.name}</span>
+                  <span class="text-[11px] font-semibold text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded-md">
+                    ${item.weightKg} кг
+                  </span>
+                  ${isGiant ? `<span class="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-amber-400 text-slate-950">ГИГАНТ</span>` : ''}
+                </div>
+                ${mutTags ? `<div class="flex flex-wrap gap-1 mt-1">${mutTags}</div>` : `<div class="text-[11px] text-slate-500 mt-0.5">Обычный плод</div>`}
+              </div>
+            </div>
+
+            <button onclick="sellSingleItem('${item.uid}')"
+              class="shrink-0 bg-amber-500/20 hover:bg-amber-500/30 active:scale-95 border border-amber-400/50 text-amber-200 font-display font-extrabold text-xs px-3 py-2 rounded-xl transition">
+              +${item.value.toLocaleString('ru-RU')} 🪙
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /**
+     * ============================================================================
+     * 9. TOASTS & RESET MODAL
+     * ============================================================================
+     */
+    function showToast(message, tone = 'emerald') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const styles = {
+        emerald: 'bg-emerald-950/95 border-emerald-500/60 text-emerald-100',
+        amber: 'bg-amber-950/95 border-amber-500/60 text-amber-100',
+        indigo: 'bg-indigo-950/95 border-indigo-500/60 text-indigo-100',
+        rose: 'bg-rose-950/95 border-rose-500/60 text-rose-100',
+        slate: 'bg-slate-900/95 border-slate-600/60 text-slate-100'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `px-3.5 py-2.5 rounded-2xl border backdrop-blur-md shadow-xl text-xs font-semibold text-center transition-all duration-300 transform -translate-y-2 opacity-0 ${styles[tone] || styles.slate}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('-translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('-translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 2800);
+    }
+
+    function openResetModal() {
+      triggerHaptic('light');
+      document.getElementById('reset-modal').classList.remove('hidden');
+    }
+
+    function closeResetModal() {
+      document.getElementById('reset-modal').classList.add('hidden');
+    }
+
+    function confirmResetGame() {
+      localStorage.removeItem(SAVE_KEY);
+      state = createInitialState();
+      generateShopStock(state, false);
+      saveState();
+      closeResetModal();
+      triggerHaptic('warning');
+      animateCoins();
+      updateWeatherUI();
+      updateInventoryBadges();
+      renderGarden();
+      renderHotbar();
+      renderShop();
+      renderBackpack();
+      showToast('🌱 Сад обновлен! Удачного урожая!', 'emerald');
+    }
+
+    /**
+     * ============================================================================
+     * 10. HTML5 CANVAS WEATHER PARTICLES & FLOATING POPUPS
+     * ============================================================================
+     */
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let popups = [];
+    let lightningBolts = [];
+    let flashAlpha = 0;
+
+    function resizeCanvas() {
+      const stage = document.getElementById('garden-stage');
+      if (!stage || !canvas) return;
+      const rect = stage.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function getPlotCenter(plotId) {
+      const stage = document.getElementById('garden-stage');
+      const plotEl = document.querySelector(`[data-plot="${plotId}"]`);
+      if (!stage || !plotEl) return { x: canvas.width / 2, y: canvas.height / 2 };
+      const sRect = stage.getBoundingClientRect();
+      const pRect = plotEl.getBoundingClientRect();
+      return {
+        x: pRect.left - sRect.left + pRect.width / 2,
+        y: pRect.top - sRect.top + pRect.height / 2
+      };
+    }
+
+    function spawnPlotPopup(plotId, text, color = '#fde047') {
+      const pos = getPlotCenter(plotId);
+      popups.push({
+        x: pos.x,
+        y: pos.y - 10,
+        vy: -0.85,
+        text,
+        color,
+        life: 1.0
+      });
+    }
+
+    function triggerLightningStrike(plotId) {
+      const target = getPlotCenter(plotId);
+      flashAlpha = 0.55;
+      const segments = [];
+      let curX = target.x + (Math.random() * 60 - 30);
+      let curY = 0;
+      const steps = 6;
+      for (let i = 1; i <= steps; i++) {
+        const nextX = i === steps ? target.x : curX + (Math.random() * 34 - 17);
+        const nextY = (target.y / steps) * i;
+        segments.push({ x1: curX, y1: curY, x2: nextX, y2: nextY });
+        curX = nextX;
+        curY = nextY;
+      }
+      lightningBolts.push({ segments, life: 1.0 });
+    }
+
+    function spawnShootingStarHit(plotId) {
+      const target = getPlotCenter(plotId);
+      particles.push({
+        type: 'meteor',
+        x: target.x - 90,
+        y: -20,
+        tx: target.x,
+        ty: target.y,
+        progress: 0
+      });
+    }
+
+    function updateAndDrawFX() {
+      if (!ctx || !canvas.width) {
+        requestAnimationFrame(updateAndDrawFX);
+        return;
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const wId = state.weatherId;
+
+      // Spawn ambient weather particles
+      if (wId === 'rain' || wId === 'thunder') {
+        for (let i = 0; i < 3; i++) {
+          particles.push({
+            type: 'rain',
+            x: Math.random() * (canvas.width + 40),
+            y: -10,
+            vx: -1.8,
+            vy: 8 + Math.random() * 4,
+            len: 10 + Math.random() * 6
+          });
+        }
+      } else if (wId === 'frost') {
+        if (Math.random() < 0.45) {
+          particles.push({
+            type: 'snow',
+            x: Math.random() * canvas.width,
+            y: -6,
+            vx: Math.random() * 0.8 - 0.4,
+            vy: 1.2 + Math.random() * 1.1,
+            r: 2 + Math.random() * 2.2
+          });
+        }
+      } else if (wId === 'starfall') {
+        if (Math.random() < 0.08) {
+          particles.push({
+            type: 'star',
+            x: Math.random() * canvas.width * 0.9 + 20,
+            y: -10,
+            vx: -3.5,
+            vy: 4.5,
+            life: 1.0
+          });
+        }
+      }
+
+      // Draw & update particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        if (p.type === 'rain') {
+          ctx.strokeStyle = 'rgba(125, 211, 252, 0.45)';
+          ctx.lineWidth = 1.3;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x + p.vx, p.y + p.len);
+          ctx.stroke();
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.y > canvas.height) particles.splice(i, 1);
+        } else if (p.type === 'snow') {
+          ctx.fillStyle = 'rgba(224, 242, 254, 0.75)';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+          p.x += p.vx + Math.sin(p.y * 0.04) * 0.3;
+          p.y += p.vy;
+          if (p.y > canvas.height) particles.splice(i, 1);
+        } else if (p.type === 'star') {
+          ctx.strokeStyle = `rgba(244, 114, 182, ${p.life})`;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x - p.vx * 5, p.y - p.vy * 5);
+          ctx.stroke();
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= 0.025;
+          if (p.life <= 0 || p.y > canvas.height) particles.splice(i, 1);
+        } else if (p.type === 'meteor') {
+          p.progress += 0.08;
+          const cx = p.x + (p.tx - p.x) * p.progress;
+          const cy = p.y + (p.ty - p.y) * p.progress;
+          ctx.fillStyle = '#f472b6';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+          ctx.fill();
+          if (p.progress >= 1) particles.splice(i, 1);
+        }
+      }
+
+      // Draw Lightning Flash & Bolts
+      if (flashAlpha > 0) {
+        ctx.fillStyle = `rgba(250, 204, 21, ${flashAlpha * 0.35})`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        flashAlpha -= 0.04;
+      }
+
+      for (let i = lightningBolts.length - 1; i >= 0; i--) {
+        const bolt = lightningBolts[i];
+        ctx.strokeStyle = `rgba(253, 224, 71, ${bolt.life})`;
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#c084fc';
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        bolt.segments.forEach((s, idx) => {
+          if (idx === 0) ctx.moveTo(s.x1, s.y1);
+          ctx.lineTo(s.x2, s.y2);
+        });
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+        bolt.life -= 0.07;
+        if (bolt.life <= 0) lightningBolts.splice(i, 1);
+      }
+
+      // Draw Floating Text Popups
+      for (let i = popups.length - 1; i >= 0; i--) {
+        const pop = popups[i];
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, pop.life);
+        ctx.font = '800 12px Nunito, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'rgba(15, 23, 42, 0.9)';
+        ctx.strokeText(pop.text, pop.x, pop.y);
+        ctx.fillStyle = pop.color;
+        ctx.fillText(pop.text, pop.x, pop.y);
+        ctx.restore();
+
+        pop.y += pop.vy;
+        pop.life -= 0.018;
+        if (pop.life <= 0) popups.splice(i, 1);
+      }
+
+      requestAnimationFrame(updateAndDrawFX);
+    }
+
+    /**
+     * ============================================================================
+     * 11. INITIAL BOOTSTRAP
+     * ============================================================================
+     */
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('player-name').textContent = playerName;
+      processOfflineProgress();
+      document.getElementById('coin-balance').textContent = state.coins.toLocaleString('ru-RU');
+
+      // Apply saved weather background
+      const w = WEATHERS.find(item => item.id === state.weatherId) || WEATHERS[0];
+      const stage = document.getElementById('garden-stage');
+      if (stage) {
+        stage.className = `relative rounded-3xl p-3 border border-emerald-500/25 shadow-xl overflow-visible transition-colors duration-700 bg-gradient-to-b ${w.stageBg}`;
+      }
+
+      updateWeatherUI();
+      updateInventoryBadges();
+      renderGarden();
+      renderHotbar();
+      renderShop();
+      renderBackpack();
+
+      resizeCanvas();
+      requestAnimationFrame(updateAndDrawFX);
+    });
+  </script>
+</body>
+</html>
