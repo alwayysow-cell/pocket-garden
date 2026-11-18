@@ -7,17 +7,18 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg: #09110d;
-      --bg-card: #121e18;
-      --bg-card-2: #192921;
-      --border: rgba(167, 243, 208, 0.15);
-      --border-bright: rgba(52, 211, 153, 0.45);
-      --text: #ecfdf5;
-      --muted: #94a3b8;
-      --accent: #34d399;
-      --accent-dark: #059669;
-      --gold: #fbbf24;
-      --danger: #f87171;
+      --bg: #0b0e0d;
+      --surface: #121715;
+      --surface-2: #181f1c;
+      --surface-3: #1f2824;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text: #f1f5f3;
+      --muted: #8a9992;
+      --accent: #2ea877;
+      --accent-soft: rgba(46, 168, 119, 0.16);
+      --gold: #d4a348;
+      --danger: #cf5656;
     }
 
     * {
@@ -34,7 +35,7 @@
       overflow: hidden;
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
     }
 
     .app {
@@ -49,16 +50,15 @@
 
     /* HEADER */
     .header {
-      background: linear-gradient(145deg, #16251e, #0e1813);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 8px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
       flex-shrink: 0;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     }
 
     .profile {
@@ -69,20 +69,19 @@
     }
 
     .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #10b981, #047857);
-      border: 2px solid var(--border-bright);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--surface-3);
+      border: 1px solid var(--border-strong);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 15px;
-      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
       overflow: hidden;
       flex-shrink: 0;
-      box-shadow: 0 0 12px rgba(52, 211, 153, 0.25);
     }
 
     .avatar img {
@@ -98,7 +97,8 @@
 
     .profile-name {
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
+      letter-spacing: -0.01em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -107,7 +107,7 @@
     .profile-record {
       font-size: 10px;
       color: var(--gold);
-      font-weight: 700;
+      font-weight: 600;
       margin-top: 1px;
     }
 
@@ -122,20 +122,20 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 999px;
+      border-radius: 8px;
       padding: 4px 8px;
       font-size: 11px;
       font-weight: 600;
-      color: #cbd5e1;
+      color: #cbd5d1;
     }
 
     .weather-bar {
-      width: 22px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.14);
-      border-radius: 4px;
+      width: 20px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
       overflow: hidden;
     }
 
@@ -147,14 +147,14 @@
     }
 
     .coins-badge {
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(217, 119, 6, 0.15));
-      border: 1px solid rgba(251, 191, 36, 0.4);
-      color: #fde68a;
+      background: var(--surface-2);
+      border: 1px solid rgba(212, 163, 72, 0.35);
+      color: #f0cf8e;
       padding: 4px 10px;
-      border-radius: 999px;
-      font-weight: 800;
+      border-radius: 8px;
+      font-weight: 700;
       font-size: 13px;
-      box-shadow: 0 2px 10px rgba(251, 191, 36, 0.12);
+      font-variant-numeric: tabular-nums;
     }
 
     /* MAIN VIEWPORT */
@@ -177,7 +177,7 @@
       display: flex;
     }
 
-    /* GARDEN FULLSCREEN VIEW */
+    /* GARDEN VIEW */
     .garden-view {
       gap: 8px;
     }
@@ -186,12 +186,11 @@
       flex: 1;
       min-height: 0;
       width: 100%;
-      border-radius: 18px;
+      border-radius: 14px;
       overflow: hidden;
       border: 1px solid var(--border);
-      background: #102017;
+      background: #101513;
       position: relative;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
     }
 
     canvas {
@@ -208,7 +207,7 @@
       right: 8px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       pointer-events: none;
       z-index: 5;
     }
@@ -221,69 +220,61 @@
     }
 
     .hud-chip {
-      background: rgba(10, 18, 14, 0.78);
+      background: rgba(14, 19, 17, 0.84);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 5px 10px;
-      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      padding: 4px 9px;
+      border-radius: 8px;
       font-size: 11px;
-      font-weight: 700;
-      color: #e2e8f0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      font-weight: 600;
+      color: #dce5e1;
     }
 
     .hud-chip.clickable {
       pointer-events: auto;
       cursor: pointer;
-      border-color: var(--border-bright);
-      background: rgba(14, 34, 24, 0.86);
-      color: #a7f3d0;
       display: flex;
       align-items: center;
       gap: 4px;
-      transition: transform 0.1s;
     }
 
     .hud-chip.clickable:active {
-      transform: scale(0.95);
+      opacity: 0.8;
     }
 
     .active-devices-strip {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
+      gap: 4px;
       justify-content: center;
     }
 
     .device-chip {
-      background: rgba(12, 24, 18, 0.84);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(52, 211, 153, 0.35);
-      color: #ecfdf5;
+      background: rgba(14, 19, 17, 0.88);
+      border: 1px solid rgba(46, 168, 119, 0.4);
+      color: #bce8d4;
       font-size: 10px;
-      font-weight: 800;
+      font-weight: 700;
       padding: 3px 8px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+      font-variant-numeric: tabular-nums;
     }
 
+    /* 3-BUTTON TOOLBAR */
     .toolbar {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 6px;
       flex-shrink: 0;
     }
 
     .tool-btn {
-      background: linear-gradient(180deg, #17261f, #111c17);
+      background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text);
-      border-radius: 14px;
-      padding: 7px 4px;
+      border-radius: 12px;
+      padding: 8px 6px;
       font-size: 11px;
       font-weight: 700;
       display: flex;
@@ -291,51 +282,49 @@
       align-items: center;
       gap: 2px;
       cursor: pointer;
-      position: relative;
-      transition: transform 0.1s, border-color 0.15s, background 0.15s;
+      transition: border-color 0.15s, background 0.15s;
     }
 
     .tool-btn:active {
-      transform: scale(0.95);
+      background: var(--surface-2);
     }
 
     .tool-btn.active {
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.14));
+      background: var(--accent-soft);
       border-color: var(--accent);
-      color: #a7f3d0;
-      box-shadow: 0 0 14px rgba(52, 211, 153, 0.16);
+      color: #c8f3df;
     }
 
     .tool-btn.danger.active {
-      background: linear-gradient(180deg, rgba(248, 113, 113, 0.24), rgba(220, 38, 38, 0.14));
+      background: rgba(207, 86, 86, 0.16);
       border-color: var(--danger);
-      color: #fecaca;
+      color: #f5c2c2;
     }
 
     .tool-btn .icon {
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1;
     }
 
     .tool-btn .sub {
       font-size: 10px;
       color: var(--muted);
-      font-weight: 600;
-      max-width: 76px;
+      font-weight: 500;
+      max-width: 96px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .tool-btn.active .sub {
-      color: #6ee7b7;
+      color: #8fd9b8;
     }
 
     /* SUBPAGES */
     .subpage {
-      background: var(--bg-card);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 14px;
       padding: 12px;
       gap: 10px;
       overflow: hidden;
@@ -350,18 +339,20 @@
     }
 
     .panel-title {
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
     }
 
     .timer-badge {
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--surface-2);
       border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 999px;
+      padding: 4px 9px;
+      border-radius: 8px;
       font-size: 11px;
-      color: #a7f3d0;
-      font-weight: 700;
+      color: #b4d4c6;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
     }
 
     .filters {
@@ -373,21 +364,21 @@
     }
 
     .filter-btn {
-      background: var(--bg-card-2);
+      background: var(--surface-2);
       border: 1px solid var(--border);
       color: var(--muted);
-      border-radius: 999px;
-      padding: 5px 11px;
+      border-radius: 8px;
+      padding: 5px 10px;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
     }
 
     .filter-btn.active {
-      background: rgba(52, 211, 153, 0.2);
+      background: var(--accent-soft);
       border-color: var(--accent);
-      color: #ecfdf5;
+      color: var(--text);
     }
 
     .scroll-list {
@@ -396,15 +387,15 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
       padding-right: 2px;
     }
 
     .item-card {
-      background: linear-gradient(145deg, #1b2c23, #15231c);
+      background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 12px;
+      border-radius: 11px;
+      padding: 9px 11px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -412,12 +403,12 @@
     }
 
     .item-card.out-of-stock {
-      opacity: 0.5;
+      opacity: 0.45;
     }
 
     .item-card.selected-card {
       border-color: var(--accent);
-      background: linear-gradient(145deg, #1d3629, #15261d);
+      background: rgba(46, 168, 119, 0.1);
     }
 
     .item-left {
@@ -429,15 +420,15 @@
     }
 
     .item-emoji {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: rgba(0, 0, 0, 0.28);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      background: var(--surface);
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 23px;
+      font-size: 21px;
       flex-shrink: 0;
     }
 
@@ -454,23 +445,24 @@
 
     .item-name {
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .tag {
       font-size: 9px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 6px;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 4px;
       text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
 
-    .rarity-common { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; }
-    .rarity-uncommon { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
-    .rarity-rare { background: rgba(168, 85, 247, 0.22); color: #d8b4fe; }
-    .rarity-epic { background: rgba(244, 114, 182, 0.22); color: #f9a8d4; }
-    .rarity-legendary { background: rgba(251, 191, 36, 0.22); color: #fde68a; }
-    .rarity-mythical { background: rgba(248, 113, 113, 0.25); color: #fca5a5; }
+    .rarity-common { background: rgba(148, 163, 184, 0.14); color: #b8c4ce; }
+    .rarity-uncommon { background: rgba(56, 189, 248, 0.14); color: #7cc4e4; }
+    .rarity-rare { background: rgba(168, 85, 247, 0.16); color: #c9a7eb; }
+    .rarity-epic { background: rgba(236, 72, 153, 0.16); color: #e89ec2; }
+    .rarity-legendary { background: rgba(212, 163, 72, 0.18); color: #ebd096; }
+    .rarity-mythical { background: rgba(207, 86, 86, 0.2); color: #eba3a3; }
 
     .item-meta {
       font-size: 11px;
@@ -480,39 +472,38 @@
     }
 
     .buy-btn {
-      background: linear-gradient(135deg, #10b981, #059669);
+      background: var(--accent);
       border: none;
-      color: #fff;
-      font-weight: 800;
+      color: #07140e;
+      font-weight: 700;
       font-size: 12px;
-      padding: 8px 12px;
-      border-radius: 10px;
+      padding: 8px 11px;
+      border-radius: 8px;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
-      box-shadow: 0 3px 10px rgba(5, 150, 105, 0.3);
+      font-variant-numeric: tabular-nums;
     }
 
     .buy-btn:disabled {
-      background: #2b3832;
-      color: #7c8f85;
-      box-shadow: none;
+      background: var(--surface-3);
+      color: #5c6b64;
       cursor: not-allowed;
     }
 
     .sell-all-btn {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
+      background: var(--gold);
       border: none;
-      color: #fff;
-      font-weight: 800;
+      color: #140f05;
+      font-weight: 700;
       font-size: 12px;
-      padding: 8px 12px;
-      border-radius: 10px;
+      padding: 7px 11px;
+      border-radius: 8px;
       cursor: pointer;
     }
 
     .sell-all-btn:disabled {
-      opacity: 0.45;
+      opacity: 0.4;
       cursor: not-allowed;
     }
 
@@ -529,10 +520,10 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      background: var(--bg-card);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 5px;
+      border-radius: 12px;
+      padding: 4px;
       flex-shrink: 0;
     }
 
@@ -540,40 +531,39 @@
       border: none;
       background: transparent;
       color: var(--muted);
-      border-radius: 12px;
-      padding: 7px 4px;
+      border-radius: 9px;
+      padding: 6px 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 2px;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
       position: relative;
-      transition: 0.15s;
     }
 
     .nav-btn .nav-icon {
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1;
     }
 
     .nav-btn.active {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #fff;
-      box-shadow: 0 3px 12px rgba(5, 150, 105, 0.35);
+      background: var(--surface-3);
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px var(--border-strong);
     }
 
     .badge-dot {
       position: absolute;
       top: 4px;
       right: 14px;
-      background: #f59e0b;
-      color: #09110d;
+      background: var(--gold);
+      color: #120d04;
       font-size: 9px;
-      font-weight: 900;
+      font-weight: 800;
       padding: 1px 5px;
-      border-radius: 999px;
+      border-radius: 6px;
       display: none;
     }
 
@@ -581,11 +571,11 @@
       display: inline-block;
     }
 
-    /* MODALS & SEED PICKER SHEET */
+    /* MODALS & PICKER SHEETS */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.78);
       backdrop-filter: blur(3px);
       display: none;
       align-items: center;
@@ -604,29 +594,28 @@
     }
 
     .modal {
-      background: #15231c;
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
       padding: 16px;
       width: 100%;
       max-width: 360px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
     }
 
     .modal-backdrop.sheet .modal {
       max-width: 520px;
-      border-radius: 22px 22px 0 0;
+      border-radius: 18px 18px 0 0;
       border-bottom: none;
-      max-height: 72dvh;
+      max-height: 74dvh;
       padding-bottom: max(16px, env(safe-area-inset-bottom));
     }
 
     .modal-title {
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -634,7 +623,7 @@
 
     .modal-body {
       font-size: 13px;
-      color: #cbd5e1;
+      color: #cbd5d1;
       line-height: 1.45;
     }
 
@@ -645,22 +634,22 @@
     }
 
     .btn-secondary {
-      background: #23352c;
+      background: var(--surface-3);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 9px 14px;
-      border-radius: 10px;
-      font-weight: 700;
+      padding: 8px 13px;
+      border-radius: 8px;
+      font-weight: 600;
       font-size: 12px;
       cursor: pointer;
     }
 
     .btn-danger {
-      background: #dc2626;
+      background: var(--danger);
       border: none;
       color: #fff;
-      padding: 9px 14px;
-      border-radius: 10px;
+      padding: 8px 13px;
+      border-radius: 8px;
       font-weight: 700;
       font-size: 12px;
       cursor: pointer;
@@ -668,22 +657,22 @@
 
     .toast {
       position: fixed;
-      top: 58px;
+      top: 56px;
       left: 50%;
-      transform: translateX(-50%) translateY(-14px);
-      background: #0e261b;
-      border: 1px solid var(--accent);
-      color: #ecfdf5;
-      padding: 7px 14px;
-      border-radius: 999px;
+      transform: translateX(-50%) translateY(-12px);
+      background: var(--surface-3);
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+      padding: 7px 13px;
+      border-radius: 8px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
       opacity: 0;
       pointer-events: none;
       transition: 0.2s ease;
       z-index: 200;
       white-space: nowrap;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
     }
 
     .toast.show {
@@ -714,7 +703,7 @@
             <div id="weatherProgress" class="weather-bar-fill"></div>
           </div>
         </div>
-        <div id="coinsDisplay" class="coins-badge">50 🪙</div>
+        <div id="coinsDisplay" class="coins-badge">60 🪙</div>
       </div>
     </header>
 
@@ -725,75 +714,79 @@
         <div id="canvasContainer" class="canvas-container">
           <div class="garden-overlay-top">
             <div class="hud-row">
-              <span id="plotCountLabel" class="hud-chip">🏡 9 / 15</span>
-              <button id="selectedSeedHud" class="hud-chip clickable" title="Выбрать семечко">
-                <span>🌱 Морковь (4)</span>
-                <span style="font-size:9px;opacity:0.8;">▼</span>
+              <span id="plotCountLabel" class="hud-chip">Участок: 9/15</span>
+              <button id="selectedSeedHud" class="hud-chip clickable">
+                <span>🥕 Морковь: 3</span>
+                <span style="font-size:9px;opacity:0.7;">▼</span>
               </button>
-              <span id="readyCountLabel" class="hud-chip">🧺 0</span>
+              <span id="readyCountLabel" class="hud-chip">Созрело: 0</span>
             </div>
             <div id="activeDevicesStrip" class="active-devices-strip"></div>
           </div>
           <canvas id="gardenCanvas"></canvas>
         </div>
 
+        <!-- 3-BUTTON TOOLBAR (БЕЗ КНОПКИ СОБРАТЬ, С МЕНЮ СНАРЯЖЕНИЯ) -->
         <div class="toolbar">
-          <button id="btnHarvestAll" class="tool-btn">
-            <span class="icon">🧺</span>
-            <span>Собрать</span>
-            <span id="harvestSub" class="sub">0 шт.</span>
-          </button>
-
-          <button id="toolWater" class="tool-btn">
-            <span class="icon">🚿</span>
-            <span>Лейка</span>
-            <span id="waterSub" class="sub">5/5</span>
-          </button>
-
           <button id="toolPlant" class="tool-btn active">
             <span class="icon">🌱</span>
             <span>Посадка</span>
-            <span id="seedSub" class="sub">Выбрать ▾</span>
+            <span id="seedSub" class="sub">Морковь (3)</span>
+          </button>
+
+          <button id="toolGear" class="tool-btn">
+            <span class="icon">🧰</span>
+            <span>Снаряжение</span>
+            <span id="gearSub" class="sub">Выбрать ▾</span>
           </button>
 
           <button id="toolShovel" class="tool-btn danger">
             <span class="icon">🪏</span>
             <span>Лопата</span>
-            <span class="sub">Убрать</span>
+            <span class="sub">Удалить</span>
           </button>
         </div>
       </section>
 
-      <!-- 2. SHOP VIEW -->
+      <!-- 2. SEED SHOP VIEW -->
       <section id="view-shop" class="view subpage">
         <div class="panel-header">
-          <div class="panel-title">🏪 Лавка семян</div>
-          <div class="timer-badge">⏳ Завоз: <span id="shopTimer">05:00</span></div>
+          <div class="panel-title">Лавка семян</div>
+          <div class="timer-badge">Завоз: <span id="shopTimer">05:00</span></div>
         </div>
 
-        <div class="filters">
-          <button class="filter-btn active" data-filter="all">Все (15)</button>
-          <button class="filter-btn" data-filter="common">Обычные</button>
+        <div class="filters" id="seedFilters">
+          <button class="filter-btn active" data-filter="all">Все (24)</button>
+          <button class="filter-btn" data-filter="common">Базовые</button>
           <button class="filter-btn" data-filter="rare">Редкие</button>
-          <button class="filter-btn" data-filter="epic">Эпик+</button>
+          <button class="filter-btn" data-filter="epic">Эпик</button>
+          <button class="filter-btn" data-filter="legendary">Легенд.+Миф</button>
         </div>
 
         <div id="shopList" class="scroll-list"></div>
       </section>
 
-      <!-- 3. GEAR VIEW -->
+      <!-- 3. GEAR SHOP VIEW (КАК ЛАВКА СЕМЯН СО СТОКОМ РАЗ В 5 МИН) -->
       <section id="view-gear" class="view subpage">
         <div class="panel-header">
-          <div class="panel-title">⚙️ Снаряжение и участок</div>
-          <div id="activeDevicesBadge" class="timer-badge">Активно: 0</div>
+          <div class="panel-title">Лавка снаряжения</div>
+          <div class="timer-badge">Завоз: <span id="gearShopTimer">05:00</span></div>
         </div>
+
+        <div class="filters" id="gearFilters">
+          <button class="filter-btn active" data-gfilter="all">Всё</button>
+          <button class="filter-btn" data-gfilter="growth">Полив и рост</button>
+          <button class="filter-btn" data-gfilter="mutation">Мутации</button>
+          <button class="filter-btn" data-gfilter="auto">Авто и участок</button>
+        </div>
+
         <div id="gearList" class="scroll-list"></div>
       </section>
 
       <!-- 4. BACKPACK VIEW -->
       <section id="view-bag" class="view subpage">
         <div class="panel-header">
-          <div class="panel-title">🎒 Рюкзак урожая</div>
+          <div class="panel-title">Рюкзак урожая</div>
           <button id="btnSellAll" class="sell-all-btn" disabled>Продать всё (0 🪙)</button>
         </div>
         <div id="bagList" class="scroll-list"></div>
@@ -807,11 +800,11 @@
         <span>Сад</span>
       </button>
       <button class="nav-btn" data-view="shop">
-        <span class="nav-icon">🏪</span>
-        <span>Лавка</span>
+        <span class="nav-icon">🌱</span>
+        <span>Семена</span>
       </button>
       <button class="nav-btn" data-view="gear">
-        <span class="nav-icon">⚙️</span>
+        <span class="nav-icon">🧰</span>
         <span>Снаряж.</span>
         <span id="gearBadge" class="badge-dot">0</span>
       </button>
@@ -832,14 +825,25 @@
     </div>
   </div>
 
-  <!-- SEED PICKER BOTTOM SHEET -->
+  <!-- SEED PICKER SHEET -->
   <div id="seedPickerBackdrop" class="modal-backdrop sheet">
     <div class="modal">
       <div class="modal-title">
-        <span>🌱 Выбери семена для посадки</span>
-        <button id="closeSeedPicker" class="btn-secondary" style="padding:5px 10px;">✕</button>
+        <span>Выбор семян из сумки</span>
+        <button id="closeSeedPicker" class="btn-secondary" style="padding:4px 9px;">✕</button>
       </div>
       <div id="seedPickerList" class="scroll-list" style="max-height:52dvh;"></div>
+    </div>
+  </div>
+
+  <!-- GEAR PICKER SHEET -->
+  <div id="gearPickerBackdrop" class="modal-backdrop sheet">
+    <div class="modal">
+      <div class="modal-title">
+        <span>Снаряжение в сумке</span>
+        <button id="closeGearPicker" class="btn-secondary" style="padding:4px 9px;">✕</button>
+      </div>
+      <div id="gearPickerList" class="scroll-list" style="max-height:52dvh;"></div>
     </div>
   </div>
 
@@ -863,50 +867,71 @@
       } catch (e) {}
     }
 
-    // --- DATA ---
+    // --- 24 CROPS & REBALANCED ECONOMY ---
     const CROPS = [
-      { id: "carrot", name: "Морковь", emoji: "🥕", rarity: "common", rarityLabel: "Обычная", cost: 10, baseSell: 18, growSec: 8, multi: false, minKg: 0.4, maxKg: 2.5, stockChance: 1.0, maxStock: 8 },
-      { id: "radish", name: "Редис", emoji: "🌰", rarity: "common", rarityLabel: "Обычный", cost: 18, baseSell: 32, growSec: 12, multi: false, minKg: 0.3, maxKg: 2.0, stockChance: 1.0, maxStock: 7 },
-      { id: "strawberry", name: "Клубника", emoji: "🍓", rarity: "common", rarityLabel: "Обычная", cost: 35, baseSell: 26, growSec: 15, multi: true, minKg: 0.2, maxKg: 1.8, stockChance: 0.95, maxStock: 5 },
-      { id: "corn", name: "Кукуруза", emoji: "🌽", rarity: "uncommon", rarityLabel: "Необычная", cost: 65, baseSell: 115, growSec: 22, multi: false, minKg: 1.0, maxKg: 5.5, stockChance: 0.85, maxStock: 5 },
-      { id: "tomato", name: "Томатный куст", emoji: "🍅", rarity: "uncommon", rarityLabel: "Необычный", cost: 110, baseSell: 75, growSec: 25, multi: true, minKg: 0.8, maxKg: 4.5, stockChance: 0.8, maxStock: 4 },
-      { id: "blueberry", name: "Черника", emoji: "🫐", rarity: "uncommon", rarityLabel: "Необычная", cost: 180, baseSell: 125, growSec: 30, multi: true, minKg: 0.5, maxKg: 3.5, stockChance: 0.72, maxStock: 4 },
-      { id: "pumpkin", name: "Тыква-гигант", emoji: "🎃", rarity: "rare", rarityLabel: "Редкая", cost: 320, baseSell: 580, growSec: 42, multi: false, minKg: 5.0, maxKg: 35.0, stockChance: 0.6, maxStock: 3 },
-      { id: "watermelon", name: "Сахарный арбуз", emoji: "🍉", rarity: "rare", rarityLabel: "Редкий", cost: 520, baseSell: 940, growSec: 50, multi: false, minKg: 6.0, maxKg: 42.0, stockChance: 0.52, maxStock: 3 },
-      { id: "peach", name: "Персиковое дерево", emoji: "🍑", rarity: "rare", rarityLabel: "Редкое", cost: 850, baseSell: 540, growSec: 55, multi: true, minKg: 1.5, maxKg: 9.0, stockChance: 0.45, maxStock: 2 },
-      { id: "pineapple", name: "Королевский ананас", emoji: "🍍", rarity: "epic", rarityLabel: "Эпический", cost: 1500, baseSell: 2700, growSec: 70, multi: false, minKg: 3.0, maxKg: 18.0, stockChance: 0.35, maxStock: 2 },
-      { id: "mango", name: "Манговое дерево", emoji: "🥭", rarity: "epic", rarityLabel: "Эпическое", cost: 2600, baseSell: 1650, growSec: 80, multi: true, minKg: 2.0, maxKg: 14.0, stockChance: 0.28, maxStock: 2 },
-      { id: "glowshroom", name: "Светящийся гриб", emoji: "🍄", rarity: "epic", rarityLabel: "Эпический", cost: 4200, baseSell: 7600, growSec: 95, multi: false, minKg: 1.2, maxKg: 11.0, stockChance: 0.22, maxStock: 2 },
-      { id: "dragonfruit", name: "Драконий фрукт", emoji: "🐉", rarity: "legendary", rarityLabel: "Легендарный", cost: 7500, baseSell: 4800, growSec: 110, multi: true, minKg: 4.0, maxKg: 28.0, stockChance: 0.16, maxStock: 1 },
-      { id: "goldapple", name: "Золотая яблоня", emoji: "🍏", rarity: "legendary", rarityLabel: "Легендарная", cost: 14000, baseSell: 9200, growSec: 130, multi: true, minKg: 3.5, maxKg: 24.0, stockChance: 0.11, maxStock: 1 },
-      { id: "moonlotus", name: "Лунный лотос", emoji: "🪷", rarity: "mythical", rarityLabel: "Мифический", cost: 30000, baseSell: 22000, growSec: 160, multi: true, minKg: 2.5, maxKg: 55.0, stockChance: 0.06, maxStock: 1 }
+      // Common
+      { id: "carrot", name: "Морковь", emoji: "🥕", rarity: "common", rarityLabel: "Обычная", cost: 25, baseSell: 42, growSec: 10, multi: false, minKg: 0.4, maxKg: 2.2, stockChance: 1.0, maxStock: 8 },
+      { id: "radish", name: "Редис", emoji: "🌰", rarity: "common", rarityLabel: "Обычный", cost: 55, baseSell: 90, growSec: 14, multi: false, minKg: 0.3, maxKg: 1.8, stockChance: 1.0, maxStock: 7 },
+      { id: "potato", name: "Картофель", emoji: "🥔", rarity: "common", rarityLabel: "Обычный", cost: 110, baseSell: 180, growSec: 18, multi: false, minKg: 0.8, maxKg: 3.5, stockChance: 0.95, maxStock: 6 },
+      { id: "strawberry", name: "Клубника", emoji: "🍓", rarity: "common", rarityLabel: "Обычная", cost: 220, baseSell: 135, growSec: 20, multi: true, minKg: 0.2, maxKg: 1.5, stockChance: 0.92, maxStock: 5 },
+      // Uncommon
+      { id: "corn", name: "Кукуруза", emoji: "🌽", rarity: "uncommon", rarityLabel: "Необычная", cost: 450, baseSell: 740, growSec: 26, multi: false, minKg: 1.0, maxKg: 4.8, stockChance: 0.85, maxStock: 5 },
+      { id: "tomato", name: "Томатный куст", emoji: "🍅", rarity: "uncommon", rarityLabel: "Необычный", cost: 850, baseSell: 490, growSec: 30, multi: true, minKg: 0.8, maxKg: 4.0, stockChance: 0.80, maxStock: 4 },
+      { id: "pepper", name: "Острый перец", emoji: "🌶️", rarity: "uncommon", rarityLabel: "Необычный", cost: 1500, baseSell: 860, growSec: 34, multi: true, minKg: 0.3, maxKg: 2.0, stockChance: 0.75, maxStock: 4 },
+      { id: "blueberry", name: "Черника", emoji: "🫐", rarity: "uncommon", rarityLabel: "Необычная", cost: 2800, baseSell: 1550, growSec: 38, multi: true, minKg: 0.5, maxKg: 3.0, stockChance: 0.70, maxStock: 4 },
+      // Rare
+      { id: "pumpkin", name: "Тыква-гигант", emoji: "🎃", rarity: "rare", rarityLabel: "Редкая", cost: 5500, baseSell: 8900, growSec: 48, multi: false, minKg: 5.0, maxKg: 32.0, stockChance: 0.60, maxStock: 3 },
+      { id: "watermelon", name: "Сахарный арбуз", emoji: "🍉", rarity: "rare", rarityLabel: "Редкий", cost: 9800, baseSell: 15800, growSec: 56, multi: false, minKg: 6.0, maxKg: 38.0, stockChance: 0.52, maxStock: 3 },
+      { id: "grape", name: "Виноградная лоза", emoji: "🍇", rarity: "rare", rarityLabel: "Редкая", cost: 16500, baseSell: 9200, growSec: 60, multi: true, minKg: 1.2, maxKg: 6.5, stockChance: 0.46, maxStock: 2 },
+      { id: "peach", name: "Персиковое дерево", emoji: "🍑", rarity: "rare", rarityLabel: "Редкое", cost: 28000, baseSell: 15400, growSec: 68, multi: true, minKg: 1.5, maxKg: 8.5, stockChance: 0.40, maxStock: 2 },
+      // Epic
+      { id: "pineapple", name: "Королевский ананас", emoji: "🍍", rarity: "epic", rarityLabel: "Эпический", cost: 52000, baseSell: 84000, growSec: 80, multi: false, minKg: 3.0, maxKg: 16.0, stockChance: 0.34, maxStock: 2 },
+      { id: "cacao", name: "Какао-дерево", emoji: "🤎", rarity: "epic", rarityLabel: "Эпическое", cost: 95000, baseSell: 52000, growSec: 90, multi: true, minKg: 1.8, maxKg: 10.0, stockChance: 0.28, maxStock: 2 },
+      { id: "mango", name: "Манговое дерево", emoji: "🥭", rarity: "epic", rarityLabel: "Эпическое", cost: 165000, baseSell: 91000, growSec: 100, multi: true, minKg: 2.0, maxKg: 13.0, stockChance: 0.24, maxStock: 2 },
+      { id: "truffle", name: "Черный трюфель", emoji: "🍄", rarity: "epic", rarityLabel: "Эпический", cost: 280000, baseSell: 450000, growSec: 115, multi: false, minKg: 0.5, maxKg: 5.0, stockChance: 0.19, maxStock: 2 },
+      // Legendary
+      { id: "dragonfruit", name: "Драконий фрукт", emoji: "🐉", rarity: "legendary", rarityLabel: "Легендарный", cost: 520000, baseSell: 285000, growSec: 130, multi: true, minKg: 4.0, maxKg: 25.0, stockChance: 0.15, maxStock: 1 },
+      { id: "saffron", name: "Крокус шафрана", emoji: "🌺", rarity: "legendary", rarityLabel: "Легендарный", cost: 950000, baseSell: 1520000, growSec: 145, multi: false, minKg: 0.2, maxKg: 2.5, stockChance: 0.12, maxStock: 1 },
+      { id: "goldapple", name: "Золотая яблоня", emoji: "🍏", rarity: "legendary", rarityLabel: "Легендарная", cost: 1750000, baseSell: 960000, growSec: 160, multi: true, minKg: 3.5, maxKg: 22.0, stockChance: 0.09, maxStock: 1 },
+      { id: "sakura", name: "Древняя сакура", emoji: "🌸", rarity: "legendary", rarityLabel: "Легендарная", cost: 3200000, baseSell: 1780000, growSec: 180, multi: true, minKg: 2.0, maxKg: 15.0, stockChance: 0.07, maxStock: 1 },
+      // Mythical
+      { id: "starfruit", name: "Звездная карамбола", emoji: "⭐", rarity: "mythical", rarityLabel: "Мифический", cost: 5800000, baseSell: 3200000, growSec: 200, multi: true, minKg: 2.5, maxKg: 28.0, stockChance: 0.05, maxStock: 1 },
+      { id: "moonlotus", name: "Лунный лотос", emoji: "🪷", rarity: "mythical", rarityLabel: "Мифический", cost: 9500000, baseSell: 5300000, growSec: 225, multi: true, minKg: 2.5, maxKg: 45.0, stockChance: 0.035, maxStock: 1 },
+      { id: "celestialtree", name: "Небесное древо", emoji: "🌳", rarity: "mythical", rarityLabel: "Мифическое", cost: 15000000, baseSell: 8500000, growSec: 260, multi: true, minKg: 5.0, maxKg: 65.0, stockChance: 0.02, maxStock: 1 },
+      { id: "voidorchid", name: "Орхидея пустоты", emoji: "🪻", rarity: "mythical", rarityLabel: "Мифическая", cost: 25000000, baseSell: 42000000, growSec: 300, multi: false, minKg: 1.0, maxKg: 12.0, stockChance: 0.015, maxStock: 1 }
     ];
 
     const WEATHERS = [
-      { id: "clear", name: "Ясно", icon: "☀️", weight: 42, skyTop: "#1a3c2d", skyBot: "#0f231a" },
-      { id: "rain", name: "Дождь", icon: "🌧️", weight: 24, skyTop: "#152b3b", skyBot: "#0d1b26" },
-      { id: "frost", name: "Заморозки", icon: "❄️", weight: 15, skyTop: "#1b3847", skyBot: "#11242e" },
-      { id: "storm", name: "Гроза", icon: "⚡", weight: 12, skyTop: "#221c42", skyBot: "#110e24" },
-      { id: "meteor", name: "Звездопад", icon: "🌠", weight: 7, skyTop: "#1e143d", skyBot: "#0c081f" }
+      { id: "clear", name: "Ясно", icon: "☀️", weight: 42, skyTop: "#141d19", skyBot: "#0e1411" },
+      { id: "rain", name: "Дождь", icon: "🌧️", weight: 24, skyTop: "#121a21", skyBot: "#0c1217" },
+      { id: "frost", name: "Заморозки", icon: "❄️", weight: 15, skyTop: "#152026", skyBot: "#0e151a" },
+      { id: "storm", name: "Гроза", icon: "⚡", weight: 12, skyTop: "#181526", skyBot: "#0f0d19" },
+      { id: "meteor", name: "Звездопад", icon: "🌠", weight: 7, skyTop: "#161224", skyBot: "#0c0a14" }
     ];
 
+    // --- GEAR CATALOG (WITH STOCK & 5-MIN REFRESH) ---
     const GEAR_ITEMS = [
-      { id: "sprinkler_basic", type: "device", name: "Базовый спринклер", emoji: "💦", shortName: "Спринклер", cost: 250, durationSec: 180, desc: "Ускоряет рост на 35% и повышает вес плодов на 3 мин." },
-      { id: "sprinkler_gold", type: "device", name: "Золотой спринклер", emoji: "✨", shortName: "Зол. спринкл.", cost: 1200, durationSec: 240, desc: "Ускоряет рост на 70% и повышает шанс Gold/Rainbow на 4 мин." },
-      { id: "lightning_rod", type: "device", name: "Громоотвод", emoji: "⚡", shortName: "Громоотвод", cost: 2200, durationSec: 300, desc: "Притягивает разряды в грозу: шанс мутации Shocked (x50) выше в 3 раза." },
-      { id: "star_prism", type: "device", name: "Звездная призма", emoji: "🔮", shortName: "Призма", cost: 4500, durationSec: 300, desc: "Усиливает Starlit (x100) и Rainbow (x20) на всех грядках на 5 мин." },
-      { id: "collector_bee", type: "device", name: "Пчела-сборщик", emoji: "🐝", shortName: "Пчела", cost: 1800, durationSec: 240, desc: "Автоматически собирает созревшие плоды и сразу начисляет монеты." },
-      { id: "giant_elixir", type: "consumable", name: "Эликсир гиганта", emoji: "🧪", cost: 600, desc: "Увеличивает вес и размер всех текущих растущих плодов в 2.5x–4x." },
-      { id: "turbo_can", type: "upgrade", name: "Турбо-лейка", emoji: "🚿", cost: 900, desc: "Постоянно: 10 зарядов лейки вместо 5 и восстановление в 2 раза быстрее." },
-      { id: "expand_plot", type: "expansion", name: "Расширение участка", emoji: "🏡", desc: "Добавляет +1 новую грядку в твой сад (максимум 15 грядок)." }
+      { id: "watering_can", category: "growth", mode: "plot", name: "Лейка садовода", emoji: "🚿", shortName: "Лейка", rarity: "common", rarityLabel: "Базовый", cost: 150, stockChance: 1.0, maxStock: 6, desc: "Применяется на одну растущую грядку: мгновенно +40% к прогрессу роста." },
+      { id: "growth_fertilizer", category: "growth", mode: "plot", name: "Био-удобрение", emoji: "🌿", shortName: "Удобрение", rarity: "uncommon", rarityLabel: "Необычный", cost: 1200, stockChance: 0.85, maxStock: 4, desc: "Применяется на грядку: +75% роста и +25% к итоговому весу плода." },
+      { id: "sprinkler_basic", category: "growth", mode: "garden", name: "Базовый спринклер", emoji: "💦", shortName: "Спринклер", rarity: "rare", rarityLabel: "Редкий", cost: 6500, durationSec: 180, stockChance: 0.65, maxStock: 2, desc: "Устанавливается в сад на 3 мин: +35% скорость роста и +20% вес всех плодов." },
+      { id: "giant_elixir", category: "growth", mode: "plot", name: "Эликсир гиганта", emoji: "🧪", shortName: "Эликсир", rarity: "epic", rarityLabel: "Эпический", cost: 28000, stockChance: 0.45, maxStock: 2, desc: "Применяется на одну грядку: увеличивает вес и размер плода в 2.5x–3.5x." },
+      { id: "sprinkler_gold", category: "mutation", mode: "garden", name: "Золотой спринклер", emoji: "✨", shortName: "Зол. спринкл.", rarity: "epic", rarityLabel: "Эпический", cost: 65000, durationSec: 240, stockChance: 0.35, maxStock: 2, desc: "Работает 4 мин: +65% скорость роста и x3 шанс на Gold/Rainbow мутации." },
+      { id: "lightning_rod", category: "mutation", mode: "garden", name: "Громоотвод", emoji: "⚡", shortName: "Громоотвод", rarity: "legendary", rarityLabel: "Легендарный", cost: 180000, durationSec: 300, stockChance: 0.22, maxStock: 1, desc: "Работает 5 мин: притягивает молнии в грозу (шанс Shocked x20 выше в 3 раза)." },
+      { id: "star_prism", category: "mutation", mode: "garden", name: "Звездная призма", emoji: "🔮", shortName: "Призма", rarity: "mythical", rarityLabel: "Мифический", cost: 480000, durationSec: 300, stockChance: 0.14, maxStock: 1, desc: "Работает 5 мин: усиливает шанс на Starlit (x35) и Rainbow (x10) в 3 раза." },
+      { id: "collector_drone", category: "auto", mode: "garden", name: "Дрон-сборщик", emoji: "🛸", shortName: "Дрон", rarity: "legendary", rarityLabel: "Легендарный", cost: 120000, durationSec: 240, stockChance: 0.25, maxStock: 1, desc: "Работает 4 мин: автоматически собирает созревшие плоды и начисляет монеты." },
+      { id: "expand_plot", category: "auto", mode: "instant", name: "Новая грядка", emoji: "📐", shortName: "Участок", rarity: "rare", rarityLabel: "Участок", cost: 1000, stockChance: 1.0, maxStock: 1, desc: "Расширяет ваш сад на +1 грядку (максимум 15 грядок)." }
     ];
 
     const SHOP_REFRESH_MS = 5 * 60 * 1000;
-    const SAVE_KEY = "pocket_garden_save_v6";
+    const SAVE_KEY = "pocket_garden_save_v7";
 
-    // --- HELPERS (DECLARED BEFORE LOAD) ---
+    // --- HELPERS ---
     function getCrop(id) {
       return CROPS.find(c => c.id === id);
+    }
+
+    function getGear(id) {
+      return GEAR_ITEMS.find(g => g.id === id);
     }
 
     function createEmptyPlot() {
@@ -924,33 +949,56 @@
     function createDefaultState() {
       const now = Date.now();
       return {
-        version: 6,
-        coins: 50,
+        version: 7,
+        coins: 60,
         bestFruitValue: 0,
         unlockedPlots: 9,
         plots: Array.from({ length: 15 }, () => createEmptyPlot()),
-        seedInventory: { carrot: 4 },
+        seedInventory: { carrot: 3 },
         selectedSeed: "carrot",
+        gearInventory: { watering_can: 2 },
+        selectedGear: "watering_can",
         harvestBag: [],
-        waterCharges: 5,
-        lastWaterTick: now,
-        turboCan: false,
         devices: [],
         weather: { id: "clear", remainingMs: 45000, durationMs: 45000 },
         shop: { nextRefreshAt: now + SHOP_REFRESH_MS, stock: {} },
+        gearShop: { nextRefreshAt: now + SHOP_REFRESH_MS, stock: {} },
         lastTimestamp: now
       };
     }
 
+    function generateSeedStock() {
+      const stock = {};
+      CROPS.forEach(c => {
+        stock[c.id] = Math.random() <= c.stockChance ? Math.floor(Math.random() * c.maxStock) + 1 : 0;
+      });
+      if (!stock.carrot || stock.carrot < 3) stock.carrot = 5;
+      return stock;
+    }
+
+    function generateGearStock() {
+      const stock = {};
+      GEAR_ITEMS.forEach(g => {
+        if (g.id === "expand_plot") {
+          stock[g.id] = 1;
+        } else {
+          stock[g.id] = Math.random() <= g.stockChance ? Math.floor(Math.random() * g.maxStock) + 1 : 0;
+        }
+      });
+      if (!stock.watering_can || stock.watering_can < 2) stock.watering_can = 3;
+      return stock;
+    }
+
+    // Rebalanced multipliers
     function rollFruitStatsWithContext(crop, plot, weatherId, activeDeviceIds) {
       const hasGoldSprinkler = activeDeviceIds.includes("sprinkler_gold");
       const hasBasicSprinkler = activeDeviceIds.includes("sprinkler_basic");
       const hasPrism = activeDeviceIds.includes("star_prism");
       const hasRod = activeDeviceIds.includes("lightning_rod");
 
-      const sizeBoost = (hasGoldSprinkler ? 1.45 : hasBasicSprinkler ? 1.2 : 1) * (plot.giantBoost || 1);
-      const isGiantRoll = Math.random() < 0.14;
-      const rawRatio = Math.pow(Math.random(), isGiantRoll ? 0.55 : 1.6);
+      const sizeBoost = (hasGoldSprinkler ? 1.35 : hasBasicSprinkler ? 1.2 : 1) * (plot.giantBoost || 1);
+      const isGiantRoll = Math.random() < 0.12;
+      const rawRatio = Math.pow(Math.random(), isGiantRoll ? 0.6 : 1.7);
       const weight = Number(((crop.minKg + (crop.maxKg - crop.minKg) * rawRatio) * sizeBoost).toFixed(2));
 
       const mutations = [];
@@ -958,23 +1006,23 @@
       const prismMult = hasPrism ? 3 : 1;
       const rodMult = hasRod ? 3 : 1;
 
-      if (Math.random() < 0.015 * prismMult) {
-        mutations.push({ id: "rainbow", name: "Rainbow", mult: 20, color: "#f472b6" });
-      } else if (Math.random() < 0.045 * goldMult) {
-        mutations.push({ id: "gold", name: "Gold", mult: 5, color: "#fbbf24" });
+      if (Math.random() < 0.012 * prismMult) {
+        mutations.push({ id: "rainbow", name: "Rainbow", mult: 10, color: "#e89ec2" });
+      } else if (Math.random() < 0.04 * goldMult) {
+        mutations.push({ id: "gold", name: "Gold", mult: 3, color: "#ebd096" });
       }
 
-      if (weatherId === "rain" && Math.random() < 0.55) {
-        mutations.push({ id: "wet", name: "Wet", mult: 2, color: "#38bdf8" });
+      if (weatherId === "rain" && Math.random() < 0.5) {
+        mutations.push({ id: "wet", name: "Wet", mult: 1.5, color: "#7cc4e4" });
       }
-      if (weatherId === "frost" && Math.random() < 0.45) {
-        mutations.push({ id: "frozen", name: "Frozen", mult: 10, color: "#7dd3fc" });
+      if (weatherId === "frost" && Math.random() < 0.4) {
+        mutations.push({ id: "frozen", name: "Frozen", mult: 5, color: "#9bd8f0" });
       }
-      if (weatherId === "storm" && Math.random() < 0.22 * rodMult) {
-        mutations.push({ id: "shocked", name: "Shocked", mult: 50, color: "#c084fc" });
+      if (weatherId === "storm" && Math.random() < 0.18 * rodMult) {
+        mutations.push({ id: "shocked", name: "Shocked", mult: 20, color: "#c9a7eb" });
       }
-      if (weatherId === "meteor" && Math.random() < 0.18 * prismMult) {
-        mutations.push({ id: "starlit", name: "Starlit", mult: 100, color: "#fde047" });
+      if (weatherId === "meteor" && Math.random() < 0.14 * prismMult) {
+        mutations.push({ id: "starlit", name: "Starlit", mult: 35, color: "#f5dc84" });
       }
 
       return { weight, mutations };
@@ -982,42 +1030,29 @@
 
     function calcFruitPrice(crop, weight, mutations) {
       const avgKg = (crop.minKg + crop.maxKg) / 2;
-      const weightFactor = Math.max(0.7, weight / avgKg);
+      const weightFactor = Math.max(0.75, Math.min(4.5, weight / avgKg));
       const mutMult = mutations.reduce((acc, m) => acc * m.mult, 1);
       return Math.max(1, Math.round(crop.baseSell * weightFactor * mutMult));
     }
 
-    // --- BUG-FREE OFFLINE PROGRESSION ENGINE ---
+    // --- OFFLINE PROGRESSION ---
     function applyElapsedOfflineTime(targetState, elapsedMs) {
       if (elapsedMs <= 0) return 0;
       const now = Date.now();
-      // Ограничиваем оффлайн-симуляцию 7 днями на случай сбоя системных часов
       const safeElapsed = Math.min(elapsedMs, 7 * 24 * 60 * 60 * 1000);
 
-      // 1. Восстановление лейки
-      const maxWater = targetState.turboCan ? 10 : 5;
-      const regenMs = targetState.turboCan ? 7500 : 15000;
-      const waterDelta = Math.max(0, now - (targetState.lastWaterTick || now));
-      const gainedWater = Math.floor(waterDelta / regenMs);
-      if (gainedWater > 0) {
-        targetState.waterCharges = Math.min(maxWater, (targetState.waterCharges || 0) + gainedWater);
-        targetState.lastWaterTick = now - (waterDelta % regenMs);
-      }
-
-      // 2. Определяем, какие устройства работали в момент ухода
       const wasActiveIds = (targetState.devices || [])
         .filter(d => d.endAt > now - safeElapsed)
         .map(d => d.id);
 
       let offlineSpeed = 1;
       if (wasActiveIds.includes("sprinkler_basic")) offlineSpeed += 0.35;
-      if (wasActiveIds.includes("sprinkler_gold")) offlineSpeed += 0.70;
-      if (targetState.weather && targetState.weather.id === "rain") offlineSpeed += 0.25;
+      if (wasActiveIds.includes("sprinkler_gold")) offlineSpeed += 0.65;
+      if (targetState.weather && targetState.weather.id === "rain") offlineSpeed += 0.20;
 
-      const beeWasActive = wasActiveIds.includes("collector_bee");
+      const droneWasActive = wasActiveIds.includes("collector_drone");
       let maturedCount = 0;
 
-      // 3. Аккуратный расчет роста для каждой грядки без сбросов
       for (let i = 0; i < targetState.unlockedPlots; i++) {
         const p = targetState.plots[i];
         if (!p || !p.cropId) continue;
@@ -1036,8 +1071,7 @@
           }
         }
 
-        // Если была активна пчела-сборщик — собираем созревшее в монеты
-        if (p.ready && beeWasActive) {
+        if (p.ready && droneWasActive) {
           const val = calcFruitPrice(crop, p.weight, p.mutations);
           targetState.coins += val;
           if (val > targetState.bestFruitValue) targetState.bestFruitValue = val;
@@ -1053,7 +1087,6 @@
         }
       }
 
-      // 4. Чистим истекшие устройства
       targetState.devices = (targetState.devices || []).filter(d => d.endAt > now);
       targetState.lastTimestamp = now;
       return maturedCount;
@@ -1064,12 +1097,12 @@
       try {
         const raw =
           localStorage.getItem(SAVE_KEY) ||
-          localStorage.getItem("pocket_garden_save_v5") ||
-          localStorage.getItem("pocket_garden_save_data") ||
-          localStorage.getItem("pocket_garden_v2");
+          localStorage.getItem("pocket_garden_save_v6") ||
+          localStorage.getItem("pocket_garden_save_v5");
 
         if (!raw) {
-          def.shop.stock = generateShopStock();
+          def.shop.stock = generateSeedStock();
+          def.gearShop.stock = generateGearStock();
           return def;
         }
 
@@ -1079,8 +1112,10 @@
           ...def,
           ...parsed,
           seedInventory: { ...def.seedInventory, ...(parsed.seedInventory || {}) },
+          gearInventory: { ...def.gearInventory, ...(parsed.gearInventory || {}) },
           weather: { ...def.weather, ...(parsed.weather || {}) },
-          shop: { ...def.shop, ...(parsed.shop || {}) }
+          shop: { ...def.shop, ...(parsed.shop || {}) },
+          gearShop: { ...def.gearShop, ...(parsed.gearShop || {}) }
         };
 
         st.plots = Array.from({ length: 15 }, (_, i) => {
@@ -1108,30 +1143,41 @@
         if (!Array.isArray(st.harvestBag)) st.harvestBag = [];
         if (!Array.isArray(st.devices)) st.devices = [];
 
-        // Применяем оффлайн-время с момента последнего сохранения
         const prevTs = Number(parsed.lastTimestamp) || now;
         const offlineElapsed = Math.max(0, now - prevTs);
         applyElapsedOfflineTime(st, offlineElapsed);
 
         if (!st.shop.stock || Object.keys(st.shop.stock).length === 0 || now >= st.shop.nextRefreshAt) {
-          st.shop.stock = generateShopStock();
+          st.shop.stock = generateSeedStock();
           st.shop.nextRefreshAt = now + SHOP_REFRESH_MS;
         }
 
+        if (!st.gearShop.stock || Object.keys(st.gearShop.stock).length === 0 || now >= st.gearShop.nextRefreshAt) {
+          st.gearShop.stock = generateGearStock();
+          st.gearShop.nextRefreshAt = now + SHOP_REFRESH_MS;
+        }
+
         ensureValidSelectedSeed(st);
+        ensureValidSelectedGear(st);
         return st;
       } catch (e) {
-        def.shop.stock = generateShopStock();
+        def.shop.stock = generateSeedStock();
+        def.gearShop.stock = generateGearStock();
         return def;
       }
     }
 
-    function ensureValidSelectedSeed(targetState) {
-      if ((targetState.seedInventory[targetState.selectedSeed] || 0) <= 0) {
-        const available = CROPS.find(c => (targetState.seedInventory[c.id] || 0) > 0);
-        if (available) {
-          targetState.selectedSeed = available.id;
-        }
+    function ensureValidSelectedSeed(st) {
+      if ((st.seedInventory[st.selectedSeed] || 0) <= 0) {
+        const available = CROPS.find(c => (st.seedInventory[c.id] || 0) > 0);
+        if (available) st.selectedSeed = available.id;
+      }
+    }
+
+    function ensureValidSelectedGear(st) {
+      if ((st.gearInventory[st.selectedGear] || 0) <= 0) {
+        const available = GEAR_ITEMS.find(g => (st.gearInventory[g.id] || 0) > 0);
+        if (available) st.selectedGear = available.id;
       }
     }
 
@@ -1142,18 +1188,10 @@
       } catch (e) {}
     }
 
-    function generateShopStock() {
-      const stock = {};
-      CROPS.forEach(c => {
-        stock[c.id] = Math.random() <= c.stockChance ? Math.floor(Math.random() * c.maxStock) + 1 : 0;
-      });
-      if (!stock.carrot || stock.carrot < 3) stock.carrot = 5;
-      return stock;
-    }
-
     let state = loadState();
-    let activeTool = "plant";
+    let activeTool = "plant"; // plant | gear | shovel
     let shopFilter = "all";
+    let gearFilter = "all";
     let currentView = "garden";
     let lastTickAt = Date.now();
 
@@ -1166,9 +1204,7 @@
         const awayMs = Math.max(0, now - (state.lastTimestamp || now));
         if (awayMs > 1500) {
           const matured = applyElapsedOfflineTime(state, awayMs);
-          if (matured > 0) {
-            showToast(`🌿 Пока тебя не было, созрело плодов: ${matured}`);
-          }
+          if (matured > 0) showToast(`Созрело за время отсутствия: ${matured}`);
           saveState();
         }
         lastTickAt = now;
@@ -1209,7 +1245,7 @@
       el.textContent = text;
       el.classList.add("show");
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove("show"), 2000);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 1900);
     }
 
     function openModal(title, htmlBody, buttons) {
@@ -1248,8 +1284,8 @@
       if (ownedCrops.length === 0) {
         list.innerHTML = `
           <div class="empty-state">
-            У тебя пока нет купленных семян.<br><br>
-            <button id="goToShopFromPicker" class="buy-btn">🏪 Перейти в лавку семян</button>
+            В сумке нет семян.<br><br>
+            <button id="goToShopFromPicker" class="buy-btn">Открыть лавку семян</button>
           </div>
         `;
         document.getElementById("goToShopFromPicker").onclick = () => {
@@ -1259,7 +1295,7 @@
       } else {
         ownedCrops.forEach(crop => {
           const qty = state.seedInventory[crop.id] || 0;
-          const isSelected = state.selectedSeed === crop.id;
+          const isSelected = state.selectedSeed === crop.id && activeTool === "plant";
 
           const card = document.createElement("div");
           card.className = "item-card" + (isSelected ? " selected-card" : "");
@@ -1273,11 +1309,11 @@
                   <span class="tag rarity-${crop.rarity}">${crop.rarityLabel}</span>
                 </div>
                 <div class="item-meta">
-                  ⏱ ${crop.growSec}с • ${crop.multi ? "♻️ Многоразовое" : "1️⃣ Одноразовое"} • В сумке: <strong>${qty} шт.</strong>
+                  ${crop.growSec}с • ${crop.multi ? "Многоразовое" : "Одноразовое"} • В сумке: <strong>${qty} шт.</strong>
                 </div>
               </div>
             </div>
-            <button class="buy-btn" style="${isSelected ? 'background:#047857;' : ''}">${isSelected ? "✓ Выбрано" : "Выбрать"}</button>
+            <button class="buy-btn">${isSelected ? "Активно" : "Выбрать"}</button>
           `;
 
           card.onclick = () => {
@@ -1287,7 +1323,7 @@
             saveState();
             closeSeedPicker();
             haptic("light");
-            showToast(`🌱 Выбрано: ${crop.emoji} ${crop.name}`);
+            showToast(`Выбрано: ${crop.emoji} ${crop.name}`);
           };
 
           list.appendChild(card);
@@ -1306,7 +1342,90 @@
       if (e.target.id === "seedPickerBackdrop") closeSeedPicker();
     });
 
-    // --- FORMATTERS & SPEED ---
+    // --- GEAR PICKER SHEET (ВМЕСТО КНОПКИ С ЛЕЙКОЙ) ---
+    function openGearPicker() {
+      const list = document.getElementById("gearPickerList");
+      list.innerHTML = "";
+
+      const ownedGear = GEAR_ITEMS.filter(g => (state.gearInventory[g.id] || 0) > 0);
+
+      if (ownedGear.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            В сумке пока нет купленного снаряжения.<br><br>
+            <button id="goToGearShopFromPicker" class="buy-btn">Открыть лавку снаряжения</button>
+          </div>
+        `;
+        document.getElementById("goToGearShopFromPicker").onclick = () => {
+          closeGearPicker();
+          switchView("gear");
+        };
+      } else {
+        ownedGear.forEach(item => {
+          const qty = state.gearInventory[item.id] || 0;
+          const isPlotTool = item.mode === "plot";
+          const isSelected = isPlotTool && state.selectedGear === item.id && activeTool === "gear";
+
+          const card = document.createElement("div");
+          card.className = "item-card" + (isSelected ? " selected-card" : "");
+          card.style.cursor = "pointer";
+          card.innerHTML = `
+            <div class="item-left">
+              <div class="item-emoji">${item.emoji}</div>
+              <div class="item-info">
+                <div class="item-title-row">
+                  <span class="item-name">${item.name}</span>
+                  <span class="tag rarity-${item.rarity}">${qty} шт.</span>
+                </div>
+                <div class="item-meta">${item.desc}</div>
+              </div>
+            </div>
+            <button class="buy-btn">${isPlotTool ? (isSelected ? "В руке" : "Взять") : "Включить"}</button>
+          `;
+
+          card.onclick = () => {
+            if (isPlotTool) {
+              state.selectedGear = item.id;
+              activeTool = "gear";
+              updateToolButtons();
+              saveState();
+              closeGearPicker();
+              haptic("light");
+              showToast(`Взято в руку: ${item.emoji} ${item.name} (тапни по грядке)`);
+            } else if (item.mode === "garden") {
+              if ((state.gearInventory[item.id] || 0) <= 0) return;
+              state.gearInventory[item.id]--;
+              const existing = state.devices.find(d => d.id === item.id);
+              if (existing) {
+                existing.endAt = Math.max(existing.endAt, Date.now()) + item.durationSec * 1000;
+              } else {
+                state.devices.push({ id: item.id, endAt: Date.now() + item.durationSec * 1000 });
+              }
+              ensureValidSelectedGear(state);
+              saveState();
+              closeGearPicker();
+              haptic("success");
+              showToast(`${item.emoji} ${item.name} активирован в саду!`);
+            }
+          };
+
+          list.appendChild(card);
+        });
+      }
+
+      document.getElementById("gearPickerBackdrop").classList.add("open");
+    }
+
+    function closeGearPicker() {
+      document.getElementById("gearPickerBackdrop").classList.remove("open");
+    }
+
+    document.getElementById("closeGearPicker").onclick = closeGearPicker;
+    document.getElementById("gearPickerBackdrop").addEventListener("click", (e) => {
+      if (e.target.id === "gearPickerBackdrop") closeGearPicker();
+    });
+
+    // --- SPEED & FORMATTERS ---
     function hasActiveDevice(id) {
       const now = Date.now();
       return state.devices.some(d => d.id === id && d.endAt > now);
@@ -1315,8 +1434,8 @@
     function getSpeedMultiplier() {
       let mult = 1;
       if (hasActiveDevice("sprinkler_basic")) mult += 0.35;
-      if (hasActiveDevice("sprinkler_gold")) mult += 0.70;
-      if (state.weather.id === "rain") mult += 0.25;
+      if (hasActiveDevice("sprinkler_gold")) mult += 0.65;
+      if (state.weather.id === "rain") mult += 0.20;
       return mult;
     }
 
@@ -1350,7 +1469,7 @@
       state.weather.remainingMs -= dt;
       if (state.weather.remainingMs <= 0) {
         const next = pickRandomWeather(state.weather.id);
-        const nextDur = (35 + Math.floor(Math.random() * 31)) * 1000;
+        const nextDur = (40 + Math.floor(Math.random() * 31)) * 1000;
         state.weather = { id: next.id, remainingMs: nextDur, durationMs: nextDur };
         showToast(`${next.icon} Погода: ${next.name}`);
       }
@@ -1370,38 +1489,29 @@
 
       updateWeather(dt);
 
-      // Лейка
-      const maxWater = state.turboCan ? 10 : 5;
-      const regenMs = state.turboCan ? 7500 : 15000;
-      if (state.waterCharges < maxWater) {
-        if (now - state.lastWaterTick >= regenMs) {
-          state.waterCharges++;
-          state.lastWaterTick = now;
-        }
-      } else {
-        state.lastWaterTick = now;
-      }
-
-      // Магазин (раз в 5 мин)
+      // Обновление лавки семян (5 мин)
       if (now >= state.shop.nextRefreshAt) {
-        state.shop.stock = generateShopStock();
+        state.shop.stock = generateSeedStock();
         state.shop.nextRefreshAt = now + SHOP_REFRESH_MS;
-        showToast("🚚 В лавку завезли свежие семена!");
+        showToast("Завоз в лавке семян!");
         if (currentView === "shop") renderShop();
       }
       document.getElementById("shopTimer").textContent = formatTimeLeft(state.shop.nextRefreshAt - now);
 
-      // Устройства и живые таймеры
+      // Обновление лавки снаряжения (5 мин)
+      if (now >= state.gearShop.nextRefreshAt) {
+        state.gearShop.stock = generateGearStock();
+        state.gearShop.nextRefreshAt = now + SHOP_REFRESH_MS;
+        showToast("Завоз в лавке снаряжения!");
+        if (currentView === "gear") renderGear();
+      }
+      document.getElementById("gearShopTimer").textContent = formatTimeLeft(state.gearShop.nextRefreshAt - now);
+
+      // Активные устройства
       const beforeDev = state.devices.length;
       state.devices = state.devices.filter(d => d.endAt > now);
       if (state.devices.length !== beforeDev && currentView === "gear") {
         renderGear();
-      }
-      if (currentView === "gear" && state.devices.length > 0) {
-        state.devices.forEach(d => {
-          const el = document.getElementById("gear-timer-" + d.id);
-          if (el) el.textContent = formatTimeLeft(d.endAt - now);
-        });
       }
 
       // Рост растений
@@ -1427,7 +1537,7 @@
         }
 
         if (p.ready) {
-          if (hasActiveDevice("collector_bee")) {
+          if (hasActiveDevice("collector_drone")) {
             const val = calcFruitPrice(crop, p.weight, p.mutations);
             state.coins += val;
             if (val > state.bestFruitValue) state.bestFruitValue = val;
@@ -1458,34 +1568,41 @@
     function updateHUD(readyCount, now) {
       document.getElementById("coinsDisplay").textContent = `${formatNumber(state.coins)} 🪙`;
       document.getElementById("bestRecord").textContent = `🏆 Рекорд: ${formatNumber(state.bestFruitValue)} 🪙`;
-      document.getElementById("plotCountLabel").textContent = `🏡 ${state.unlockedPlots} / 15`;
-      document.getElementById("readyCountLabel").textContent = `🧺 ${readyCount}`;
-      document.getElementById("harvestSub").textContent = `${readyCount} шт.`;
+      document.getElementById("plotCountLabel").textContent = `Участок: ${state.unlockedPlots}/15`;
+      document.getElementById("readyCountLabel").textContent = `Созрело: ${readyCount}`;
 
-      const maxWater = state.turboCan ? 10 : 5;
-      document.getElementById("waterSub").textContent = `${state.waterCharges}/${maxWater}`;
-
+      // Кнопка Посадка
       const selCrop = getCrop(state.selectedSeed);
       const selQty = state.seedInventory[state.selectedSeed] || 0;
       document.getElementById("seedSub").textContent = selCrop && selQty > 0 ? `${selCrop.name} (${selQty})` : "Выбрать ▾";
 
       const hudSeed = document.getElementById("selectedSeedHud");
       if (selCrop && selQty > 0) {
-        hudSeed.innerHTML = `<span>${selCrop.emoji} ${selCrop.name}: ${selQty}</span><span style="font-size:9px;opacity:0.8;">▼</span>`;
+        hudSeed.innerHTML = `<span>${selCrop.emoji} ${selCrop.name}: ${selQty}</span><span style="font-size:9px;opacity:0.7;">▼</span>`;
       } else {
-        hudSeed.innerHTML = `<span>🌱 Выбрать семена</span><span style="font-size:9px;opacity:0.8;">▼</span>`;
+        hudSeed.innerHTML = `<span>Выбрать семена</span><span style="font-size:9px;opacity:0.7;">▼</span>`;
       }
 
-      // Живая полоска активного снаряжения в саду
+      // Кнопка Снаряжение
+      const totalGearOwned = Object.values(state.gearInventory).reduce((s, v) => s + (v || 0), 0);
+      const selGearObj = getGear(state.selectedGear);
+      const selGearQty = state.gearInventory[state.selectedGear] || 0;
+      if (activeTool === "gear" && selGearObj && selGearQty > 0) {
+        document.getElementById("gearSub").textContent = `${selGearObj.shortName} (${selGearQty})`;
+      } else {
+        document.getElementById("gearSub").textContent = totalGearOwned > 0 ? `Сумка: ${totalGearOwned} ▾` : "Пусто ▾";
+      }
+
+      // Полоска активных устройств в саду
       const strip = document.getElementById("activeDevicesStrip");
       if (state.devices.length === 0) {
         if (strip.innerHTML !== "") strip.innerHTML = "";
       } else {
         strip.innerHTML = state.devices
           .map(d => {
-            const g = GEAR_ITEMS.find(item => item.id === d.id);
+            const g = getGear(d.id);
             if (!g) return "";
-            return `<div class="device-chip">${g.emoji} ${g.shortName || g.name} • ${formatTimeLeft(d.endAt - now)}</div>`;
+            return `<div class="device-chip">${g.emoji} ${g.shortName} • ${formatTimeLeft(d.endAt - now)}</div>`;
           })
           .join("");
       }
@@ -1495,14 +1612,12 @@
       bagBadge.classList.toggle("visible", state.harvestBag.length > 0);
 
       const gearBadge = document.getElementById("gearBadge");
-      gearBadge.textContent = state.devices.length;
-      gearBadge.classList.toggle("visible", state.devices.length > 0);
-
-      document.getElementById("activeDevicesBadge").textContent = `Активно: ${state.devices.length}`;
+      gearBadge.textContent = totalGearOwned;
+      gearBadge.classList.toggle("visible", totalGearOwned > 0);
     }
 
     // --- PLOT INTERACTIONS ---
-    function harvestPlot(idx, silent = false) {
+    function harvestPlot(idx) {
       const p = state.plots[idx];
       if (!p || !p.cropId || !p.ready) return false;
       const crop = getCrop(p.cropId);
@@ -1533,11 +1648,9 @@
         state.plots[idx] = createEmptyPlot();
       }
 
-      if (!silent) {
-        haptic("success");
-        const mutText = harvestedMuts.length ? ` [${harvestedMuts.map(m => m.name).join("+")}]` : "";
-        showToast(`🧺 ${crop.emoji} ${crop.name} (${harvestedWeight} кг)${mutText}`);
-      }
+      haptic("success");
+      const mutText = harvestedMuts.length ? ` [${harvestedMuts.map(m => m.name).join("+")}]` : "";
+      showToast(`${crop.emoji} ${crop.name} (${harvestedWeight} кг)${mutText}`);
       return true;
     }
 
@@ -1552,22 +1665,22 @@
           return;
         }
         const crop = getCrop(p.cropId);
-        const refund = Math.floor(crop.cost * 0.3);
+        const refund = Math.floor(crop.cost * 0.25);
         haptic("warning");
         openModal(
-          "🪏 Выкопать растение?",
-          `Удалить <strong>${crop.emoji} ${crop.name}</strong> с грядки №${idx + 1}?<br>Возврат 30%: <strong>+${refund} 🪙</strong>.`,
+          "Удалить растение?",
+          `Выкопать <strong>${crop.emoji} ${crop.name}</strong> с грядки №${idx + 1}?<br>Компенсация 25%: <strong>+${formatNumber(refund)} 🪙</strong>.`,
           [
             { label: "Отмена", className: "btn-secondary" },
             {
-              label: `Удалить (+${refund} 🪙)`,
+              label: `Удалить (+${formatNumber(refund)} 🪙)`,
               className: "btn-danger",
               onClick: () => {
                 state.coins += refund;
                 state.plots[idx] = createEmptyPlot();
                 saveState();
                 haptic("medium");
-                showToast(`🪏 Удалено (+${refund} 🪙)`);
+                showToast(`Удалено (+${formatNumber(refund)} 🪙)`);
               }
             }
           ]
@@ -1575,27 +1688,49 @@
         return;
       }
 
-      // 2. Сбор по тапу
+      // 2. Сбор созревшего урожая по тапу на грядку
       if (p.cropId && p.ready) {
         harvestPlot(idx);
         saveState();
         return;
       }
 
-      // 3. Полив
-      if (activeTool === "water") {
+      // 3. Применение выбранного снаряжения на грядку
+      if (activeTool === "gear") {
+        const gItem = getGear(state.selectedGear);
+        const gQty = state.gearInventory[state.selectedGear] || 0;
+        if (!gItem || gQty <= 0 || gItem.mode !== "plot") {
+          openGearPicker();
+          return;
+        }
         if (!p.cropId) {
-          showToast("Сначала посади семечко");
+          showToast("Сначала посади растение на грядку");
           return;
         }
-        if (state.waterCharges <= 0) {
-          showToast("🚿 Лейка пуста! Подожди заряда");
-          return;
+
+        state.gearInventory[gItem.id]--;
+        const maxMs = p.growDuration * 1000;
+
+        if (gItem.id === "watering_can") {
+          p.progressMs = Math.min(maxMs, p.progressMs + maxMs * 0.40);
+          showToast("🚿 Полито (+40% роста)");
+        } else if (gItem.id === "growth_fertilizer") {
+          p.progressMs = Math.min(maxMs, p.progressMs + maxMs * 0.75);
+          p.giantBoost = Number((p.giantBoost * 1.25).toFixed(2));
+          showToast("🌿 Удобрено (+75% роста и +25% вес)");
+        } else if (gItem.id === "giant_elixir") {
+          p.giantBoost = Number((p.giantBoost * (2.5 + Math.random())).toFixed(2));
+          showToast("🧪 Эликсир гиганта применён!");
         }
-        state.waterCharges--;
-        p.progressMs = Math.min(p.growDuration * 1000, p.progressMs + (p.growDuration * 1000) * 0.35);
+
+        if ((state.gearInventory[gItem.id] || 0) <= 0) {
+          ensureValidSelectedGear(state);
+          if ((state.gearInventory[state.selectedGear] || 0) <= 0) {
+            activeTool = "plant";
+            updateToolButtons();
+          }
+        }
         haptic("light");
-        showToast("💦 Грядка полита (+35% роста)");
         saveState();
         return;
       }
@@ -1605,7 +1740,6 @@
         ensureValidSelectedSeed(state);
         const qty = state.seedInventory[state.selectedSeed] || 0;
         if (qty <= 0) {
-          showToast("🌱 Семена закончились! Купи в лавке");
           openSeedPicker();
           return;
         }
@@ -1632,14 +1766,14 @@
       openModal(
         `${crop.emoji} ${crop.name}`,
         `Прогресс роста: <strong>${pct}%</strong><br>` +
-        `Тип: <strong>${crop.multi ? "Многоразовое растение" : "Одноразовый урожай"}</strong><br>` +
+        `Тип: <strong>${crop.multi ? "Многоразовая культура" : "Одноразовый урожай"}</strong><br>` +
         `Базовая цена: <strong>${formatNumber(crop.baseSell)} 🪙</strong><br>` +
-        `Бонус гиганта: <strong>${p.giantBoost}x</strong>`,
+        `Множитель веса: <strong>${p.giantBoost}x</strong>`,
         [{ label: "Закрыть", className: "btn-secondary" }]
       );
     }
 
-    // --- RENDER SUBPAGES ---
+    // --- RENDER SEED SHOP ---
     function renderShop() {
       const list = document.getElementById("shopList");
       list.innerHTML = "";
@@ -1648,7 +1782,8 @@
         if (shopFilter === "all") return true;
         if (shopFilter === "common") return c.rarity === "common" || c.rarity === "uncommon";
         if (shopFilter === "rare") return c.rarity === "rare";
-        if (shopFilter === "epic") return c.rarity === "epic" || c.rarity === "legendary" || c.rarity === "mythical";
+        if (shopFilter === "epic") return c.rarity === "epic";
+        if (shopFilter === "legendary") return c.rarity === "legendary" || c.rarity === "mythical";
         return true;
       });
 
@@ -1668,8 +1803,8 @@
                 <span class="tag rarity-${crop.rarity}">${crop.rarityLabel}</span>
               </div>
               <div class="item-meta">
-                ⏱ ${crop.growSec}с • ${crop.multi ? "♻️ Многоразовое" : "1️⃣ Одноразовое"} • В сумке: <strong>${owned}</strong><br>
-                В лавке: <strong>${stock > 0 ? stock + " шт." : "Раскуплено"}</strong>
+                ${crop.growSec}с • ${crop.multi ? "Многоразовое" : "Одноразовое"} • В сумке: <strong>${owned}</strong><br>
+                В наличии: <strong>${stock > 0 ? stock + " шт." : "Нет в завозе"}</strong>
               </div>
             </div>
           </div>
@@ -1685,7 +1820,7 @@
           activeTool = "plant";
           updateToolButtons();
           haptic("light");
-          showToast(`🌱 Куплено: ${crop.emoji} ${crop.name}`);
+          showToast(`Куплено: ${crop.emoji} ${crop.name}`);
           saveState();
           renderShop();
         };
@@ -1705,96 +1840,69 @@
       });
     }
 
+    // --- RENDER GEAR SHOP (С КАТЕГОРИЯМИ И СТОКОМ КАК В ЛАВКЕ СЕМЯН) ---
     function renderGear() {
       const list = document.getElementById("gearList");
       list.innerHTML = "";
-      const now = Date.now();
 
-      GEAR_ITEMS.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "item-card";
+      const filtered = GEAR_ITEMS.filter(g => {
+        if (gearFilter === "all") return true;
+        return g.category === gearFilter;
+      });
+
+      filtered.forEach(item => {
+        const isExpansion = item.id === "expand_plot";
+        const stock = isExpansion
+          ? (state.unlockedPlots < 15 ? 1 : 0)
+          : (state.gearShop.stock[item.id] || 0);
+        const owned = state.gearInventory[item.id] || 0;
 
         let price = item.cost;
-        let btnLabel = `${formatNumber(price)} 🪙`;
-        let disabled = state.coins < price;
-        let statusNote = "";
-
-        if (item.type === "device") {
-          const active = state.devices.find(d => d.id === item.id && d.endAt > now);
-          if (active) {
-            card.classList.add("selected-card");
-            statusNote = `<br><span style="color:#34d399;font-weight:800;">● Работает: осталось <span id="gear-timer-${item.id}">${formatTimeLeft(active.endAt - now)}</span></span>`;
-            btnLabel = `+${formatNumber(price)} 🪙`;
-          }
-        } else if (item.type === "upgrade") {
-          if (state.turboCan) {
-            btnLabel = "Куплено";
-            disabled = true;
-          }
-        } else if (item.type === "expansion") {
-          if (state.unlockedPlots >= 15) {
-            btnLabel = "Макс. (15)";
-            disabled = true;
-          } else {
-            const boughtPlots = state.unlockedPlots - 9;
-            price = Math.round(300 * Math.pow(2.15, boughtPlots));
-            btnLabel = `${formatNumber(price)} 🪙`;
-            disabled = state.coins < price;
-            statusNote = `<br>Открыто грядок: <strong>${state.unlockedPlots} из 15</strong>`;
-          }
+        if (isExpansion) {
+          const boughtPlots = state.unlockedPlots - 9;
+          price = Math.round(1000 * Math.pow(2.4, boughtPlots));
         }
 
+        const canBuy = stock > 0 && state.coins >= price;
+
+        const card = document.createElement("div");
+        card.className = "item-card" + (stock <= 0 ? " out-of-stock" : "");
         card.innerHTML = `
           <div class="item-left">
             <div class="item-emoji">${item.emoji}</div>
             <div class="item-info">
-              <div class="item-name">${item.name}</div>
-              <div class="item-meta">${item.desc}${statusNote}</div>
+              <div class="item-title-row">
+                <span class="item-name">${item.name}</span>
+                <span class="tag rarity-${item.rarity}">${item.rarityLabel}</span>
+              </div>
+              <div class="item-meta">
+                ${item.desc}<br>
+                ${isExpansion
+                  ? `Открыто грядок: <strong>${state.unlockedPlots} из 15</strong>`
+                  : `В сумке: <strong>${owned}</strong> • В наличии: <strong>${stock > 0 ? stock + " шт." : "Нет в завозе"}</strong>`
+                }
+              </div>
             </div>
           </div>
-          <button class="buy-btn" ${disabled ? "disabled" : ""}>${btnLabel}</button>
+          <button class="buy-btn" ${canBuy ? "" : "disabled"}>${isExpansion && state.unlockedPlots >= 15 ? "Макс." : formatNumber(price) + " 🪙"}</button>
         `;
 
         card.querySelector(".buy-btn").onclick = () => {
-          if (item.type === "expansion") {
-            const boughtPlots = state.unlockedPlots - 9;
-            const expCost = Math.round(300 * Math.pow(2.15, boughtPlots));
-            if (state.unlockedPlots >= 15 || state.coins < expCost) return;
-            state.coins -= expCost;
+          if (!canBuy) return;
+          if (isExpansion) {
+            state.coins -= price;
             state.unlockedPlots++;
             haptic("success");
-            showToast(`🏡 Открыта грядка №${state.unlockedPlots}!`);
-          } else if (item.type === "upgrade") {
-            if (state.turboCan || state.coins < item.cost) return;
-            state.coins -= item.cost;
-            state.turboCan = true;
-            state.waterCharges = 10;
-            haptic("success");
-            showToast("🚿 Турбо-лейка активирована!");
-          } else if (item.type === "consumable") {
-            if (state.coins < item.cost) return;
-            const growing = state.plots.filter((p, i) => i < state.unlockedPlots && p.cropId && !p.ready);
-            if (growing.length === 0) {
-              showToast("Сначала посади растения на грядки!");
-              return;
+            showToast(`Открыта грядка №${state.unlockedPlots}`);
+          } else {
+            state.coins -= price;
+            state.gearShop.stock[item.id]--;
+            state.gearInventory[item.id] = (state.gearInventory[item.id] || 0) + 1;
+            if (item.mode === "plot") {
+              state.selectedGear = item.id;
             }
-            state.coins -= item.cost;
-            growing.forEach(p => {
-              p.giantBoost = Number((2.5 + Math.random() * 1.5).toFixed(2));
-            });
-            haptic("success");
-            showToast("🧪 Эликсир гиганта применён!");
-          } else if (item.type === "device") {
-            if (state.coins < item.cost) return;
-            state.coins -= item.cost;
-            const existing = state.devices.find(d => d.id === item.id);
-            if (existing) {
-              existing.endAt = Math.max(existing.endAt, Date.now()) + item.durationSec * 1000;
-            } else {
-              state.devices.push({ id: item.id, endAt: Date.now() + item.durationSec * 1000 });
-            }
-            haptic("success");
-            showToast(`${item.emoji} ${item.name} активирован!`);
+            haptic("light");
+            showToast(`Куплено: ${item.emoji} ${item.name} (в сумке)`);
           }
           saveState();
           renderGear();
@@ -1804,6 +1912,7 @@
       });
     }
 
+    // --- RENDER BACKPACK ---
     function renderBag() {
       const list = document.getElementById("bagList");
       const sellAllBtn = document.getElementById("btnSellAll");
@@ -1816,14 +1925,14 @@
       sellAllBtn.textContent = `Продать всё (${formatNumber(totalVal)} 🪙)`;
 
       if (sorted.length === 0) {
-        list.innerHTML = `<div class="empty-state">Рюкзак пока пуст.<br>Перейди в раздел «Сад» и собери созревшие плоды!</div>`;
+        list.innerHTML = `<div class="empty-state">Рюкзак пуст.<br>Нажми на созревшее растение в саду, чтобы собрать урожай.</div>`;
         return;
       }
 
       sorted.forEach(item => {
         const mutHtml = item.mutations && item.mutations.length
-          ? item.mutations.map(m => `<span class="tag" style="background:rgba(255,255,255,0.1);color:${m.color}">${m.name} x${m.mult}</span>`).join(" ")
-          : `<span class="tag" style="background:rgba(255,255,255,0.06);color:#94a3b8">Обычный</span>`;
+          ? item.mutations.map(m => `<span class="tag" style="background:rgba(255,255,255,0.08);color:${m.color}">${m.name} x${m.mult}</span>`).join(" ")
+          : `<span class="tag" style="background:rgba(255,255,255,0.05);color:#8a9992">Стандарт</span>`;
 
         const card = document.createElement("div");
         card.className = "item-card";
@@ -1833,7 +1942,7 @@
             <div class="item-info">
               <div class="item-title-row">
                 <span class="item-name">${item.name}</span>
-                <span style="font-size:11px;color:#a7f3d0;font-weight:700;">${item.weight} кг</span>
+                <span style="font-size:11px;color:#b4d4c6;font-weight:600;">${item.weight} кг</span>
               </div>
               <div class="item-meta" style="margin-top:4px;">${mutHtml}</div>
             </div>
@@ -1845,7 +1954,7 @@
           state.coins += item.value;
           state.harvestBag = state.harvestBag.filter(x => x.uid !== item.uid);
           haptic("light");
-          showToast(`🪙 Продано за ${formatNumber(item.value)} монет`);
+          showToast(`Продано: +${formatNumber(item.value)} 🪙`);
           saveState();
           renderBag();
         };
@@ -1875,16 +1984,10 @@
     });
 
     function updateToolButtons() {
-      document.getElementById("toolWater").classList.toggle("active", activeTool === "water");
       document.getElementById("toolPlant").classList.toggle("active", activeTool === "plant");
+      document.getElementById("toolGear").classList.toggle("active", activeTool === "gear");
       document.getElementById("toolShovel").classList.toggle("active", activeTool === "shovel");
     }
-
-    document.getElementById("toolWater").onclick = () => {
-      activeTool = "water";
-      updateToolButtons();
-      haptic("light");
-    };
 
     document.getElementById("toolPlant").onclick = () => {
       if (activeTool === "plant") {
@@ -1894,6 +1997,11 @@
         updateToolButtons();
       }
       haptic("light");
+    };
+
+    document.getElementById("toolGear").onclick = () => {
+      haptic("light");
+      openGearPicker();
     };
 
     document.getElementById("selectedSeedHud").onclick = () => {
@@ -1907,41 +2015,36 @@
       haptic("light");
     };
 
-    document.getElementById("btnHarvestAll").onclick = () => {
-      let count = 0;
-      for (let i = 0; i < state.unlockedPlots; i++) {
-        if (harvestPlot(i, true)) count++;
-      }
-      if (count > 0) {
-        haptic("success");
-        showToast(`🧺 Собрано плодов: ${count} шт.`);
-        saveState();
-      } else {
-        showToast("Пока нет созревших плодов");
-      }
-    };
-
     document.getElementById("btnSellAll").onclick = () => {
       if (state.harvestBag.length === 0) return;
       const total = state.harvestBag.reduce((s, i) => s + i.value, 0);
       state.coins += total;
       state.harvestBag = [];
       haptic("success");
-      showToast(`💰 Продано за ${formatNumber(total)} 🪙`);
+      showToast(`Продано на ${formatNumber(total)} 🪙`);
       saveState();
       renderBag();
     };
 
-    document.querySelectorAll(".filter-btn").forEach(btn => {
+    document.querySelectorAll("#seedFilters .filter-btn").forEach(btn => {
       btn.onclick = () => {
-        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll("#seedFilters .filter-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         shopFilter = btn.dataset.filter;
         renderShop();
       };
     });
 
-    // --- 2.5D ILLUSTRATED CANVAS RENDERER ---
+    document.querySelectorAll("#gearFilters .filter-btn").forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll("#gearFilters .filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        gearFilter = btn.dataset.gfilter;
+        renderGear();
+      };
+    });
+
+    // --- SLEEK BOTANICAL CANVAS RENDERER ---
     const canvasContainer = document.getElementById("canvasContainer");
     const canvas = document.getElementById("gardenCanvas");
     const ctx = canvas.getContext("2d");
@@ -1966,47 +2069,41 @@
       window.addEventListener("resize", resizeCanvas);
     }
 
-    const drops = Array.from({ length: 44 }, () => ({
+    const drops = Array.from({ length: 34 }, () => ({
       x: Math.random() * 500,
       y: Math.random() * 700,
-      speed: 2 + Math.random() * 4,
-      size: 1.2 + Math.random() * 2
+      speed: 2 + Math.random() * 3.5,
+      size: 1 + Math.random() * 1.5
     }));
 
     function drawGarden(ts) {
       if (currentView === "garden") {
         const wObj = WEATHERS.find(w => w.id === state.weather.id) || WEATHERS[0];
 
-        // Небо / лужайка с мягким радиальным светом
+        // Спокойный матовый фон теплицы/участка
         const grad = ctx.createLinearGradient(0, 0, 0, logicalH);
         grad.addColorStop(0, wObj.skyTop);
         grad.addColorStop(1, wObj.skyBot);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, logicalW, logicalH);
 
-        const glow = ctx.createRadialGradient(logicalW / 2, logicalH * 0.45, 20, logicalW / 2, logicalH * 0.45, logicalW * 0.75);
-        glow.addColorStop(0, "rgba(52, 211, 153, 0.08)");
-        glow.addColorStop(1, "rgba(0, 0, 0, 0.22)");
-        ctx.fillStyle = glow;
-        ctx.fillRect(0, 0, logicalW, logicalH);
-
-        // Декоративные травинки и цветы на фоне
-        for (let i = 0; i < 20; i++) {
-          const gx = (i * 97) % Math.max(100, logicalW - 24) + 12;
-          const gy = (i * 71) % Math.max(100, logicalH - 24) + 12;
-          ctx.fillStyle = i % 4 === 0 ? "rgba(251, 191, 36, 0.14)" : "rgba(52, 211, 153, 0.09)";
+        // Тонкая архитектурная сетка на фоне
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.025)";
+        ctx.lineWidth = 1;
+        for (let gx = 24; gx < logicalW; gx += 32) {
           ctx.beginPath();
-          ctx.arc(gx, gy, i % 4 === 0 ? 2.5 : 3.5, 0, Math.PI * 2);
-          ctx.fill();
+          ctx.moveTo(gx, 0);
+          ctx.lineTo(gx, logicalH);
+          ctx.stroke();
         }
 
         const hasDevices = state.devices.length > 0;
-        const topOffset = hasDevices ? 64 : 40;
+        const topOffset = hasDevices ? 60 : 38;
         const cols = 3;
         const rows = 5;
         const padX = 12;
         const padBottom = 12;
-        const gap = 10;
+        const gap = 9;
         const cellW = (logicalW - padX * 2 - gap * (cols - 1)) / cols;
         const cellH = (logicalH - topOffset - padBottom - gap * (rows - 1)) / rows;
 
@@ -2026,15 +2123,17 @@
 
           if (!unlocked) {
             ctx.beginPath();
-            ctx.roundRect(x, y, cellW, cellH, 15);
-            ctx.fillStyle = "rgba(10, 18, 14, 0.52)";
+            ctx.roundRect(x, y, cellW, cellH, 10);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.02)";
             ctx.fill();
-            ctx.strokeStyle = "rgba(148, 163, 184, 0.14)";
-            ctx.lineWidth = 1.5;
+            ctx.setLineDash([4, 4]);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+            ctx.lineWidth = 1;
             ctx.stroke();
+            ctx.setLineDash([]);
 
-            ctx.fillStyle = "rgba(148, 163, 184, 0.45)";
-            ctx.font = "18px sans-serif";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+            ctx.font = "13px sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText("🔒", x + cellW / 2, y + cellH / 2);
@@ -2042,45 +2141,34 @@
             continue;
           }
 
-          // Объемная тень под грядкой (2.5D)
+          // Строгий короб грядки с темным грунтом
           ctx.beginPath();
-          ctx.roundRect(x, y + 3, cellW, cellH, 15);
-          ctx.fillStyle = "rgba(0, 0, 0, 0.36)";
+          ctx.roundRect(x, y, cellW, cellH, 10);
+          ctx.fillStyle = p.cropId ? "#211b17" : "#181512";
           ctx.fill();
 
-          // Основная коробка грядки
-          ctx.beginPath();
-          ctx.roundRect(x, y, cellW, cellH, 15);
-          const soilGrad = ctx.createLinearGradient(x, y, x, y + cellH);
-          if (p.cropId) {
-            soilGrad.addColorStop(0, "#462e1e");
-            soilGrad.addColorStop(1, "#322014");
-          } else {
-            soilGrad.addColorStop(0, "#332216");
-            soilGrad.addColorStop(1, "#25180f");
-          }
-          ctx.fillStyle = soilGrad;
-          ctx.fill();
-
-          // Рамка статуса
+          // Подсветка в зависимости от выбранного инструмента
           if (activeTool === "shovel" && p.cropId) {
-            ctx.strokeStyle = "#f87171";
-            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = "#cf5656";
+            ctx.lineWidth = 1.6;
+          } else if (activeTool === "gear" && p.cropId && !p.ready) {
+            ctx.strokeStyle = "#d4a348";
+            ctx.lineWidth = 1.6;
           } else if (p.ready) {
-            ctx.strokeStyle = "#34d399";
-            ctx.lineWidth = 2.4;
+            ctx.strokeStyle = "#2ea877";
+            ctx.lineWidth = 1.8;
           } else {
-            ctx.strokeStyle = "#6e4930";
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.11)";
+            ctx.lineWidth = 1.2;
           }
           ctx.stroke();
 
-          // Борозды почвы
-          ctx.strokeStyle = "rgba(0, 0, 0, 0.25)";
-          ctx.lineWidth = 1.6;
+          // Минималистичные линии грядки
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+          ctx.lineWidth = 1;
           ctx.beginPath();
-          ctx.moveTo(x + 12, y + cellH * 0.36);
-          ctx.lineTo(x + cellW - 12, y + cellH * 0.36);
+          ctx.moveTo(x + 12, y + cellH * 0.38);
+          ctx.lineTo(x + cellW - 12, y + cellH * 0.38);
           ctx.moveTo(x + 12, y + cellH * 0.64);
           ctx.lineTo(x + cellW - 12, y + cellH * 0.64);
           ctx.stroke();
@@ -2091,90 +2179,83 @@
             const maxMs = p.growDuration * 1000;
             const progress = p.ready ? 1 : Math.min(0.99, p.progressMs / maxMs);
 
-            // Аура мутаций или готовности
-            if (p.ready) {
-              const auraColor = p.mutations && p.mutations.length > 0
-                ? p.mutations[p.mutations.length - 1].color
-                : "#34d399";
-              const pulse = 0.78 + Math.sin(ts / 220 + i) * 0.18;
-              const radius = Math.min(cellW, cellH) * 0.36 * pulse;
+            // Тонкое кольцо мутации
+            if (p.ready && p.mutations && p.mutations.length > 0) {
+              const topMut = p.mutations[p.mutations.length - 1];
+              const radius = Math.min(cellW, cellH) * 0.32;
               ctx.beginPath();
-              ctx.arc(x + cellW / 2, y + cellH / 2 - 2, radius, 0, Math.PI * 2);
-              ctx.fillStyle = auraColor + "2E";
-              ctx.fill();
+              ctx.arc(x + cellW / 2, y + cellH / 2 - 4, radius, 0, Math.PI * 2);
+              ctx.strokeStyle = topMut.color + "66";
+              ctx.lineWidth = 1.5;
+              ctx.stroke();
             }
 
-            const baseEmojiSize = Math.min(cellW, cellH) * 0.44;
-            let scale = 0.52 + progress * 0.48;
+            const baseEmojiSize = Math.min(cellW, cellH) * 0.42;
+            let scale = 0.55 + progress * 0.45;
             if (p.ready && crop) {
-              const ratio = p.weight / crop.maxKg;
-              scale = 1.0 + ratio * 0.62;
+              const ratio = Math.min(1.5, p.weight / crop.maxKg);
+              scale = 1.0 + ratio * 0.42;
             }
 
-            const bob = p.ready ? Math.sin(ts / 260 + i) * 2.5 : 0;
             ctx.font = `${Math.round(baseEmojiSize * scale)}px sans-serif`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             const icon = progress < 0.35 ? "🌱" : progress < 0.75 ? "🌿" : crop.emoji;
-            ctx.fillText(icon, x + cellW / 2, y + cellH / 2 - 5 + bob);
+            ctx.fillText(icon, x + cellW / 2, y + cellH / 2 - 5);
 
             if (!p.ready) {
               const barW = cellW - 20;
-              ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
-              ctx.beginPath();
-              ctx.roundRect(x + 10, y + cellH - 12, barW, 5, 3);
-              ctx.fill();
+              ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+              ctx.fillRect(x + 10, y + cellH - 10, barW, 3);
 
-              ctx.fillStyle = "#34d399";
-              ctx.beginPath();
-              ctx.roundRect(x + 10, y + cellH - 12, Math.max(4, barW * progress), 5, 3);
-              ctx.fill();
+              ctx.fillStyle = "#2ea877";
+              ctx.fillRect(x + 10, y + cellH - 10, Math.max(3, barW * progress), 3);
             } else {
-              ctx.fillStyle = "rgba(10, 18, 14, 0.86)";
+              ctx.fillStyle = "rgba(11, 14, 13, 0.88)";
               ctx.beginPath();
-              ctx.roundRect(x + 8, y + cellH - 20, cellW - 16, 15, 6);
+              ctx.roundRect(x + 8, y + cellH - 18, cellW - 16, 13, 4);
               ctx.fill();
-              ctx.fillStyle = p.mutations.length ? "#fde047" : "#ecfdf5";
-              ctx.font = "bold 10px sans-serif";
-              ctx.fillText(`${p.weight} кг`, x + cellW / 2, y + cellH - 12);
+              ctx.fillStyle = p.mutations.length ? "#ebd096" : "#dce5e1";
+              ctx.font = "600 9.5px sans-serif";
+              ctx.fillText(`${p.weight} кг`, x + cellW / 2, y + cellH - 11.5);
             }
           }
           ctx.restore();
         }
 
-        // Погодные частицы
+        // Спокойные погодные эффекты
         if (state.weather.id === "rain" || state.weather.id === "storm") {
-          ctx.strokeStyle = "rgba(125, 211, 252, 0.42)";
-          ctx.lineWidth = 1.4;
+          ctx.strokeStyle = "rgba(148, 197, 224, 0.25)";
+          ctx.lineWidth = 1;
           drops.forEach(d => {
-            d.y += d.speed * 2.2;
-            d.x -= 1.2;
+            d.y += d.speed * 2;
+            d.x -= 0.8;
             if (d.y > logicalH) { d.y = -10; d.x = Math.random() * logicalW; }
             ctx.beginPath();
             ctx.moveTo(d.x, d.y);
-            ctx.lineTo(d.x - 3, d.y + 10);
+            ctx.lineTo(d.x - 2, d.y + 8);
             ctx.stroke();
           });
         } else if (state.weather.id === "frost") {
-          ctx.fillStyle = "rgba(224, 242, 254, 0.68)";
+          ctx.fillStyle = "rgba(210, 232, 245, 0.35)";
           drops.forEach(d => {
-            d.y += d.speed * 0.55;
-            d.x += Math.sin(ts / 500 + d.y) * 0.4;
+            d.y += d.speed * 0.45;
+            d.x += Math.sin(ts / 600 + d.y) * 0.3;
             if (d.y > logicalH) { d.y = -5; d.x = Math.random() * logicalW; }
             ctx.beginPath();
             ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2);
             ctx.fill();
           });
         } else if (state.weather.id === "meteor") {
-          ctx.strokeStyle = "rgba(253, 224, 71, 0.72)";
-          ctx.lineWidth = 2;
-          drops.slice(0, 9).forEach(d => {
-            d.y += d.speed * 2.8;
-            d.x += d.speed * 1.6;
+          ctx.strokeStyle = "rgba(235, 208, 150, 0.45)";
+          ctx.lineWidth = 1.2;
+          drops.slice(0, 6).forEach(d => {
+            d.y += d.speed * 2.5;
+            d.x += d.speed * 1.4;
             if (d.y > logicalH || d.x > logicalW) { d.y = -10; d.x = Math.random() * (logicalW * 0.7); }
             ctx.beginPath();
             ctx.moveTo(d.x, d.y);
-            ctx.lineTo(d.x - 14, d.y - 20);
+            ctx.lineTo(d.x - 10, d.y - 16);
             ctx.stroke();
           });
         }
