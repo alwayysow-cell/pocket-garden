@@ -10,20 +10,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-top: #266b4c;
-      --bg-bot: #174732;
-      --card: #f4fbf6;
-      --card-2: #e3f4e9;
-      --card-3: #d0ebda;
-      --ink: #1b3b2b;
-      --ink-muted: #527a66;
-      --outline: #1f4d36;
-      --accent: #38d984;
-      --accent-dark: #1fa861;
-      --gold: #ffd24c;
-      --gold-dark: #c98600;
+      --bg-top: #1b2030;
+      --bg-bot: #11141f;
+      --card: #23293d;
+      --card-2: #2d354f;
+      --card-3: #374161;
+      --ink: #f1f5f9;
+      --ink-muted: #9aa6c4;
+      --outline: #0c0e17;
+      --accent: #38bdf8;
+      --accent-dark: #0284c7;
+      --gold: #ffbe3b;
+      --gold-dark: #b87400;
       --danger: #ff6b6b;
-      --danger-dark: #c93b3b;
+      --danger-dark: #b82e2e;
     }
 
     * {
@@ -54,7 +54,7 @@
       background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%);
     }
 
-    /* ENLARGED CARTOON VECTOR ICONS */
+    /* CARTOON VECTOR ICONS */
     .svg-ico {
       width: 22px;
       height: 22px;
@@ -85,7 +85,7 @@
       flex-shrink: 0;
     }
 
-    /* CHUNKY CARTOON HEADER */
+    /* DARK CARTOON HEADER */
     .header {
       background: var(--card);
       border: 2.5px solid var(--outline);
@@ -97,7 +97,7 @@
       justify-content: space-between;
       gap: 8px;
       flex-shrink: 0;
-      box-shadow: inset 0 2px 0 #ffffff, 0 4px 12px rgba(12, 38, 26, 0.22);
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.08), 0 5px 14px rgba(0, 0, 0, 0.4);
     }
 
     .profile {
@@ -111,16 +111,16 @@
       width: 42px;
       height: 42px;
       border-radius: 15px;
-      background: linear-gradient(180deg, #54e898 0%, #27b86b 100%);
+      background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
       border: 2.5px solid var(--outline);
-      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55);
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 900;
       font-size: 17px;
       color: #ffffff;
-      text-shadow: 0 1px 0 var(--outline);
+      text-shadow: 0 1.5px 0 var(--outline);
       overflow: hidden;
       flex-shrink: 0;
     }
@@ -152,9 +152,9 @@
     }
 
     .lvl-pill {
-      background: #ffd859;
+      background: #ffbe3b;
       border: 1.8px solid var(--outline);
-      color: #4a2c00;
+      color: #2b1800;
       font-size: 10px;
       font-weight: 900;
       padding: 1px 6px;
@@ -164,7 +164,7 @@
 
     .profile-record {
       font-size: 11px;
-      color: #9e6200;
+      color: #fbbf24;
       font-weight: 800;
       margin-top: 2px;
       display: flex;
@@ -195,24 +195,24 @@
     .weather-bar {
       width: 22px;
       height: 5px;
-      background: rgba(31, 77, 54, 0.18);
+      background: rgba(0, 0, 0, 0.35);
       border-radius: 4px;
       overflow: hidden;
     }
 
     .weather-bar-fill {
       height: 100%;
-      background: var(--accent-dark);
+      background: var(--accent);
       width: 100%;
       transition: width 0.4s linear;
     }
 
     .coins-badge {
-      background: linear-gradient(180deg, #ffe47a 0%, #ffbe2e 100%);
+      background: linear-gradient(180deg, #ffd15c 0%, #f59e0b 100%);
       border: 2.5px solid var(--outline);
       border-bottom-width: 4px;
-      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.7);
-      color: #422400;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.45);
+      color: #291500;
       padding: 4px 10px;
       border-radius: 14px;
       font-weight: 900;
@@ -256,9 +256,9 @@
       overflow: hidden;
       border: 3px solid var(--outline);
       border-bottom-width: 5px;
-      background: #46b556;
+      background: #232a38;
       position: relative;
-      box-shadow: 0 6px 18px rgba(10, 32, 22, 0.28);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
     }
 
     canvas {
@@ -288,7 +288,7 @@
     }
 
     .hud-chip {
-      background: rgba(244, 251, 246, 0.94);
+      background: rgba(31, 37, 56, 0.92);
       border: 2px solid var(--outline);
       border-bottom-width: 3.5px;
       padding: 4px 10px;
@@ -299,13 +299,13 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      box-shadow: inset 0 1.5px 0 #ffffff, 0 3px 6px rgba(15, 46, 31, 0.18);
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.08), 0 3px 8px rgba(0, 0, 0, 0.35);
     }
 
     .hud-chip.clickable {
       pointer-events: auto;
       cursor: pointer;
-      background: linear-gradient(180deg, #ffffff 0%, #e1f7ea 100%);
+      background: linear-gradient(180deg, #323c59 0%, #242b42 100%);
     }
 
     .hud-chip.clickable:active {
@@ -316,17 +316,17 @@
     .hud-chip.harvest-quick {
       pointer-events: auto;
       cursor: pointer;
-      background: linear-gradient(180deg, #5ef0a2 0%, #2ecc78 100%);
+      background: linear-gradient(180deg, #ffd15c 0%, #f59e0b 100%);
       border-color: var(--outline);
-      color: #0d331f;
+      color: #291500;
     }
 
     .hud-chip.order-chip {
       pointer-events: auto;
       cursor: pointer;
-      background: linear-gradient(180deg, #fff9e6 0%, #ffefc2 100%);
+      background: rgba(36, 42, 64, 0.94);
       border-color: var(--outline);
-      color: #593600;
+      color: #fcd34d;
       font-size: 11px;
       padding: 3px 10px;
       margin: 0 auto;
@@ -340,9 +340,9 @@
     }
 
     .device-chip {
-      background: #fff8e1;
+      background: #2d354f;
       border: 2px solid var(--outline);
-      color: #4d2e00;
+      color: #fde68a;
       font-size: 10px;
       font-weight: 900;
       padding: 2px 8px;
@@ -351,10 +351,10 @@
       align-items: center;
       gap: 4px;
       font-variant-numeric: tabular-nums;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     }
 
-    /* 3-BUTTON CHUNKY CARTOON TOOLBAR */
+    /* 3-BUTTON DARK CARTOON TOOLBAR */
     .toolbar {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -363,10 +363,10 @@
     }
 
     .tool-btn {
-      background: linear-gradient(180deg, #ffffff 0%, #e4f5eb 100%);
+      background: linear-gradient(180deg, #2d354f 0%, #21273b 100%);
       border: 2.5px solid var(--outline);
       border-bottom-width: 5px;
-      box-shadow: inset 0 2px 0 #ffffff, 0 3px 8px rgba(12, 38, 26, 0.2);
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.1), 0 4px 10px rgba(0, 0, 0, 0.35);
       color: var(--ink);
       border-radius: 18px;
       padding: 7px 6px;
@@ -386,17 +386,17 @@
     }
 
     .tool-btn.active {
-      background: linear-gradient(180deg, #63f2a5 0%, #2ecc78 100%);
+      background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
       border-color: var(--outline);
-      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.65), 0 4px 10px rgba(12, 38, 26, 0.25);
-      color: #0b301d;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35), 0 4px 12px rgba(37, 99, 235, 0.35);
+      color: #ffffff;
     }
 
     .tool-btn.danger.active {
-      background: linear-gradient(180deg, #ff8f8f 0%, #f25555 100%);
+      background: linear-gradient(180deg, #ff7b7b 0%, #dc2626 100%);
       border-color: var(--outline);
-      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55);
-      color: #3d0808;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35);
+      color: #ffffff;
     }
 
     .tool-btn .sub {
@@ -410,11 +410,11 @@
     }
 
     .tool-btn.active .sub {
-      color: #0f472b;
+      color: #dbeafe;
     }
 
     .tool-btn.danger.active .sub {
-      color: #4f0b0b;
+      color: #fee2e2;
     }
 
     /* SUBPAGES (SHOP, GEAR, BACKPACK) */
@@ -426,7 +426,7 @@
       padding: 12px;
       gap: 10px;
       overflow: hidden;
-      box-shadow: inset 0 2px 0 #ffffff, 0 6px 18px rgba(10, 32, 22, 0.25);
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.08), 0 6px 20px rgba(0, 0, 0, 0.45);
     }
 
     .panel-header {
@@ -452,7 +452,7 @@
       padding: 4px 10px;
       border-radius: 12px;
       font-size: 11px;
-      color: var(--ink);
+      color: #cbd5e1;
       font-weight: 900;
       font-variant-numeric: tabular-nums;
     }
@@ -479,8 +479,8 @@
     }
 
     .filter-btn.active {
-      background: linear-gradient(180deg, #54e898 0%, #29c270 100%);
-      color: #0b301d;
+      background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+      color: #ffffff;
       font-weight: 900;
     }
 
@@ -495,7 +495,7 @@
     }
 
     .item-card {
-      background: #ffffff;
+      background: var(--card-2);
       border: 2px solid var(--outline);
       border-bottom-width: 4px;
       border-radius: 17px;
@@ -504,17 +504,17 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      box-shadow: 0 2px 6px rgba(27, 59, 43, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
 
     .item-card.out-of-stock {
-      opacity: 0.55;
-      background: #eaf2ed;
+      opacity: 0.48;
+      background: #1d2233;
     }
 
     .item-card.selected-card {
-      border-color: var(--outline);
-      background: linear-gradient(180deg, #e8fff1 0%, #ccf7de 100%);
+      border-color: #60a5fa;
+      background: linear-gradient(180deg, #2b3859 0%, #222c47 100%);
     }
 
     .item-left {
@@ -529,7 +529,7 @@
       width: 58px;
       height: 58px;
       border-radius: 15px;
-      background: linear-gradient(180deg, #e6f7ed 0%, #cfead9 100%);
+      background: linear-gradient(180deg, #1f2538 0%, #161b29 100%);
       border: 2px solid var(--outline);
       display: flex;
       align-items: center;
@@ -560,16 +560,16 @@
       font-weight: 900;
       padding: 2px 7px;
       border-radius: 7px;
-      border: 1.5px solid rgba(27, 59, 43, 0.25);
+      border: 1.5px solid rgba(0, 0, 0, 0.35);
       text-transform: uppercase;
     }
 
-    .rarity-common { background: #e2e8f0; color: #334155; }
-    .rarity-uncommon { background: #bae6fd; color: #0369a1; }
-    .rarity-rare { background: #e9d5ff; color: #6b21a8; }
-    .rarity-epic { background: #fbcfe8; color: #9d174d; }
-    .rarity-legendary { background: #fef08a; color: #854d0e; }
-    .rarity-mythical { background: #fecaca; color: #991b1b; }
+    .rarity-common { background: #334155; color: #e2e8f0; }
+    .rarity-uncommon { background: #0369a1; color: #e0f2fe; }
+    .rarity-rare { background: #6b21a8; color: #f3e8ff; }
+    .rarity-epic { background: #9d174d; color: #fce7f3; }
+    .rarity-legendary { background: #b45309; color: #fef3c7; }
+    .rarity-mythical { background: #991b1b; color: #fee2e2; }
 
     .item-meta {
       font-size: 11px;
@@ -579,12 +579,16 @@
       line-height: 1.35;
     }
 
+    .item-meta strong {
+      color: #e2e8f0;
+    }
+
     .buy-btn {
-      background: linear-gradient(180deg, #5ef0a2 0%, #29c270 100%);
+      background: linear-gradient(180deg, #ffd15c 0%, #f59e0b 100%);
       border: 2px solid var(--outline);
       border-bottom-width: 4px;
-      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.65);
-      color: #0b301d;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.45);
+      color: #291500;
       font-weight: 900;
       font-size: 12.5px;
       padding: 8px 12px;
@@ -604,20 +608,20 @@
     }
 
     .buy-btn:disabled {
-      background: #dce8e1;
-      border-color: #8aa899;
+      background: #252b3d;
+      border-color: #141824;
       border-bottom-width: 2px;
       box-shadow: none;
-      color: #6b8a7b;
+      color: #64748b;
       cursor: not-allowed;
     }
 
     .sell-all-btn {
-      background: linear-gradient(180deg, #ffe47a 0%, #ffbe2e 100%);
+      background: linear-gradient(180deg, #ffd15c 0%, #f59e0b 100%);
       border: 2px solid var(--outline);
       border-bottom-width: 4px;
-      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.7);
-      color: #422400;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.45);
+      color: #291500;
       font-weight: 900;
       font-size: 12px;
       padding: 7px 12px;
@@ -629,7 +633,7 @@
     }
 
     .sell-all-btn:disabled {
-      opacity: 0.45;
+      opacity: 0.4;
       cursor: not-allowed;
     }
 
@@ -653,7 +657,7 @@
       border-radius: 20px;
       padding: 5px;
       flex-shrink: 0;
-      box-shadow: inset 0 2px 0 #ffffff, 0 4px 12px rgba(12, 38, 26, 0.22);
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.08), 0 4px 12px rgba(0, 0, 0, 0.35);
     }
 
     .nav-btn {
@@ -673,20 +677,20 @@
     }
 
     .nav-btn.active {
-      background: linear-gradient(180deg, #5ef0a2 0%, #29c270 100%);
+      background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
       border-color: var(--outline);
       border-bottom-width: 3px;
-      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.65);
-      color: #0b301d;
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.35);
+      color: #ffffff;
     }
 
     .badge-dot {
       position: absolute;
       top: 2px;
       right: 10px;
-      background: #ffcf48;
+      background: #ffbe3b;
       border: 1.5px solid var(--outline);
-      color: #3d2200;
+      color: #291500;
       font-size: 9.5px;
       font-weight: 900;
       padding: 0 5px;
@@ -702,8 +706,8 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(13, 36, 25, 0.62);
-      backdrop-filter: blur(3px);
+      background: rgba(8, 10, 18, 0.72);
+      backdrop-filter: blur(4px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -731,7 +735,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      box-shadow: inset 0 2px 0 #ffffff, 0 12px 30px rgba(10, 30, 20, 0.35);
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.1), 0 14px 36px rgba(0, 0, 0, 0.55);
     }
 
     .modal-backdrop.sheet .modal {
@@ -753,9 +757,13 @@
 
     .modal-body {
       font-size: 13.5px;
-      color: var(--ink);
+      color: #cbd5e1;
       font-weight: 700;
       line-height: 1.45;
+    }
+
+    .modal-body strong {
+      color: #ffffff;
     }
 
     .modal-actions {
@@ -765,7 +773,7 @@
     }
 
     .btn-secondary {
-      background: #ffffff;
+      background: var(--card-2);
       border: 2px solid var(--outline);
       border-bottom-width: 3.5px;
       color: var(--ink);
@@ -777,7 +785,7 @@
     }
 
     .btn-danger {
-      background: linear-gradient(180deg, #ff8585 0%, #eb4d4d 100%);
+      background: linear-gradient(180deg, #ff7b7b 0%, #dc2626 100%);
       border: 2px solid var(--outline);
       border-bottom-width: 3.5px;
       color: #ffffff;
@@ -793,10 +801,10 @@
       top: 62px;
       left: 50%;
       transform: translateX(-50%) translateY(-12px);
-      background: #fffdf5;
+      background: #23293d;
       border: 2.5px solid var(--outline);
       border-bottom-width: 4px;
-      color: var(--ink);
+      color: #f8fafc;
       padding: 7px 15px;
       border-radius: 15px;
       font-size: 12.5px;
@@ -806,7 +814,7 @@
       transition: 0.2s ease;
       z-index: 200;
       white-space: nowrap;
-      box-shadow: 0 8px 20px rgba(10, 32, 22, 0.25);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     .toast.show {
@@ -1033,25 +1041,25 @@
       } catch (e) {}
     }
 
-    // --- CHUNKY CARTOON VECTOR ICONS ---
+    // --- CARTOON VECTOR ICONS (DARK OUTLINE, WARM & SKY ACCENTS) ---
     const ICONS = {
-      coin: `<svg class="svg-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffd24c" stroke="#1f4d36" stroke-width="2.2"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#c98600" stroke-width="1.6"/><path d="M12 7.5v9M9.8 10h4.4M9.8 14h4.4" stroke="#7a4e00" stroke-width="2" stroke-linecap="round"/></svg>`,
-      trophy: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="#ffd24c" stroke="#1f4d36" stroke-width="2"/><path d="M7 6H4a2 2 0 0 0 0 4h3M17 6h3a2 2 0 0 1 0 4h-3M12 15v4M8 20h8" stroke="#c98600" stroke-width="2.2" stroke-linecap="round"/></svg>`,
-      houseSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff7452" stroke="#1f4d36" stroke-width="2" stroke-linejoin="round"/><rect x="6" y="11" width="12" height="9" rx="2" fill="#fff3d6" stroke="#1f4d36" stroke-width="1.8"/><rect x="10" y="14" width="4" height="6" fill="#a66332"/></svg>`,
-      basketSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M4 11h16l-1.5 8h-13L4 11z" fill="#d9873c" stroke="#1f4d36" stroke-width="2" stroke-linejoin="round"/><path d="M8 11l2-5M16 11l-2-5" stroke="#c98600" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9" r="2.4" fill="#ff5c5c" stroke="#1f4d36" stroke-width="1.2"/><circle cx="15" cy="9" r="2.4" fill="#4ade80" stroke="#1f4d36" stroke-width="1.2"/></svg>`,
-      sproutSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 20V11" stroke="#1fa861" stroke-width="2.6" stroke-linecap="round"/><path d="M12 12.5c-4.5 0-7-2.6-7-6 4.2 0 7 2 7 6z" fill="#38d984" stroke="#1f4d36" stroke-width="1.7"/><path d="M12 10.5c4.5 0 7-2.6 7-6-4.2 0-7 2-7 6z" fill="#7cf7bd" stroke="#1f4d36" stroke-width="1.7"/></svg>`,
-      sprout: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M12 21V11" stroke="#1fa861" stroke-width="3" stroke-linecap="round"/><path d="M12 12.5c-5.2 0-7.8-2.9-7.8-6.8 4.6 0 7.8 2.3 7.8 6.8z" fill="#38d984" stroke="#1f4d36" stroke-width="1.8"/><path d="M12 10.5c5.2 0 7.8-2.9 7.8-6.8-4.6 0-7.8 2.3-7.8 6.8z" fill="#7cf7bd" stroke="#1f4d36" stroke-width="1.8"/></svg>`,
-      gearTool: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#7dd3fc" stroke="#1f4d36" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="#1f4d36"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M19.1 4.9l-2.2 2.2M7.1 16.9l-2.2 2.2" stroke="#1f4d36" stroke-width="2.6" stroke-linecap="round"/></svg>`,
-      shovel: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M14 4l6 6M17 7l-7 7" stroke="#8c5327" stroke-width="2.8" stroke-linecap="round"/><path d="M9 13l2 2-4.5 4.5a2.1 2.1 0 0 1-3-3L8 12z" fill="#ff7575" stroke="#1f4d36" stroke-width="1.9"/></svg>`,
-      gardenNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff7452" stroke="#1f4d36" stroke-width="2" stroke-linejoin="round"/><rect x="5" y="11" width="14" height="9" rx="2.5" fill="#fff3d6" stroke="#1f4d36" stroke-width="1.9"/><rect x="10" y="14" width="4" height="6" fill="#a66332"/><circle cx="18" cy="17" r="3.8" fill="#38d984" stroke="#1f4d36" stroke-width="1.7"/></svg>`,
-      shopNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 9l2-5h14l2 5" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.9" stroke-linejoin="round"/><rect x="4" y="9" width="16" height="11" rx="2.5" fill="#fff3d6" stroke="#1f4d36" stroke-width="1.9"/><rect x="9" y="13" width="6" height="7" fill="#a66332"/></svg>`,
-      gearNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#7dd3fc" stroke="#1f4d36" stroke-width="1.9"/><circle cx="12" cy="12" r="1.8" fill="#1f4d36"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2" stroke="#1f4d36" stroke-width="2.4" stroke-linecap="round"/></svg>`,
-      bagNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="13" rx="4.5" fill="#ff6b6b" stroke="#1f4d36" stroke-width="1.9"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7" fill="none" stroke="#1f4d36" stroke-width="2.2" stroke-linecap="round"/><rect x="8" y="12" width="8" height="5" rx="2" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.6"/></svg>`,
-      sun: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5.2" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.7"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8" stroke="#e09400" stroke-width="2.2" stroke-linecap="round"/></svg>`,
-      rain: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M6 15a4 4 0 0 1 0-8 5 5 0 0 1 9.7-1.5A4 4 0 0 1 18 15H6z" fill="#7dd3fc" stroke="#1f4d36" stroke-width="1.7"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/></svg>`,
-      frost: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1" stroke="#0284c7" stroke-width="2.3" stroke-linecap="round"/></svg>`,
-      storm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
-      meteor: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><circle cx="16" cy="16" r="4.5" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.7"/><path d="M13 13L4 4M15 10L8 3M10 15L3 8" stroke="#e09400" stroke-width="2.2" stroke-linecap="round"/></svg>`
+      coin: `<svg class="svg-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffd15c" stroke="#0c0e17" stroke-width="2.2"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#b87400" stroke-width="1.6"/><path d="M12 7.5v9M9.8 10h4.4M9.8 14h4.4" stroke="#5c3600" stroke-width="2" stroke-linecap="round"/></svg>`,
+      trophy: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="#ffd15c" stroke="#0c0e17" stroke-width="2"/><path d="M7 6H4a2 2 0 0 0 0 4h3M17 6h3a2 2 0 0 1 0 4h-3M12 15v4M8 20h8" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+      houseSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff7452" stroke="#0c0e17" stroke-width="2" stroke-linejoin="round"/><rect x="6" y="11" width="12" height="9" rx="2" fill="#e2e8f0" stroke="#0c0e17" stroke-width="1.8"/><rect x="10" y="14" width="4" height="6" fill="#9a5b2c"/></svg>`,
+      basketSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M4 11h16l-1.5 8h-13L4 11z" fill="#d9873c" stroke="#0c0e17" stroke-width="2" stroke-linejoin="round"/><path d="M8 11l2-5M16 11l-2-5" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9" r="2.4" fill="#ff5c5c" stroke="#0c0e17" stroke-width="1.2"/><circle cx="15" cy="9" r="2.4" fill="#ffd15c" stroke="#0c0e17" stroke-width="1.2"/></svg>`,
+      sproutSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 20V11" stroke="#38bdf8" stroke-width="2.6" stroke-linecap="round"/><path d="M12 12.5c-4.5 0-7-2.6-7-6 4.2 0 7 2 7 6z" fill="#60a5fa" stroke="#0c0e17" stroke-width="1.7"/><path d="M12 10.5c4.5 0 7-2.6 7-6-4.2 0-7 2-7 6z" fill="#93c5fd" stroke="#0c0e17" stroke-width="1.7"/></svg>`,
+      sprout: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M12 21V11" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/><path d="M12 12.5c-5.2 0-7.8-2.9-7.8-6.8 4.6 0 7.8 2.3 7.8 6.8z" fill="#60a5fa" stroke="#0c0e17" stroke-width="1.8"/><path d="M12 10.5c5.2 0 7.8-2.9 7.8-6.8-4.6 0-7.8 2.3-7.8 6.8z" fill="#93c5fd" stroke="#0c0e17" stroke-width="1.8"/></svg>`,
+      gearTool: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#fbbf24" stroke="#0c0e17" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="#0c0e17"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M19.1 4.9l-2.2 2.2M7.1 16.9l-2.2 2.2" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+      shovel: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M14 4l6 6M17 7l-7 7" stroke="#c27d48" stroke-width="2.8" stroke-linecap="round"/><path d="M9 13l2 2-4.5 4.5a2.1 2.1 0 0 1-3-3L8 12z" fill="#ff7575" stroke="#0c0e17" stroke-width="1.9"/></svg>`,
+      gardenNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff7452" stroke="#0c0e17" stroke-width="2" stroke-linejoin="round"/><rect x="5" y="11" width="14" height="9" rx="2.5" fill="#e2e8f0" stroke="#0c0e17" stroke-width="1.9"/><rect x="10" y="14" width="4" height="6" fill="#9a5b2c"/><circle cx="18" cy="17" r="3.8" fill="#fbbf24" stroke="#0c0e17" stroke-width="1.7"/></svg>`,
+      shopNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 9l2-5h14l2 5" fill="#ffd15c" stroke="#0c0e17" stroke-width="1.9" stroke-linejoin="round"/><rect x="4" y="9" width="16" height="11" rx="2.5" fill="#e2e8f0" stroke="#0c0e17" stroke-width="1.9"/><rect x="9" y="13" width="6" height="7" fill="#9a5b2c"/></svg>`,
+      gearNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#fbbf24" stroke="#0c0e17" stroke-width="1.9"/><circle cx="12" cy="12" r="1.8" fill="#0c0e17"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2" stroke="#cbd5e1" stroke-width="2.3" stroke-linecap="round"/></svg>`,
+      bagNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="13" rx="4.5" fill="#ff6b6b" stroke="#0c0e17" stroke-width="1.9"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7" fill="none" stroke="#cbd5e1" stroke-width="2.2" stroke-linecap="round"/><rect x="8" y="12" width="8" height="5" rx="2" fill="#ffd15c" stroke="#0c0e17" stroke-width="1.6"/></svg>`,
+      sun: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5.2" fill="#ffd15c" stroke="#0c0e17" stroke-width="1.7"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+      rain: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M6 15a4 4 0 0 1 0-8 5 5 0 0 1 9.7-1.5A4 4 0 0 1 18 15H6z" fill="#7dd3fc" stroke="#0c0e17" stroke-width="1.7"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+      frost: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1" stroke="#7dd3fc" stroke-width="2.3" stroke-linecap="round"/></svg>`,
+      storm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="#ffd15c" stroke="#0c0e17" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
+      meteor: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><circle cx="16" cy="16" r="4.5" fill="#ffd15c" stroke="#0c0e17" stroke-width="1.7"/><path d="M13 13L4 4M15 10L8 3M10 15L3 8" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/></svg>`
     };
 
     function bindStaticIcons() {
@@ -1106,13 +1114,13 @@
       { id: "voidorchid", name: "Орхидея пустоты", shape: "flower", color: "#cc5de8", leaf: "#ff6b6b", rarity: "mythical", rarityLabel: "Мифическая", cost: 120000000, baseSell: 210000000, growSec: 300, multi: false, minKg: 1.0, maxKg: 14.0, stockChance: 0.015, maxStock: 1 }
     ];
 
-    // SOFT EYE-PLEASING CARTOON MEADOW PALETTES PER WEATHER
+    // COZY DARK TWILIGHT & EARTHY COURTYARD PALETTES (NO BRIGHT NEON GREEN)
     const WEATHERS = [
-      { id: "clear", name: "Ясно", iconKey: "sun", weight: 42, grassTop: "#64cf6e", grassBot: "#48ad54", tuft: "#3b9445" },
-      { id: "rain", name: "Дождь", iconKey: "rain", weight: 24, grassTop: "#49a882", grassBot: "#358767", tuft: "#296b51" },
-      { id: "frost", name: "Заморозки", iconKey: "frost", weight: 15, grassTop: "#77c9b8", grassBot: "#56ab9b", tuft: "#438c7e" },
-      { id: "storm", name: "Гроза", iconKey: "storm", weight: 12, grassTop: "#458c7e", grassBot: "#31695e", tuft: "#245249" },
-      { id: "meteor", name: "Звездопад", iconKey: "meteor", weight: 7, grassTop: "#4b8a78", grassBot: "#34695b", tuft: "#275247" }
+      { id: "clear", name: "Ясно", iconKey: "sun", weight: 42, yardTop: "#28313b", yardBot: "#1b2129", pebble: "#36424f" },
+      { id: "rain", name: "Дождь", iconKey: "rain", weight: 24, yardTop: "#1f2c3d", yardBot: "#151f2b", pebble: "#2d3f57" },
+      { id: "frost", name: "Заморозки", iconKey: "frost", weight: 15, yardTop: "#253647", yardBot: "#182533", pebble: "#385069" },
+      { id: "storm", name: "Гроза", iconKey: "storm", weight: 12, yardTop: "#262138", yardBot: "#191526", pebble: "#393154" },
+      { id: "meteor", name: "Звездопад", iconKey: "meteor", weight: 7, yardTop: "#241d36", yardBot: "#151121", pebble: "#3a2f57" }
     ];
 
     const GEAR_ITEMS = [
@@ -1123,7 +1131,7 @@
       { id: "sprinkler_gold", category: "mutation", mode: "garden", name: "Золотой спринклер", shortName: "Зол. спринкл.", color: "#ffd43b", rarity: "epic", rarityLabel: "Эпический", cost: 190000, durationSec: 240, stockChance: 0.35, maxStock: 2, desc: "Работает 4 мин: +65% скорость роста и x3 шанс на Gold/Rainbow мутации." },
       { id: "lightning_rod", category: "mutation", mode: "garden", name: "Громоотвод", shortName: "Громоотвод", color: "#cc5de8", rarity: "legendary", rarityLabel: "Легендарный", cost: 520000, durationSec: 300, stockChance: 0.22, maxStock: 1, desc: "Работает 5 мин: притягивает молнии в грозу (шанс Shocked x20 выше в 3 раза)." },
       { id: "star_prism", category: "mutation", mode: "garden", name: "Звездная призма", shortName: "Призма", color: "#ffe066", rarity: "mythical", rarityLabel: "Мифический", cost: 1400000, durationSec: 300, stockChance: 0.14, maxStock: 1, desc: "Работает 5 мин: усиливает шанс на Starlit (x35) и Rainbow (x10) в 3 раза." },
-      { id: "collector_drone", category: "auto", mode: "garden", name: "Дрон-сборщик", shortName: "Дрон", color: "#38d984", rarity: "legendary", rarityLabel: "Легендарный", cost: 380000, durationSec: 240, stockChance: 0.25, maxStock: 1, desc: "Работает 4 мин: автоматически собирает созревшие плоды и начисляет монеты." },
+      { id: "collector_drone", category: "auto", mode: "garden", name: "Дрон-сборщик", shortName: "Дрон", color: "#38bdf8", rarity: "legendary", rarityLabel: "Легендарный", cost: 380000, durationSec: 240, stockChance: 0.25, maxStock: 1, desc: "Работает 4 мин: автоматически собирает созревшие плоды и начисляет монеты." },
       { id: "expand_plot", category: "auto", mode: "instant", name: "Новая грядка", shortName: "Участок", color: "#ffa94d", rarity: "rare", rarityLabel: "Участок", cost: 3500, stockChance: 1.0, maxStock: 1, desc: "Расширяет ваш сад на +1 грядку (максимум 15 грядок)." }
     ];
 
@@ -1135,19 +1143,18 @@
       ctx.save();
       ctx.translate(cx, cy);
 
-      // Even at 0% growth, plant is 65% of full size so you immediately see what's growing
       const growthScale = progress < 1 ? (0.65 + progress * 0.35) : 1;
       ctx.scale(growthScale, growthScale);
 
-      // Cozy soil mound & sprout leaves underneath while growing
+      // Soil mound & small sprout leaves underneath while growing
       if (progress < 1) {
-        ctx.fillStyle = "#3b1e0c";
+        ctx.fillStyle = "#261307";
         ctx.beginPath();
         ctx.ellipse(0, radius * 0.65, radius * 0.65, radius * 0.24, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = "#51cf66";
-        ctx.strokeStyle = "#1b3b2b";
+        ctx.fillStyle = "#40c057";
+        ctx.strokeStyle = "#0c0e17";
         ctx.lineWidth = 1.8;
         ctx.beginPath();
         ctx.ellipse(-radius * 0.45, radius * 0.55, radius * 0.28, radius * 0.13, -0.35, 0, Math.PI * 2);
@@ -1157,12 +1164,12 @@
       }
 
       const r = radius * 0.84;
-      ctx.strokeStyle = "#261408";
+      ctx.strokeStyle = "#140b05";
       ctx.lineWidth = Math.max(2.3, r * 0.12);
       ctx.lineJoin = "round";
 
       const drawTopLeaf = (yOff = -r * 0.85) => {
-        ctx.fillStyle = crop.leaf || "#38d984";
+        ctx.fillStyle = crop.leaf || "#40c057";
         ctx.beginPath();
         ctx.ellipse(-r * 0.32, yOff, r * 0.38, r * 0.2, -0.45, 0, Math.PI * 2);
         ctx.ellipse(r * 0.32, yOff, r * 0.38, r * 0.2, 0.45, 0, Math.PI * 2);
@@ -1273,7 +1280,7 @@
         ctx.fill();
         ctx.stroke();
       } else if (crop.shape === "mushroom") {
-        ctx.fillStyle = "#fff8eb";
+        ctx.fillStyle = "#f1f5f9";
         ctx.beginPath();
         ctx.roundRect(-r * 0.28, 0, r * 0.56, r * 0.8, 6);
         ctx.fill();
@@ -1329,39 +1336,35 @@
       }
 
       // Glossy cartoon highlight
-      ctx.fillStyle = "rgba(255, 255, 255, 0.48)";
+      ctx.fillStyle = "rgba(255, 255, 255, 0.42)";
       ctx.beginPath();
       ctx.ellipse(-r * 0.26, -r * 0.22, r * 0.21, r * 0.11, -0.5, 0, Math.PI * 2);
       ctx.fill();
 
-      // Cute kawaii cartoon eyes & rosy cheeks when ripe!
+      // Cute cartoon eyes & rosy cheeks when ripe
       if (showCuteFace && progress >= 1 && r >= 12) {
         const eyeY = crop.shape === "carrot" ? -r * 0.12 : r * 0.06;
         const eyeDist = r * 0.22;
 
-        // Rosy cheeks
         ctx.fillStyle = "rgba(255, 105, 135, 0.55)";
         ctx.beginPath();
         ctx.ellipse(-eyeDist * 1.35, eyeY + r * 0.11, r * 0.11, r * 0.065, 0, 0, Math.PI * 2);
         ctx.ellipse(eyeDist * 1.35, eyeY + r * 0.11, r * 0.11, r * 0.065, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        // Eyes
-        ctx.fillStyle = "#1f1209";
+        ctx.fillStyle = "#140b05";
         ctx.beginPath();
         ctx.arc(-eyeDist, eyeY, r * 0.095, 0, Math.PI * 2);
         ctx.arc(eyeDist, eyeY, r * 0.095, 0, Math.PI * 2);
         ctx.fill();
 
-        // Eye sparkles
         ctx.fillStyle = "#ffffff";
         ctx.beginPath();
         ctx.arc(-eyeDist - r * 0.03, eyeY - r * 0.03, r * 0.035, 0, Math.PI * 2);
         ctx.arc(eyeDist - r * 0.03, eyeY - r * 0.03, r * 0.035, 0, Math.PI * 2);
         ctx.fill();
 
-        // Happy little smile
-        ctx.strokeStyle = "#1f1209";
+        ctx.strokeStyle = "#140b05";
         ctx.lineWidth = Math.max(1.5, r * 0.075);
         ctx.lineCap = "round";
         ctx.beginPath();
@@ -1376,7 +1379,7 @@
       ctx.save();
       ctx.translate(cx, cy);
       const r = radius * 0.76;
-      ctx.strokeStyle = "#1f4d36";
+      ctx.strokeStyle = "#0c0e17";
       ctx.lineWidth = 2.4;
 
       if (gear.id === "watering_can") {
@@ -1395,7 +1398,7 @@
         ctx.arc(0, r * 0.22, r * 0.65, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
-        ctx.fillStyle = "#fff8eb";
+        ctx.fillStyle = "#e2e8f0";
         ctx.fillRect(-r * 0.24, -r * 0.76, r * 0.48, r * 0.44);
         ctx.strokeRect(-r * 0.24, -r * 0.76, r * 0.48, r * 0.44);
       } else if (gear.id === "sprinkler_basic" || gear.id === "sprinkler_gold") {
@@ -1444,12 +1447,12 @@
         ctx.fill();
         ctx.stroke();
       } else {
-        ctx.fillStyle = "#b56b32";
+        ctx.fillStyle = "#a35e29";
         ctx.beginPath();
         ctx.roundRect(-r * 0.72, -r * 0.72, r * 1.44, r * 1.44, 8);
         ctx.fill();
         ctx.stroke();
-        ctx.strokeStyle = "#5ef0a2";
+        ctx.strokeStyle = "#ffd15c";
         ctx.lineWidth = 3.4;
         ctx.beginPath();
         ctx.moveTo(0, -r * 0.4);
@@ -1762,7 +1765,7 @@
     }
 
     let state = loadState();
-    let activeTool = "plant"; // plant | gear | shovel
+    let activeTool = "plant";
     let shopFilter = "all";
     let gearFilter = "all";
     let currentView = "garden";
@@ -2103,11 +2106,11 @@
       if (idx >= 0 && idx < 15) plotBounce[idx] = strength;
     }
 
-    function spawnFloatingText(x, y, text, color = "#38d984") {
+    function spawnFloatingText(x, y, text, color = "#ffd15c") {
       floatingPopups.push({ x, y, text, color, life: 1.0 });
     }
 
-    function spawnBurst(x, y, color = "#38d984", count = 10) {
+    function spawnBurst(x, y, color = "#60a5fa", count = 10) {
       for (let i = 0; i < count; i++) {
         const ang = (Math.PI * 2 * i) / count + Math.random() * 0.4;
         const spd = 1.4 + Math.random() * 2.6;
@@ -2200,7 +2203,7 @@
             if (val > state.bestFruitValue) state.bestFruitValue = val;
             if (plotRects[i]) {
               const r = plotRects[i];
-              spawnFloatingText(r.x + r.w / 2, r.y + r.h / 2, `+${formatNumber(val)}`, "#ffd24c");
+              spawnFloatingText(r.x + r.w / 2, r.y + r.h / 2, `+${formatNumber(val)}`, "#ffd15c");
             }
             if (crop.multi) {
               p.ready = false;
@@ -2276,7 +2279,7 @@
           .map(d => {
             const g = getGear(d.id);
             if (!g) return "";
-            return `<div class="device-chip"><span style="width:7px;height:7px;border-radius:50%;background:${g.color};border:1px solid #1f4d36;display:inline-block;"></span>${g.shortName} • ${formatTimeLeft(d.endAt - now)}</div>`;
+            return `<div class="device-chip"><span style="width:7px;height:7px;border-radius:50%;background:${g.color};border:1px solid #0c0e17;display:inline-block;"></span>${g.shortName} • ${formatTimeLeft(d.endAt - now)}</div>`;
           })
           .join("");
       }
@@ -2320,7 +2323,7 @@
       if (plotRects[idx]) {
         const r = plotRects[idx];
         spawnBurst(r.x + r.w / 2, r.y + r.h / 2, crop.color, 12);
-        spawnFloatingText(r.x + r.w / 2, r.y + r.h * 0.4, `+${harvestedWeight} кг`, "#63f2a5");
+        spawnFloatingText(r.x + r.w / 2, r.y + r.h * 0.4, `+${harvestedWeight} кг`, "#ffd15c");
       }
 
       if (crop.multi) {
@@ -2366,7 +2369,6 @@
       const p = state.plots[idx];
       const rect = plotRects[idx];
 
-      // 1. Лопата
       if (activeTool === "shovel") {
         if (!p.cropId) {
           showToast("Эта грядка пустая");
@@ -2398,14 +2400,12 @@
         return;
       }
 
-      // 2. Сбор созревшего урожая
       if (p.cropId && p.ready) {
         harvestPlot(idx);
         saveState();
         return;
       }
 
-      // 3. Применение снаряжения на грядку
       if (activeTool === "gear") {
         const gItem = getGear(state.selectedGear);
         const gQty = state.gearInventory[state.selectedGear] || 0;
@@ -2426,22 +2426,22 @@
           p.progressMs = Math.min(maxMs, p.progressMs + maxMs * 0.40);
           if (rect) {
             spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#4dabf7", 10);
-            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, "+40% рост", "#a5d8ff");
+            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, "+40% рост", "#7dd3fc");
           }
           showToast("Полито (+40% роста)");
         } else if (gItem.id === "growth_fertilizer") {
           p.progressMs = Math.min(maxMs, p.progressMs + maxMs * 0.75);
           p.giantBoost = Number((p.giantBoost * 1.25).toFixed(2));
           if (rect) {
-            spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#51cf66", 12);
-            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, "+75% / +25% вес", "#b2f2bb");
+            spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#60a5fa", 12);
+            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, "+75% / +25% вес", "#93c5fd");
           }
           showToast("Удобрено (+75% роста и +25% вес)");
         } else if (gItem.id === "giant_elixir") {
           p.giantBoost = Number((p.giantBoost * (2.5 + Math.random())).toFixed(2));
           if (rect) {
             spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#f783ac", 14);
-            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, `Размер ${p.giantBoost}x`, "#fcc2d7");
+            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, `Размер ${p.giantBoost}x`, "#f9a8d4");
           }
           showToast("Эликсир гиганта применён!");
         }
@@ -2458,7 +2458,6 @@
         return;
       }
 
-      // 4. Посадка на пустую грядку
       if (!p.cropId) {
         ensureValidSelectedSeed(state);
         const qty = state.seedInventory[state.selectedSeed] || 0;
@@ -2486,7 +2485,6 @@
         return;
       }
 
-      // 5. Инспектор грядки
       const crop = getCrop(p.cropId);
       const pct = Math.min(99, Math.floor((p.progressMs / (p.growDuration * 1000)) * 100));
       openModal(
@@ -2666,7 +2664,7 @@
       sorted.forEach(item => {
         const crop = getCrop(item.cropId);
         const mutHtml = item.mutations && item.mutations.length
-          ? item.mutations.map(m => `<span class="tag" style="background:${m.color};color:#1b3b2b">${m.name} x${m.mult}</span>`).join(" ")
+          ? item.mutations.map(m => `<span class="tag" style="background:${m.color};color:#0c0e17">${m.name} x${m.mult}</span>`).join(" ")
           : `<span class="tag rarity-common">Стандарт</span>`;
 
         const card = document.createElement("div");
@@ -2677,7 +2675,7 @@
             <div class="item-info">
               <div class="item-title-row">
                 <span class="item-name">${item.name}</span>
-                <span style="font-size:11.5px;color:#1fa861;font-weight:900;">${item.weight} кг</span>
+                <span style="font-size:11.5px;color:#60a5fa;font-weight:900;">${item.weight} кг</span>
               </div>
               <div class="item-meta" style="margin-top:4px;">${mutHtml}</div>
             </div>
@@ -2785,7 +2783,7 @@
       };
     });
 
-    // --- LUSH CARTOON MEADOW & WOODEN GARDEN RENDERER ---
+    // --- DARK COZY COURTYARD & WOODEN GARDEN RENDERER ---
     const canvasContainer = document.getElementById("canvasContainer");
     const canvas = document.getElementById("gardenCanvas");
     const ctx = canvas.getContext("2d");
@@ -2810,20 +2808,20 @@
       window.addEventListener("resize", resizeCanvas);
     }
 
-    const meadowDecos = Array.from({ length: 28 }, (_, idx) => ({
+    const courtyardStones = Array.from({ length: 24 }, (_, idx) => ({
       rx: ((idx * 73) % 100) / 100,
       ry: ((idx * 41) % 100) / 100,
-      isFlower: idx % 4 === 0,
-      flowerColor: idx % 8 === 0 ? "#fff3bf" : "#ffc9c9"
+      radX: 4 + (idx % 3) * 2.5,
+      radY: 2.5 + (idx % 2) * 1.5
     }));
 
-    const pollenMotes = Array.from({ length: 18 }, () => ({
+    const fireflies = Array.from({ length: 18 }, () => ({
       x: Math.random() * 500,
       y: Math.random() * 700,
-      r: 2.2 + Math.random() * 2.2,
+      r: 1.8 + Math.random() * 1.8,
       phase: Math.random() * Math.PI * 2,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: -0.15 - Math.random() * 0.25
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: -0.12 - Math.random() * 0.2
     }));
 
     const drops = Array.from({ length: 38 }, () => ({
@@ -2836,13 +2834,14 @@
     function drawLockVector(cx, cy) {
       ctx.save();
       ctx.translate(cx, cy);
-      ctx.strokeStyle = "#1f4d36";
-      ctx.fillStyle = "#fff8eb";
+      ctx.strokeStyle = "#0c0e17";
       ctx.lineWidth = 2.4;
       ctx.beginPath();
       ctx.arc(0, -5, 6.5, Math.PI, 0);
+      ctx.strokeStyle = "#cbd5e1";
       ctx.stroke();
-      ctx.fillStyle = "#ffd24c";
+      ctx.fillStyle = "#ffd15c";
+      ctx.strokeStyle = "#0c0e17";
       ctx.beginPath();
       ctx.roundRect(-8.5, -3, 17, 13.5, 4);
       ctx.fill();
@@ -2854,35 +2853,21 @@
       if (currentView === "garden") {
         const wObj = WEATHERS.find(w => w.id === state.weather.id) || WEATHERS[0];
 
-        // Soft, eye-pleasing sunny meadow grass gradient
+        // Cozy dark twilight courtyard gradient (no bright green)
         const grad = ctx.createLinearGradient(0, 0, 0, logicalH);
-        grad.addColorStop(0, wObj.grassTop);
-        grad.addColorStop(1, wObj.grassBot);
+        grad.addColorStop(0, wObj.yardTop);
+        grad.addColorStop(1, wObj.yardBot);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, logicalW, logicalH);
 
-        // Decorative cartoon grass tufts & tiny meadow daisies
-        meadowDecos.forEach(d => {
-          const mx = d.rx * logicalW;
-          const my = d.ry * logicalH;
-          ctx.strokeStyle = wObj.tuft;
-          ctx.lineWidth = 2;
-          ctx.lineCap = "round";
+        // Subtle cartoon stepping stones on the dark ground
+        courtyardStones.forEach(s => {
+          const sx = s.rx * logicalW;
+          const sy = s.ry * logicalH;
+          ctx.fillStyle = wObj.pebble;
           ctx.beginPath();
-          ctx.moveTo(mx - 4, my);
-          ctx.lineTo(mx - 6, my - 5);
-          ctx.moveTo(mx, my);
-          ctx.lineTo(mx, my - 6);
-          ctx.moveTo(mx + 4, my);
-          ctx.lineTo(mx + 6, my - 5);
-          ctx.stroke();
-
-          if (d.isFlower) {
-            ctx.fillStyle = d.flowerColor;
-            ctx.beginPath();
-            ctx.arc(mx + 6, my - 2, 2.6, 0, Math.PI * 2);
-            ctx.fill();
-          }
+          ctx.ellipse(sx, sy, s.radX, s.radY, 0.2, 0, Math.PI * 2);
+          ctx.fill();
         });
 
         const hasDevices = state.devices.length > 0;
@@ -2907,7 +2892,6 @@
           const unlocked = i < state.unlockedPlots;
           const p = state.plots[i];
 
-          // Decay bounce animation smoothly
           if (plotBounce[i] > 0.005) {
             plotBounce[i] *= 0.86;
           } else {
@@ -2920,10 +2904,10 @@
           if (!unlocked) {
             ctx.beginPath();
             ctx.roundRect(x, y, cellW, cellH, 16);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.18)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
             ctx.fill();
             ctx.setLineDash([6, 5]);
-            ctx.strokeStyle = "rgba(31, 77, 54, 0.45)";
+            ctx.strokeStyle = "rgba(148, 163, 184, 0.28)";
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.setLineDash([]);
@@ -2932,36 +2916,36 @@
             continue;
           }
 
-          // Ground drop shadow under raised wooden garden bed
+          // Ground shadow under wooden bed
           ctx.beginPath();
           ctx.roundRect(x, y + 4, cellW, cellH, 16);
-          ctx.fillStyle = "rgba(24, 58, 36, 0.35)";
+          ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
           ctx.fill();
 
-          // Warm wooden raised garden bed frame
+          // Warm dark-oak wooden raised garden bed frame
           ctx.beginPath();
           ctx.roundRect(x, y, cellW, cellH, 16);
-          ctx.fillStyle = "#c4783b";
+          ctx.fillStyle = "#8c5227";
           ctx.fill();
           ctx.strokeStyle = activeTool === "shovel" && p.cropId
-            ? "#e03131"
+            ? "#ff6b6b"
             : activeTool === "gear" && p.cropId && !p.ready
-              ? "#f59f00"
+              ? "#60a5fa"
               : p.ready
-                ? "#2b8a3e"
-                : "#3b200d";
+                ? "#ffd15c"
+                : "#120a04";
           ctx.lineWidth = p.ready ? 2.8 : 2.2;
           ctx.stroke();
 
-          // Rich cozy soil bed inside wooden border
+          // Rich dark soil bed inside wooden border
           const inset = 4.5;
           ctx.beginPath();
           ctx.roundRect(x + inset, y + inset, cellW - inset * 2, cellH - inset * 2, 12);
-          ctx.fillStyle = p.cropId ? "#6b3e1e" : "#5c3418";
+          ctx.fillStyle = p.cropId ? "#472711" : "#3a1f0d";
           ctx.fill();
 
           // Cartoon soil furrows
-          ctx.strokeStyle = "rgba(43, 21, 7, 0.4)";
+          ctx.strokeStyle = "rgba(18, 9, 3, 0.55)";
           ctx.lineWidth = 1.8;
           ctx.lineCap = "round";
           ctx.beginPath();
@@ -2971,7 +2955,6 @@
           ctx.lineTo(x + cellW - 14, y + cellH * 0.65);
           ctx.stroke();
 
-          // Plant rendering (ALWAYS clearly shows what crop is growing!)
           if (p.cropId) {
             const crop = getCrop(p.cropId);
             const maxMs = p.growDuration * 1000;
@@ -2980,12 +2963,12 @@
             if (p.ready) {
               const auraColor = p.mutations && p.mutations.length > 0
                 ? p.mutations[p.mutations.length - 1].color
-                : "#fff3bf";
+                : "#ffd15c";
               const pulse = 0.88 + Math.sin(ts / 220 + i) * 0.12;
               const radius = Math.min(cellW, cellH) * 0.38 * pulse;
               ctx.beginPath();
               ctx.arc(x + cellW / 2, y + cellH / 2 + 2, radius, 0, Math.PI * 2);
-              ctx.fillStyle = auraColor + "55";
+              ctx.fillStyle = auraColor + "40";
               ctx.fill();
             }
 
@@ -2998,24 +2981,23 @@
 
             const bob = p.ready ? Math.sin(ts / 230 + i) * 2.5 : 0;
 
-            // Apply squash & stretch bounce around plot center
             ctx.save();
             ctx.translate(x + cellW / 2, y + cellH / 2 + 3 + bob);
             ctx.scale(1 + bounceWave, 1 - bounceWave);
             drawCropIllustration(ctx, crop, 0, 0, baseRadius * scale, progress, true);
             ctx.restore();
 
-            // Cream cartoon label pill at top of bed
+            // Dark cartoon label pill at top of bed (easy on eyes, zero glare)
             const shortLabel = crop.name.split(" ")[0];
-            ctx.fillStyle = "rgba(244, 251, 246, 0.94)";
-            ctx.strokeStyle = "#1f4d36";
+            ctx.fillStyle = "rgba(23, 28, 43, 0.92)";
+            ctx.strokeStyle = "#0c0e17";
             ctx.lineWidth = 1.5;
             ctx.beginPath();
             ctx.roundRect(x + 5, y + 4, cellW - 10, 14, 6);
             ctx.fill();
             ctx.stroke();
 
-            ctx.fillStyle = p.ready ? "#19713b" : "#1b3b2b";
+            ctx.fillStyle = p.ready ? "#ffd15c" : "#f1f5f9";
             ctx.font = "900 9px Nunito, sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
@@ -3023,30 +3005,30 @@
               const pct = Math.floor(progress * 100);
               ctx.fillText(`${shortLabel} ${pct}%`, x + cellW / 2, y + 11.2);
 
-              // Chunky mint progress bar at bottom
+              // Sky-blue progress bar at bottom
               const barW = cellW - 22;
-              ctx.fillStyle = "#2b1507";
+              ctx.fillStyle = "#120a04";
               ctx.beginPath();
               ctx.roundRect(x + 11, y + cellH - 11, barW, 6, 3);
               ctx.fill();
 
-              ctx.fillStyle = "#5ef0a2";
+              ctx.fillStyle = "#38bdf8";
               ctx.beginPath();
               ctx.roundRect(x + 11.5, y + cellH - 10.5, Math.max(5, (barW - 1) * progress), 5, 2.5);
               ctx.fill();
             } else {
               ctx.fillText(shortLabel, x + cellW / 2, y + 11.2);
 
-              // Weight badge pill at bottom
-              ctx.fillStyle = p.mutations.length ? "#fff3bf" : "#e3f9ec";
-              ctx.strokeStyle = "#1f4d36";
+              // Dark weight badge pill at bottom
+              ctx.fillStyle = p.mutations.length ? "rgba(59, 42, 20, 0.95)" : "rgba(23, 28, 43, 0.94)";
+              ctx.strokeStyle = "#0c0e17";
               ctx.lineWidth = 1.5;
               ctx.beginPath();
               ctx.roundRect(x + 7, y + cellH - 18, cellW - 14, 13.5, 6);
               ctx.fill();
               ctx.stroke();
 
-              ctx.fillStyle = p.mutations.length ? "#8c5200" : "#125c30";
+              ctx.fillStyle = p.mutations.length ? "#ffd15c" : "#93c5fd";
               ctx.font = "900 9.5px Nunito, sans-serif";
               ctx.fillText(`${p.weight} кг`, x + cellW / 2, y + cellH - 11.2);
             }
@@ -3054,16 +3036,16 @@
           ctx.restore();
         }
 
-        // Warm sunny pollen motes floating gently
-        pollenMotes.forEach(f => {
+        // Warm golden fireflies floating gently in the twilight yard
+        fireflies.forEach(f => {
           f.x += f.vx;
           f.y += f.vy;
           f.phase += 0.04;
           if (f.y < -10) { f.y = logicalH + 10; f.x = Math.random() * logicalW; }
           if (f.x < -10) f.x = logicalW + 10;
           if (f.x > logicalW + 10) f.x = -10;
-          const alpha = 0.4 + Math.sin(f.phase) * 0.3;
-          ctx.fillStyle = `rgba(255, 250, 210, ${Math.max(0.15, alpha)})`;
+          const alpha = 0.28 + Math.sin(f.phase) * 0.22;
+          ctx.fillStyle = `rgba(255, 215, 110, ${Math.max(0.08, alpha)})`;
           ctx.beginPath();
           ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
           ctx.fill();
@@ -3071,7 +3053,7 @@
 
         // Weather particles
         if (state.weather.id === "rain" || state.weather.id === "storm") {
-          ctx.strokeStyle = "rgba(219, 244, 255, 0.72)";
+          ctx.strokeStyle = "rgba(147, 197, 253, 0.55)";
           ctx.lineWidth = 2;
           ctx.lineCap = "round";
           drops.forEach(d => {
@@ -3084,7 +3066,7 @@
             ctx.stroke();
           });
         } else if (state.weather.id === "frost") {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+          ctx.fillStyle = "rgba(224, 242, 254, 0.7)";
           drops.forEach(d => {
             d.y += d.speed * 0.5;
             d.x += Math.sin(ts / 500 + d.y) * 0.4;
@@ -3094,7 +3076,7 @@
             ctx.fill();
           });
         } else if (state.weather.id === "meteor") {
-          ctx.strokeStyle = "rgba(255, 232, 117, 0.9)";
+          ctx.strokeStyle = "rgba(255, 215, 100, 0.85)";
           ctx.lineWidth = 2.4;
           ctx.lineCap = "round";
           drops.slice(0, 8).forEach(d => {
@@ -3121,7 +3103,7 @@
           }
           ctx.globalAlpha = Math.max(0, bp.life);
           ctx.fillStyle = bp.color;
-          ctx.strokeStyle = "#1f4d36";
+          ctx.strokeStyle = "#0c0e17";
           ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.arc(bp.x, bp.y, bp.r, 0, Math.PI * 2);
@@ -3143,7 +3125,7 @@
           ctx.globalAlpha = Math.max(0, fp.life);
           ctx.font = "900 13px Nunito, sans-serif";
           ctx.textAlign = "center";
-          ctx.strokeStyle = "#1f4d36";
+          ctx.strokeStyle = "#0c0e17";
           ctx.lineWidth = 3.5;
           ctx.strokeText(fp.text, fp.x, fp.y);
           ctx.fillStyle = fp.color;
