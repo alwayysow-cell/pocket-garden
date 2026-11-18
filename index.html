@@ -7,10 +7,11 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg: #0c1410;
-      --bg-card: #15211b;
-      --bg-card-2: #1d2d25;
-      --border: rgba(167, 243, 208, 0.14);
+      --bg: #09110d;
+      --bg-card: #121e18;
+      --bg-card-2: #192921;
+      --border: rgba(167, 243, 208, 0.15);
+      --border-bright: rgba(52, 211, 153, 0.45);
       --text: #ecfdf5;
       --muted: #94a3b8;
       --accent: #34d399;
@@ -46,17 +47,18 @@
       gap: 8px;
     }
 
-    /* COMPACT HEADER */
+    /* HEADER */
     .header {
-      background: linear-gradient(145deg, #16241d, #101a15);
+      background: linear-gradient(145deg, #16251e, #0e1813);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 8px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
       flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     }
 
     .profile {
@@ -67,19 +69,20 @@
     }
 
     .avatar {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: linear-gradient(135deg, #10b981, #047857);
-      border: 2px solid rgba(52, 211, 153, 0.45);
+      border: 2px solid var(--border-bright);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 14px;
+      font-size: 15px;
       color: #fff;
       overflow: hidden;
       flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(52, 211, 153, 0.25);
     }
 
     .avatar img {
@@ -95,7 +98,7 @@
 
     .profile-name {
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -104,6 +107,7 @@
     .profile-record {
       font-size: 10px;
       color: var(--gold);
+      font-weight: 700;
       margin-top: 1px;
     }
 
@@ -118,16 +122,17 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
       border-radius: 999px;
       padding: 4px 8px;
       font-size: 11px;
+      font-weight: 600;
       color: #cbd5e1;
     }
 
     .weather-bar {
-      width: 24px;
+      width: 22px;
       height: 4px;
       background: rgba(255, 255, 255, 0.14);
       border-radius: 4px;
@@ -142,13 +147,14 @@
     }
 
     .coins-badge {
-      background: rgba(251, 191, 36, 0.14);
-      border: 1px solid rgba(251, 191, 36, 0.35);
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(217, 119, 6, 0.15));
+      border: 1px solid rgba(251, 191, 36, 0.4);
       color: #fde68a;
-      padding: 4px 9px;
+      padding: 4px 10px;
       border-radius: 999px;
       font-weight: 800;
       font-size: 13px;
+      box-shadow: 0 2px 10px rgba(251, 191, 36, 0.12);
     }
 
     /* MAIN VIEWPORT */
@@ -180,12 +186,12 @@
       flex: 1;
       min-height: 0;
       width: 100%;
-      border-radius: 16px;
+      border-radius: 18px;
       overflow: hidden;
       border: 1px solid var(--border);
-      background: #13241b;
+      background: #102017;
       position: relative;
-      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
     }
 
     canvas {
@@ -198,24 +204,71 @@
     .garden-overlay-top {
       position: absolute;
       top: 8px;
-      left: 10px;
-      right: 10px;
+      left: 8px;
+      right: 8px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 6px;
       pointer-events: none;
       z-index: 5;
     }
 
+    .hud-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
     .hud-chip {
-      background: rgba(12, 20, 16, 0.76);
-      backdrop-filter: blur(6px);
+      background: rgba(10, 18, 14, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 4px 9px;
+      padding: 5px 10px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 700;
       color: #e2e8f0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .hud-chip.clickable {
+      pointer-events: auto;
+      cursor: pointer;
+      border-color: var(--border-bright);
+      background: rgba(14, 34, 24, 0.86);
+      color: #a7f3d0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.1s;
+    }
+
+    .hud-chip.clickable:active {
+      transform: scale(0.95);
+    }
+
+    .active-devices-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .device-chip {
+      background: rgba(12, 24, 18, 0.84);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #ecfdf5;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .toolbar {
@@ -226,10 +279,10 @@
     }
 
     .tool-btn {
-      background: var(--bg-card);
+      background: linear-gradient(180deg, #17261f, #111c17);
       border: 1px solid var(--border);
       color: var(--text);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 7px 4px;
       font-size: 11px;
       font-weight: 700;
@@ -238,27 +291,29 @@
       align-items: center;
       gap: 2px;
       cursor: pointer;
+      position: relative;
       transition: transform 0.1s, border-color 0.15s, background 0.15s;
     }
 
     .tool-btn:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
     .tool-btn.active {
-      background: rgba(52, 211, 153, 0.18);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.14));
       border-color: var(--accent);
       color: #a7f3d0;
+      box-shadow: 0 0 14px rgba(52, 211, 153, 0.16);
     }
 
     .tool-btn.danger.active {
-      background: rgba(248, 113, 113, 0.18);
+      background: linear-gradient(180deg, rgba(248, 113, 113, 0.24), rgba(220, 38, 38, 0.14));
       border-color: var(--danger);
       color: #fecaca;
     }
 
     .tool-btn .icon {
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1;
     }
 
@@ -266,17 +321,21 @@
       font-size: 10px;
       color: var(--muted);
       font-weight: 600;
-      max-width: 74px;
+      max-width: 76px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* SCROLLABLE SUB-PAGES (SHOP, GEAR, BAG) */
+    .tool-btn.active .sub {
+      color: #6ee7b7;
+    }
+
+    /* SUBPAGES */
     .subpage {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 12px;
       gap: 10px;
       overflow: hidden;
@@ -342,9 +401,9 @@
     }
 
     .item-card {
-      background: var(--bg-card-2);
+      background: linear-gradient(145deg, #1b2c23, #15231c);
       border: 1px solid var(--border);
-      border-radius: 13px;
+      border-radius: 14px;
       padding: 10px 12px;
       display: flex;
       align-items: center;
@@ -356,6 +415,11 @@
       opacity: 0.5;
     }
 
+    .item-card.selected-card {
+      border-color: var(--accent);
+      background: linear-gradient(145deg, #1d3629, #15261d);
+    }
+
     .item-left {
       display: flex;
       align-items: center;
@@ -365,14 +429,15 @@
     }
 
     .item-emoji {
-      width: 40px;
-      height: 40px;
-      border-radius: 11px;
-      background: rgba(0, 0, 0, 0.24);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 23px;
       flex-shrink: 0;
     }
 
@@ -425,11 +490,13 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(5, 150, 105, 0.3);
     }
 
     .buy-btn:disabled {
-      background: #334155;
-      color: #94a3b8;
+      background: #2b3832;
+      color: #7c8f85;
+      box-shadow: none;
       cursor: not-allowed;
     }
 
@@ -457,7 +524,7 @@
       line-height: 1.5;
     }
 
-    /* BOTTOM NAVIGATION BAR */
+    /* BOTTOM NAVIGATION */
     .bottom-nav {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -473,7 +540,7 @@
       border: none;
       background: transparent;
       color: var(--muted);
-      border-radius: 11px;
+      border-radius: 12px;
       padding: 7px 4px;
       display: flex;
       flex-direction: column;
@@ -492,9 +559,9 @@
     }
 
     .nav-btn.active {
-      background: var(--accent-dark);
+      background: linear-gradient(135deg, #10b981, #059669);
       color: #fff;
-      box-shadow: 0 2px 10px rgba(5, 150, 105, 0.35);
+      box-shadow: 0 3px 12px rgba(5, 150, 105, 0.35);
     }
 
     .badge-dot {
@@ -502,7 +569,7 @@
       top: 4px;
       right: 14px;
       background: #f59e0b;
-      color: #0f1713;
+      color: #09110d;
       font-size: 9px;
       font-weight: 900;
       padding: 1px 5px;
@@ -514,11 +581,12 @@
       display: inline-block;
     }
 
-    /* MODAL & TOAST */
+    /* MODALS & SEED PICKER SHEET */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.74);
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(3px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -530,21 +598,38 @@
       display: flex;
     }
 
+    .modal-backdrop.sheet {
+      align-items: flex-end;
+      padding: 0;
+    }
+
     .modal {
-      background: #18261f;
+      background: #15231c;
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 16px;
       width: 100%;
-      max-width: 350px;
+      max-width: 360px;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-backdrop.sheet .modal {
+      max-width: 520px;
+      border-radius: 22px 22px 0 0;
+      border-bottom: none;
+      max-height: 72dvh;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
     }
 
     .modal-title {
       font-size: 16px;
       font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .modal-body {
@@ -560,7 +645,7 @@
     }
 
     .btn-secondary {
-      background: #27372f;
+      background: #23352c;
       border: 1px solid var(--border);
       color: var(--text);
       padding: 9px 14px;
@@ -583,10 +668,10 @@
 
     .toast {
       position: fixed;
-      top: 56px;
+      top: 58px;
       left: 50%;
       transform: translateX(-50%) translateY(-14px);
-      background: #102a1e;
+      background: #0e261b;
       border: 1px solid var(--accent);
       color: #ecfdf5;
       padding: 7px 14px;
@@ -611,7 +696,7 @@
   <div id="toast" class="toast"></div>
 
   <div class="app">
-    <!-- COMPACT HEADER -->
+    <!-- HEADER -->
     <header class="header">
       <div class="profile">
         <div id="avatarBox" class="avatar">🌱</div>
@@ -635,13 +720,19 @@
 
     <!-- MAIN VIEWS -->
     <main class="views">
-      <!-- 1. GARDEN VIEW (FULLSCREEN) -->
+      <!-- 1. GARDEN VIEW -->
       <section id="view-garden" class="view garden-view active">
         <div id="canvasContainer" class="canvas-container">
           <div class="garden-overlay-top">
-            <span id="plotCountLabel" class="hud-chip">🏡 9 / 15</span>
-            <span id="selectedSeedHud" class="hud-chip">🌱 Морковь (4)</span>
-            <span id="readyCountLabel" class="hud-chip">🧺 0</span>
+            <div class="hud-row">
+              <span id="plotCountLabel" class="hud-chip">🏡 9 / 15</span>
+              <button id="selectedSeedHud" class="hud-chip clickable" title="Выбрать семечко">
+                <span>🌱 Морковь (4)</span>
+                <span style="font-size:9px;opacity:0.8;">▼</span>
+              </button>
+              <span id="readyCountLabel" class="hud-chip">🧺 0</span>
+            </div>
+            <div id="activeDevicesStrip" class="active-devices-strip"></div>
           </div>
           <canvas id="gardenCanvas"></canvas>
         </div>
@@ -662,7 +753,7 @@
           <button id="toolPlant" class="tool-btn active">
             <span class="icon">🌱</span>
             <span>Посадка</span>
-            <span id="seedSub" class="sub">Морковь</span>
+            <span id="seedSub" class="sub">Выбрать ▾</span>
           </button>
 
           <button id="toolShovel" class="tool-btn danger">
@@ -722,6 +813,7 @@
       <button class="nav-btn" data-view="gear">
         <span class="nav-icon">⚙️</span>
         <span>Снаряж.</span>
+        <span id="gearBadge" class="badge-dot">0</span>
       </button>
       <button class="nav-btn" data-view="bag">
         <span class="nav-icon">🎒</span>
@@ -731,12 +823,23 @@
     </nav>
   </div>
 
-  <!-- MODAL -->
+  <!-- GENERAL MODAL -->
   <div id="modalBackdrop" class="modal-backdrop">
     <div class="modal">
       <div id="modalTitle" class="modal-title">Инфо</div>
       <div id="modalBody" class="modal-body"></div>
       <div id="modalActions" class="modal-actions"></div>
+    </div>
+  </div>
+
+  <!-- SEED PICKER BOTTOM SHEET -->
+  <div id="seedPickerBackdrop" class="modal-backdrop sheet">
+    <div class="modal">
+      <div class="modal-title">
+        <span>🌱 Выбери семена для посадки</span>
+        <button id="closeSeedPicker" class="btn-secondary" style="padding:5px 10px;">✕</button>
+      </div>
+      <div id="seedPickerList" class="scroll-list" style="max-height:52dvh;"></div>
     </div>
   </div>
 
@@ -780,28 +883,32 @@
     ];
 
     const WEATHERS = [
-      { id: "clear", name: "Ясно", icon: "☀️", weight: 42, skyTop: "#1a382b", skyBot: "#11241b" },
-      { id: "rain", name: "Дождь", icon: "🌧️", weight: 24, skyTop: "#162a38", skyBot: "#0f1e28" },
-      { id: "frost", name: "Заморозки", icon: "❄️", weight: 15, skyTop: "#1c3644", skyBot: "#132631" },
-      { id: "storm", name: "Гроза", icon: "⚡", weight: 12, skyTop: "#201c3d", skyBot: "#121024" },
-      { id: "meteor", name: "Звездопад", icon: "🌠", weight: 7, skyTop: "#1d1538", skyBot: "#0e0b20" }
+      { id: "clear", name: "Ясно", icon: "☀️", weight: 42, skyTop: "#1a3c2d", skyBot: "#0f231a" },
+      { id: "rain", name: "Дождь", icon: "🌧️", weight: 24, skyTop: "#152b3b", skyBot: "#0d1b26" },
+      { id: "frost", name: "Заморозки", icon: "❄️", weight: 15, skyTop: "#1b3847", skyBot: "#11242e" },
+      { id: "storm", name: "Гроза", icon: "⚡", weight: 12, skyTop: "#221c42", skyBot: "#110e24" },
+      { id: "meteor", name: "Звездопад", icon: "🌠", weight: 7, skyTop: "#1e143d", skyBot: "#0c081f" }
     ];
 
     const GEAR_ITEMS = [
-      { id: "sprinkler_basic", type: "device", name: "Базовый спринклер", emoji: "💦", cost: 250, durationSec: 180, desc: "Ускоряет рост на 35% и повышает вес плодов на 3 мин." },
-      { id: "sprinkler_gold", type: "device", name: "Золотой спринклер", emoji: "✨", cost: 1200, durationSec: 240, desc: "Ускоряет рост на 70% и сильно повышает шанс Gold/Rainbow на 4 мин." },
-      { id: "lightning_rod", type: "device", name: "Громоотвод", emoji: "⚡", cost: 2200, durationSec: 300, desc: "Притягивает разряды в грозу: шанс мутации Shocked (x50) выше в 3 раза." },
-      { id: "star_prism", type: "device", name: "Звездная призма", emoji: "🔮", cost: 4500, durationSec: 300, desc: "Усиливает Starlit (x100) и Rainbow (x20) на всех грядках на 5 мин." },
-      { id: "collector_bee", type: "device", name: "Пчела-сборщик", emoji: "🐝", cost: 1800, durationSec: 240, desc: "Автоматически собирает созревшие плоды и сразу начисляет монеты." },
+      { id: "sprinkler_basic", type: "device", name: "Базовый спринклер", emoji: "💦", shortName: "Спринклер", cost: 250, durationSec: 180, desc: "Ускоряет рост на 35% и повышает вес плодов на 3 мин." },
+      { id: "sprinkler_gold", type: "device", name: "Золотой спринклер", emoji: "✨", shortName: "Зол. спринкл.", cost: 1200, durationSec: 240, desc: "Ускоряет рост на 70% и повышает шанс Gold/Rainbow на 4 мин." },
+      { id: "lightning_rod", type: "device", name: "Громоотвод", emoji: "⚡", shortName: "Громоотвод", cost: 2200, durationSec: 300, desc: "Притягивает разряды в грозу: шанс мутации Shocked (x50) выше в 3 раза." },
+      { id: "star_prism", type: "device", name: "Звездная призма", emoji: "🔮", shortName: "Призма", cost: 4500, durationSec: 300, desc: "Усиливает Starlit (x100) и Rainbow (x20) на всех грядках на 5 мин." },
+      { id: "collector_bee", type: "device", name: "Пчела-сборщик", emoji: "🐝", shortName: "Пчела", cost: 1800, durationSec: 240, desc: "Автоматически собирает созревшие плоды и сразу начисляет монеты." },
       { id: "giant_elixir", type: "consumable", name: "Эликсир гиганта", emoji: "🧪", cost: 600, desc: "Увеличивает вес и размер всех текущих растущих плодов в 2.5x–4x." },
       { id: "turbo_can", type: "upgrade", name: "Турбо-лейка", emoji: "🚿", cost: 900, desc: "Постоянно: 10 зарядов лейки вместо 5 и восстановление в 2 раза быстрее." },
       { id: "expand_plot", type: "expansion", name: "Расширение участка", emoji: "🏡", desc: "Добавляет +1 новую грядку в твой сад (максимум 15 грядок)." }
     ];
 
     const SHOP_REFRESH_MS = 5 * 60 * 1000;
-    const SAVE_KEY = "pocket_garden_save_v5";
+    const SAVE_KEY = "pocket_garden_save_v6";
 
-    // --- STATE & SAFE PERSISTENCE (NO RELOAD GLITCHES / NO OFFLINE GROWTH) ---
+    // --- HELPERS (DECLARED BEFORE LOAD) ---
+    function getCrop(id) {
+      return CROPS.find(c => c.id === id);
+    }
+
     function createEmptyPlot() {
       return {
         cropId: null,
@@ -815,8 +922,9 @@
     }
 
     function createDefaultState() {
+      const now = Date.now();
       return {
-        version: 5,
+        version: 6,
         coins: 50,
         bestFruitValue: 0,
         unlockedPlots: 9,
@@ -825,12 +933,130 @@
         selectedSeed: "carrot",
         harvestBag: [],
         waterCharges: 5,
-        lastWaterTick: Date.now(),
+        lastWaterTick: now,
         turboCan: false,
         devices: [],
         weather: { id: "clear", remainingMs: 45000, durationMs: 45000 },
-        shop: { nextRefreshAt: Date.now() + SHOP_REFRESH_MS, stock: {} }
+        shop: { nextRefreshAt: now + SHOP_REFRESH_MS, stock: {} },
+        lastTimestamp: now
       };
+    }
+
+    function rollFruitStatsWithContext(crop, plot, weatherId, activeDeviceIds) {
+      const hasGoldSprinkler = activeDeviceIds.includes("sprinkler_gold");
+      const hasBasicSprinkler = activeDeviceIds.includes("sprinkler_basic");
+      const hasPrism = activeDeviceIds.includes("star_prism");
+      const hasRod = activeDeviceIds.includes("lightning_rod");
+
+      const sizeBoost = (hasGoldSprinkler ? 1.45 : hasBasicSprinkler ? 1.2 : 1) * (plot.giantBoost || 1);
+      const isGiantRoll = Math.random() < 0.14;
+      const rawRatio = Math.pow(Math.random(), isGiantRoll ? 0.55 : 1.6);
+      const weight = Number(((crop.minKg + (crop.maxKg - crop.minKg) * rawRatio) * sizeBoost).toFixed(2));
+
+      const mutations = [];
+      const goldMult = hasGoldSprinkler ? 3 : 1;
+      const prismMult = hasPrism ? 3 : 1;
+      const rodMult = hasRod ? 3 : 1;
+
+      if (Math.random() < 0.015 * prismMult) {
+        mutations.push({ id: "rainbow", name: "Rainbow", mult: 20, color: "#f472b6" });
+      } else if (Math.random() < 0.045 * goldMult) {
+        mutations.push({ id: "gold", name: "Gold", mult: 5, color: "#fbbf24" });
+      }
+
+      if (weatherId === "rain" && Math.random() < 0.55) {
+        mutations.push({ id: "wet", name: "Wet", mult: 2, color: "#38bdf8" });
+      }
+      if (weatherId === "frost" && Math.random() < 0.45) {
+        mutations.push({ id: "frozen", name: "Frozen", mult: 10, color: "#7dd3fc" });
+      }
+      if (weatherId === "storm" && Math.random() < 0.22 * rodMult) {
+        mutations.push({ id: "shocked", name: "Shocked", mult: 50, color: "#c084fc" });
+      }
+      if (weatherId === "meteor" && Math.random() < 0.18 * prismMult) {
+        mutations.push({ id: "starlit", name: "Starlit", mult: 100, color: "#fde047" });
+      }
+
+      return { weight, mutations };
+    }
+
+    function calcFruitPrice(crop, weight, mutations) {
+      const avgKg = (crop.minKg + crop.maxKg) / 2;
+      const weightFactor = Math.max(0.7, weight / avgKg);
+      const mutMult = mutations.reduce((acc, m) => acc * m.mult, 1);
+      return Math.max(1, Math.round(crop.baseSell * weightFactor * mutMult));
+    }
+
+    // --- BUG-FREE OFFLINE PROGRESSION ENGINE ---
+    function applyElapsedOfflineTime(targetState, elapsedMs) {
+      if (elapsedMs <= 0) return 0;
+      const now = Date.now();
+      // Ограничиваем оффлайн-симуляцию 7 днями на случай сбоя системных часов
+      const safeElapsed = Math.min(elapsedMs, 7 * 24 * 60 * 60 * 1000);
+
+      // 1. Восстановление лейки
+      const maxWater = targetState.turboCan ? 10 : 5;
+      const regenMs = targetState.turboCan ? 7500 : 15000;
+      const waterDelta = Math.max(0, now - (targetState.lastWaterTick || now));
+      const gainedWater = Math.floor(waterDelta / regenMs);
+      if (gainedWater > 0) {
+        targetState.waterCharges = Math.min(maxWater, (targetState.waterCharges || 0) + gainedWater);
+        targetState.lastWaterTick = now - (waterDelta % regenMs);
+      }
+
+      // 2. Определяем, какие устройства работали в момент ухода
+      const wasActiveIds = (targetState.devices || [])
+        .filter(d => d.endAt > now - safeElapsed)
+        .map(d => d.id);
+
+      let offlineSpeed = 1;
+      if (wasActiveIds.includes("sprinkler_basic")) offlineSpeed += 0.35;
+      if (wasActiveIds.includes("sprinkler_gold")) offlineSpeed += 0.70;
+      if (targetState.weather && targetState.weather.id === "rain") offlineSpeed += 0.25;
+
+      const beeWasActive = wasActiveIds.includes("collector_bee");
+      let maturedCount = 0;
+
+      // 3. Аккуратный расчет роста для каждой грядки без сбросов
+      for (let i = 0; i < targetState.unlockedPlots; i++) {
+        const p = targetState.plots[i];
+        if (!p || !p.cropId) continue;
+        const crop = getCrop(p.cropId);
+        if (!crop) continue;
+
+        const maxMs = (p.growDuration || crop.growSec) * 1000;
+        if (!p.ready) {
+          p.progressMs = Math.min(maxMs, (p.progressMs || 0) + safeElapsed * offlineSpeed);
+          if (p.progressMs >= maxMs) {
+            p.ready = true;
+            const stats = rollFruitStatsWithContext(crop, p, targetState.weather.id, wasActiveIds);
+            p.weight = stats.weight;
+            p.mutations = stats.mutations;
+            maturedCount++;
+          }
+        }
+
+        // Если была активна пчела-сборщик — собираем созревшее в монеты
+        if (p.ready && beeWasActive) {
+          const val = calcFruitPrice(crop, p.weight, p.mutations);
+          targetState.coins += val;
+          if (val > targetState.bestFruitValue) targetState.bestFruitValue = val;
+          if (crop.multi) {
+            p.ready = false;
+            p.progressMs = 0;
+            p.weight = 0;
+            p.mutations = [];
+            p.giantBoost = 1;
+          } else {
+            targetState.plots[i] = createEmptyPlot();
+          }
+        }
+      }
+
+      // 4. Чистим истекшие устройства
+      targetState.devices = (targetState.devices || []).filter(d => d.endAt > now);
+      targetState.lastTimestamp = now;
+      return maturedCount;
     }
 
     function loadState() {
@@ -838,9 +1064,9 @@
       try {
         const raw =
           localStorage.getItem(SAVE_KEY) ||
+          localStorage.getItem("pocket_garden_save_v5") ||
           localStorage.getItem("pocket_garden_save_data") ||
-          localStorage.getItem("pocket_garden_v2") ||
-          localStorage.getItem("pocket_garden_v1");
+          localStorage.getItem("pocket_garden_v2");
 
         if (!raw) {
           def.shop.stock = generateShopStock();
@@ -848,7 +1074,8 @@
         }
 
         const parsed = JSON.parse(raw);
-        const state = {
+        const now = Date.now();
+        const st = {
           ...def,
           ...parsed,
           seedInventory: { ...def.seedInventory, ...(parsed.seedInventory || {}) },
@@ -856,24 +1083,15 @@
           shop: { ...def.shop, ...(parsed.shop || {}) }
         };
 
-        // Нормализация всех 15 грядок: сохраняем точный progressMs без скачков и багов при обновлении
-        state.plots = Array.from({ length: 15 }, (_, i) => {
+        st.plots = Array.from({ length: 15 }, (_, i) => {
           const old = parsed.plots && parsed.plots[i] ? parsed.plots[i] : null;
           if (!old || !old.cropId) return createEmptyPlot();
-
           const crop = getCrop(old.cropId);
           if (!crop) return createEmptyPlot();
 
           const durSec = Number(old.growDuration) || crop.growSec;
           const maxMs = durSec * 1000;
-          let progMs = Number(old.progressMs);
-
-          // Миграция со старой версии, если там был plantedAt
-          if (isNaN(progMs)) {
-            progMs = old.ready ? maxMs : 0;
-          }
-
-          progMs = Math.max(0, Math.min(maxMs, progMs));
+          const progMs = Math.max(0, Math.min(maxMs, Number(old.progressMs) || 0));
           const isReady = Boolean(old.ready) || progMs >= maxMs;
 
           return {
@@ -887,30 +1105,39 @@
           };
         });
 
-        if (!Array.isArray(state.harvestBag)) state.harvestBag = [];
-        if (!Array.isArray(state.devices)) state.devices = [];
+        if (!Array.isArray(st.harvestBag)) st.harvestBag = [];
+        if (!Array.isArray(st.devices)) st.devices = [];
 
-        const now = Date.now();
-        state.lastWaterTick = now;
-        if (typeof state.weather.remainingMs !== "number" || state.weather.remainingMs <= 0) {
-          state.weather.remainingMs = 45000;
-          state.weather.durationMs = 45000;
+        // Применяем оффлайн-время с момента последнего сохранения
+        const prevTs = Number(parsed.lastTimestamp) || now;
+        const offlineElapsed = Math.max(0, now - prevTs);
+        applyElapsedOfflineTime(st, offlineElapsed);
+
+        if (!st.shop.stock || Object.keys(st.shop.stock).length === 0 || now >= st.shop.nextRefreshAt) {
+          st.shop.stock = generateShopStock();
+          st.shop.nextRefreshAt = now + SHOP_REFRESH_MS;
         }
 
-        if (!state.shop.stock || Object.keys(state.shop.stock).length === 0 || now >= state.shop.nextRefreshAt) {
-          state.shop.stock = generateShopStock();
-          state.shop.nextRefreshAt = now + SHOP_REFRESH_MS;
-        }
-
-        return state;
+        ensureValidSelectedSeed(st);
+        return st;
       } catch (e) {
         def.shop.stock = generateShopStock();
         return def;
       }
     }
 
+    function ensureValidSelectedSeed(targetState) {
+      if ((targetState.seedInventory[targetState.selectedSeed] || 0) <= 0) {
+        const available = CROPS.find(c => (targetState.seedInventory[c.id] || 0) > 0);
+        if (available) {
+          targetState.selectedSeed = available.id;
+        }
+      }
+    }
+
     function saveState() {
       try {
+        state.lastTimestamp = Date.now();
         localStorage.setItem(SAVE_KEY, JSON.stringify(state));
       } catch (e) {}
     }
@@ -930,13 +1157,21 @@
     let currentView = "garden";
     let lastTickAt = Date.now();
 
-    // Сохранение перед перезагрузкой / сворачиванием мини-приложения
     window.addEventListener("beforeunload", saveState);
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         saveState();
       } else {
-        lastTickAt = Date.now(); // Сбрасываем дельту, чтобы при возврате не было скачка роста
+        const now = Date.now();
+        const awayMs = Math.max(0, now - (state.lastTimestamp || now));
+        if (awayMs > 1500) {
+          const matured = applyElapsedOfflineTime(state, awayMs);
+          if (matured > 0) {
+            showToast(`🌿 Пока тебя не было, созрело плодов: ${matured}`);
+          }
+          saveState();
+        }
+        lastTickAt = now;
       }
     });
 
@@ -967,14 +1202,14 @@
       }
     }
 
-    // --- TOAST & MODAL ---
+    // --- TOAST & MODALS ---
     let toastTimer = null;
     function showToast(text) {
       const el = document.getElementById("toast");
       el.textContent = text;
       el.classList.add("show");
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove("show"), 1900);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 2000);
     }
 
     function openModal(title, htmlBody, buttons) {
@@ -1003,11 +1238,75 @@
       if (e.target.id === "modalBackdrop") closeModal();
     });
 
-    // --- HELPERS ---
-    function getCrop(id) {
-      return CROPS.find(c => c.id === id);
+    // --- SEED PICKER SHEET ---
+    function openSeedPicker() {
+      const list = document.getElementById("seedPickerList");
+      list.innerHTML = "";
+
+      const ownedCrops = CROPS.filter(c => (state.seedInventory[c.id] || 0) > 0);
+
+      if (ownedCrops.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            У тебя пока нет купленных семян.<br><br>
+            <button id="goToShopFromPicker" class="buy-btn">🏪 Перейти в лавку семян</button>
+          </div>
+        `;
+        document.getElementById("goToShopFromPicker").onclick = () => {
+          closeSeedPicker();
+          switchView("shop");
+        };
+      } else {
+        ownedCrops.forEach(crop => {
+          const qty = state.seedInventory[crop.id] || 0;
+          const isSelected = state.selectedSeed === crop.id;
+
+          const card = document.createElement("div");
+          card.className = "item-card" + (isSelected ? " selected-card" : "");
+          card.style.cursor = "pointer";
+          card.innerHTML = `
+            <div class="item-left">
+              <div class="item-emoji">${crop.emoji}</div>
+              <div class="item-info">
+                <div class="item-title-row">
+                  <span class="item-name">${crop.name}</span>
+                  <span class="tag rarity-${crop.rarity}">${crop.rarityLabel}</span>
+                </div>
+                <div class="item-meta">
+                  ⏱ ${crop.growSec}с • ${crop.multi ? "♻️ Многоразовое" : "1️⃣ Одноразовое"} • В сумке: <strong>${qty} шт.</strong>
+                </div>
+              </div>
+            </div>
+            <button class="buy-btn" style="${isSelected ? 'background:#047857;' : ''}">${isSelected ? "✓ Выбрано" : "Выбрать"}</button>
+          `;
+
+          card.onclick = () => {
+            state.selectedSeed = crop.id;
+            activeTool = "plant";
+            updateToolButtons();
+            saveState();
+            closeSeedPicker();
+            haptic("light");
+            showToast(`🌱 Выбрано: ${crop.emoji} ${crop.name}`);
+          };
+
+          list.appendChild(card);
+        });
+      }
+
+      document.getElementById("seedPickerBackdrop").classList.add("open");
     }
 
+    function closeSeedPicker() {
+      document.getElementById("seedPickerBackdrop").classList.remove("open");
+    }
+
+    document.getElementById("closeSeedPicker").onclick = closeSeedPicker;
+    document.getElementById("seedPickerBackdrop").addEventListener("click", (e) => {
+      if (e.target.id === "seedPickerBackdrop") closeSeedPicker();
+    });
+
+    // --- FORMATTERS & SPEED ---
     function hasActiveDevice(id) {
       const now = Date.now();
       return state.devices.some(d => d.id === id && d.endAt > now);
@@ -1021,51 +1320,18 @@
       return mult;
     }
 
-    function rollFruitStats(crop, plot) {
-      const sizeBoost = (hasActiveDevice("sprinkler_gold") ? 1.45 : hasActiveDevice("sprinkler_basic") ? 1.2 : 1) * (plot.giantBoost || 1);
-      const isGiantRoll = Math.random() < 0.14;
-      const rawRatio = Math.pow(Math.random(), isGiantRoll ? 0.55 : 1.6);
-      const weight = Number(((crop.minKg + (crop.maxKg - crop.minKg) * rawRatio) * sizeBoost).toFixed(2));
-
-      const mutations = [];
-      const goldMult = hasActiveDevice("sprinkler_gold") ? 3 : 1;
-      const prismMult = hasActiveDevice("star_prism") ? 3 : 1;
-      const rodMult = hasActiveDevice("lightning_rod") ? 3 : 1;
-
-      if (Math.random() < 0.015 * prismMult) {
-        mutations.push({ id: "rainbow", name: "Rainbow", mult: 20, color: "#f472b6" });
-      } else if (Math.random() < 0.045 * goldMult) {
-        mutations.push({ id: "gold", name: "Gold", mult: 5, color: "#fbbf24" });
-      }
-
-      if (state.weather.id === "rain" && Math.random() < 0.55) {
-        mutations.push({ id: "wet", name: "Wet", mult: 2, color: "#38bdf8" });
-      }
-      if (state.weather.id === "frost" && Math.random() < 0.45) {
-        mutations.push({ id: "frozen", name: "Frozen", mult: 10, color: "#7dd3fc" });
-      }
-      if (state.weather.id === "storm" && Math.random() < 0.22 * rodMult) {
-        mutations.push({ id: "shocked", name: "Shocked", mult: 50, color: "#c084fc" });
-      }
-      if (state.weather.id === "meteor" && Math.random() < 0.18 * prismMult) {
-        mutations.push({ id: "starlit", name: "Starlit", mult: 100, color: "#fde047" });
-      }
-
-      return { weight, mutations };
-    }
-
-    function calcFruitPrice(crop, weight, mutations) {
-      const avgKg = (crop.minKg + crop.maxKg) / 2;
-      const weightFactor = Math.max(0.7, weight / avgKg);
-      const mutMult = mutations.reduce((acc, m) => acc * m.mult, 1);
-      return Math.max(1, Math.round(crop.baseSell * weightFactor * mutMult));
-    }
-
     function formatNumber(n) {
       if (n >= 1e9) return (n / 1e9).toFixed(2) + "B";
       if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
       if (n >= 1e4) return (n / 1e3).toFixed(1) + "K";
       return Math.floor(n).toLocaleString("ru-RU");
+    }
+
+    function formatTimeLeft(ms) {
+      const totalSec = Math.max(0, Math.ceil(ms / 1000));
+      const m = String(Math.floor(totalSec / 60)).padStart(2, "0");
+      const s = String(totalSec % 60).padStart(2, "0");
+      return `${m}:${s}`;
     }
 
     // --- WEATHER ---
@@ -1095,17 +1361,16 @@
       document.getElementById("weatherProgress").style.width = leftPct + "%";
     }
 
-    // --- GAME TICK (INCREMENTAL PROGRESS, SAFE ON REFRESH) ---
+    // --- GAME TICK ---
     let saveCounter = 0;
     function gameTick() {
       const now = Date.now();
-      // Ограничиваем шаг dt до 1000мс, чтобы при обновлении или сворачивании не было скачков
       const dt = Math.max(0, Math.min(1000, now - lastTickAt));
       lastTickAt = now;
 
       updateWeather(dt);
 
-      // Восстановление лейки
+      // Лейка
       const maxWater = state.turboCan ? 10 : 5;
       const regenMs = state.turboCan ? 7500 : 15000;
       if (state.waterCharges < maxWater) {
@@ -1117,27 +1382,31 @@
         state.lastWaterTick = now;
       }
 
-      // Автообновление лавки раз в 5 минут
+      // Магазин (раз в 5 мин)
       if (now >= state.shop.nextRefreshAt) {
         state.shop.stock = generateShopStock();
         state.shop.nextRefreshAt = now + SHOP_REFRESH_MS;
         showToast("🚚 В лавку завезли свежие семена!");
         if (currentView === "shop") renderShop();
       }
-      const remSec = Math.max(0, Math.ceil((state.shop.nextRefreshAt - now) / 1000));
-      const mm = String(Math.floor(remSec / 60)).padStart(2, "0");
-      const ss = String(remSec % 60).padStart(2, "0");
-      document.getElementById("shopTimer").textContent = `${mm}:${ss}`;
+      document.getElementById("shopTimer").textContent = formatTimeLeft(state.shop.nextRefreshAt - now);
 
-      // Устройства
+      // Устройства и живые таймеры
       const beforeDev = state.devices.length;
       state.devices = state.devices.filter(d => d.endAt > now);
       if (state.devices.length !== beforeDev && currentView === "gear") {
         renderGear();
       }
+      if (currentView === "gear" && state.devices.length > 0) {
+        state.devices.forEach(d => {
+          const el = document.getElementById("gear-timer-" + d.id);
+          if (el) el.textContent = formatTimeLeft(d.endAt - now);
+        });
+      }
 
-      // Накопительный рост растений
+      // Рост растений
       const speedMult = getSpeedMultiplier();
+      const activeIds = state.devices.map(d => d.id);
       let readyCount = 0;
 
       for (let i = 0; i < state.unlockedPlots; i++) {
@@ -1151,7 +1420,7 @@
           p.progressMs = Math.min(maxMs, p.progressMs + dt * speedMult);
           if (p.progressMs >= maxMs) {
             p.ready = true;
-            const stats = rollFruitStats(crop, p);
+            const stats = rollFruitStatsWithContext(crop, p, state.weather.id, activeIds);
             p.weight = stats.weight;
             p.mutations = stats.mutations;
           }
@@ -1183,10 +1452,10 @@
         saveState();
       }
 
-      updateHUD(readyCount);
+      updateHUD(readyCount, now);
     }
 
-    function updateHUD(readyCount) {
+    function updateHUD(readyCount, now) {
       document.getElementById("coinsDisplay").textContent = `${formatNumber(state.coins)} 🪙`;
       document.getElementById("bestRecord").textContent = `🏆 Рекорд: ${formatNumber(state.bestFruitValue)} 🪙`;
       document.getElementById("plotCountLabel").textContent = `🏡 ${state.unlockedPlots} / 15`;
@@ -1198,16 +1467,41 @@
 
       const selCrop = getCrop(state.selectedSeed);
       const selQty = state.seedInventory[state.selectedSeed] || 0;
-      document.getElementById("seedSub").textContent = selCrop ? `${selCrop.name} (${selQty})` : "Нет";
-      document.getElementById("selectedSeedHud").textContent = selCrop ? `${selCrop.emoji} ${selCrop.name}: ${selQty}` : "Нет семян";
+      document.getElementById("seedSub").textContent = selCrop && selQty > 0 ? `${selCrop.name} (${selQty})` : "Выбрать ▾";
+
+      const hudSeed = document.getElementById("selectedSeedHud");
+      if (selCrop && selQty > 0) {
+        hudSeed.innerHTML = `<span>${selCrop.emoji} ${selCrop.name}: ${selQty}</span><span style="font-size:9px;opacity:0.8;">▼</span>`;
+      } else {
+        hudSeed.innerHTML = `<span>🌱 Выбрать семена</span><span style="font-size:9px;opacity:0.8;">▼</span>`;
+      }
+
+      // Живая полоска активного снаряжения в саду
+      const strip = document.getElementById("activeDevicesStrip");
+      if (state.devices.length === 0) {
+        if (strip.innerHTML !== "") strip.innerHTML = "";
+      } else {
+        strip.innerHTML = state.devices
+          .map(d => {
+            const g = GEAR_ITEMS.find(item => item.id === d.id);
+            if (!g) return "";
+            return `<div class="device-chip">${g.emoji} ${g.shortName || g.name} • ${formatTimeLeft(d.endAt - now)}</div>`;
+          })
+          .join("");
+      }
 
       const bagBadge = document.getElementById("bagBadge");
       bagBadge.textContent = state.harvestBag.length;
       bagBadge.classList.toggle("visible", state.harvestBag.length > 0);
+
+      const gearBadge = document.getElementById("gearBadge");
+      gearBadge.textContent = state.devices.length;
+      gearBadge.classList.toggle("visible", state.devices.length > 0);
+
       document.getElementById("activeDevicesBadge").textContent = `Активно: ${state.devices.length}`;
     }
 
-    // --- PLOT ACTIONS ---
+    // --- PLOT INTERACTIONS ---
     function harvestPlot(idx, silent = false) {
       const p = state.plots[idx];
       if (!p || !p.cropId || !p.ready) return false;
@@ -1281,7 +1575,7 @@
         return;
       }
 
-      // 2. Сбор урожая по тапу
+      // 2. Сбор по тапу
       if (p.cropId && p.ready) {
         harvestPlot(idx);
         saveState();
@@ -1308,15 +1602,12 @@
 
       // 4. Посадка на пустую грядку
       if (!p.cropId) {
+        ensureValidSelectedSeed(state);
         const qty = state.seedInventory[state.selectedSeed] || 0;
         if (qty <= 0) {
-          const fallback = Object.keys(state.seedInventory).find(k => state.seedInventory[k] > 0);
-          if (!fallback) {
-            showToast("🌱 Семена закончились! Купи в лавке");
-            switchView("shop");
-            return;
-          }
-          state.selectedSeed = fallback;
+          showToast("🌱 Семена закончились! Купи в лавке");
+          openSeedPicker();
+          return;
         }
         const crop = getCrop(state.selectedSeed);
         state.seedInventory[crop.id]--;
@@ -1329,6 +1620,7 @@
           mutations: [],
           giantBoost: 1
         };
+        ensureValidSelectedSeed(state);
         haptic("light");
         saveState();
         return;
@@ -1430,8 +1722,9 @@
         if (item.type === "device") {
           const active = state.devices.find(d => d.id === item.id && d.endAt > now);
           if (active) {
-            const left = Math.ceil((active.endAt - now) / 1000);
-            statusNote = `<br><span style="color:#34d399;font-weight:700;">● Работает ещё ${left}с</span>`;
+            card.classList.add("selected-card");
+            statusNote = `<br><span style="color:#34d399;font-weight:800;">● Работает: осталось <span id="gear-timer-${item.id}">${formatTimeLeft(active.endAt - now)}</span></span>`;
+            btnLabel = `+${formatNumber(price)} 🪙`;
           }
         } else if (item.type === "upgrade") {
           if (state.turboCan) {
@@ -1501,7 +1794,7 @@
               state.devices.push({ id: item.id, endAt: Date.now() + item.durationSec * 1000 });
             }
             haptic("success");
-            showToast(`${item.emoji} ${item.name} установлен!`);
+            showToast(`${item.emoji} ${item.name} активирован!`);
           }
           saveState();
           renderGear();
@@ -1594,9 +1887,18 @@
     };
 
     document.getElementById("toolPlant").onclick = () => {
-      activeTool = "plant";
-      updateToolButtons();
+      if (activeTool === "plant") {
+        openSeedPicker();
+      } else {
+        activeTool = "plant";
+        updateToolButtons();
+      }
       haptic("light");
+    };
+
+    document.getElementById("selectedSeedHud").onclick = () => {
+      haptic("light");
+      openSeedPicker();
     };
 
     document.getElementById("toolShovel").onclick = () => {
@@ -1639,7 +1941,7 @@
       };
     });
 
-    // --- RESPONSIVE FULLSCREEN CANVAS ---
+    // --- 2.5D ILLUSTRATED CANVAS RENDERER ---
     const canvasContainer = document.getElementById("canvasContainer");
     const canvas = document.getElementById("gardenCanvas");
     const ctx = canvas.getContext("2d");
@@ -1664,7 +1966,7 @@
       window.addEventListener("resize", resizeCanvas);
     }
 
-    const drops = Array.from({ length: 42 }, () => ({
+    const drops = Array.from({ length: 44 }, () => ({
       x: Math.random() * 500,
       y: Math.random() * 700,
       speed: 2 + Math.random() * 4,
@@ -1675,28 +1977,34 @@
       if (currentView === "garden") {
         const wObj = WEATHERS.find(w => w.id === state.weather.id) || WEATHERS[0];
 
-        // Фон участка
+        // Небо / лужайка с мягким радиальным светом
         const grad = ctx.createLinearGradient(0, 0, 0, logicalH);
         grad.addColorStop(0, wObj.skyTop);
         grad.addColorStop(1, wObj.skyBot);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, logicalW, logicalH);
 
-        // Декоративные травинки
-        ctx.fillStyle = "rgba(52, 211, 153, 0.07)";
-        for (let i = 0; i < 22; i++) {
-          const gx = (i * 89) % Math.max(100, logicalW - 20) + 10;
-          const gy = (i * 67) % Math.max(100, logicalH - 20) + 10;
+        const glow = ctx.createRadialGradient(logicalW / 2, logicalH * 0.45, 20, logicalW / 2, logicalH * 0.45, logicalW * 0.75);
+        glow.addColorStop(0, "rgba(52, 211, 153, 0.08)");
+        glow.addColorStop(1, "rgba(0, 0, 0, 0.22)");
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, logicalW, logicalH);
+
+        // Декоративные травинки и цветы на фоне
+        for (let i = 0; i < 20; i++) {
+          const gx = (i * 97) % Math.max(100, logicalW - 24) + 12;
+          const gy = (i * 71) % Math.max(100, logicalH - 24) + 12;
+          ctx.fillStyle = i % 4 === 0 ? "rgba(251, 191, 36, 0.14)" : "rgba(52, 211, 153, 0.09)";
           ctx.beginPath();
-          ctx.arc(gx, gy, 3.5, 0, Math.PI * 2);
+          ctx.arc(gx, gy, i % 4 === 0 ? 2.5 : 3.5, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // Крупная сетка 3 колонки x 5 рядов на весь экран!
+        const hasDevices = state.devices.length > 0;
+        const topOffset = hasDevices ? 64 : 40;
         const cols = 3;
         const rows = 5;
         const padX = 12;
-        const topOffset = 38;
         const padBottom = 12;
         const gap = 10;
         const cellW = (logicalW - padX * 2 - gap * (cols - 1)) / cols;
@@ -1715,13 +2023,13 @@
           const p = state.plots[i];
 
           ctx.save();
-          ctx.beginPath();
-          ctx.roundRect(x, y, cellW, cellH, 14);
 
           if (!unlocked) {
-            ctx.fillStyle = "rgba(12, 20, 16, 0.55)";
+            ctx.beginPath();
+            ctx.roundRect(x, y, cellW, cellH, 15);
+            ctx.fillStyle = "rgba(10, 18, 14, 0.52)";
             ctx.fill();
-            ctx.strokeStyle = "rgba(148, 163, 184, 0.16)";
+            ctx.strokeStyle = "rgba(148, 163, 184, 0.14)";
             ctx.lineWidth = 1.5;
             ctx.stroke();
 
@@ -1734,24 +2042,41 @@
             continue;
           }
 
-          // Почва грядки
-          ctx.fillStyle = p.cropId ? "#3e291b" : "#2c1d13";
+          // Объемная тень под грядкой (2.5D)
+          ctx.beginPath();
+          ctx.roundRect(x, y + 3, cellW, cellH, 15);
+          ctx.fillStyle = "rgba(0, 0, 0, 0.36)";
           ctx.fill();
 
+          // Основная коробка грядки
+          ctx.beginPath();
+          ctx.roundRect(x, y, cellW, cellH, 15);
+          const soilGrad = ctx.createLinearGradient(x, y, x, y + cellH);
+          if (p.cropId) {
+            soilGrad.addColorStop(0, "#462e1e");
+            soilGrad.addColorStop(1, "#322014");
+          } else {
+            soilGrad.addColorStop(0, "#332216");
+            soilGrad.addColorStop(1, "#25180f");
+          }
+          ctx.fillStyle = soilGrad;
+          ctx.fill();
+
+          // Рамка статуса
           if (activeTool === "shovel" && p.cropId) {
             ctx.strokeStyle = "#f87171";
             ctx.lineWidth = 2.5;
           } else if (p.ready) {
             ctx.strokeStyle = "#34d399";
-            ctx.lineWidth = 2.2;
+            ctx.lineWidth = 2.4;
           } else {
-            ctx.strokeStyle = "#61402a";
+            ctx.strokeStyle = "#6e4930";
             ctx.lineWidth = 2;
           }
           ctx.stroke();
 
-          // Борозды
-          ctx.strokeStyle = "rgba(0,0,0,0.28)";
+          // Борозды почвы
+          ctx.strokeStyle = "rgba(0, 0, 0, 0.25)";
           ctx.lineWidth = 1.6;
           ctx.beginPath();
           ctx.moveTo(x + 12, y + cellH * 0.36);
@@ -1766,21 +2091,24 @@
             const maxMs = p.growDuration * 1000;
             const progress = p.ready ? 1 : Math.min(0.99, p.progressMs / maxMs);
 
-            if (p.ready && p.mutations && p.mutations.length > 0) {
-              const topMut = p.mutations[p.mutations.length - 1];
-              const pulse = 0.72 + Math.sin(ts / 220) * 0.25;
+            // Аура мутаций или готовности
+            if (p.ready) {
+              const auraColor = p.mutations && p.mutations.length > 0
+                ? p.mutations[p.mutations.length - 1].color
+                : "#34d399";
+              const pulse = 0.78 + Math.sin(ts / 220 + i) * 0.18;
               const radius = Math.min(cellW, cellH) * 0.36 * pulse;
               ctx.beginPath();
-              ctx.arc(x + cellW / 2, y + cellH / 2, radius, 0, Math.PI * 2);
-              ctx.fillStyle = topMut.color + "33";
+              ctx.arc(x + cellW / 2, y + cellH / 2 - 2, radius, 0, Math.PI * 2);
+              ctx.fillStyle = auraColor + "2E";
               ctx.fill();
             }
 
             const baseEmojiSize = Math.min(cellW, cellH) * 0.44;
-            let scale = 0.5 + progress * 0.5;
+            let scale = 0.52 + progress * 0.48;
             if (p.ready && crop) {
               const ratio = p.weight / crop.maxKg;
-              scale = 1.0 + ratio * 0.65;
+              scale = 1.0 + ratio * 0.62;
             }
 
             const bob = p.ready ? Math.sin(ts / 260 + i) * 2.5 : 0;
@@ -1788,18 +2116,23 @@
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             const icon = progress < 0.35 ? "🌱" : progress < 0.75 ? "🌿" : crop.emoji;
-            ctx.fillText(icon, x + cellW / 2, y + cellH / 2 - 4 + bob);
+            ctx.fillText(icon, x + cellW / 2, y + cellH / 2 - 5 + bob);
 
             if (!p.ready) {
               const barW = cellW - 20;
-              ctx.fillStyle = "rgba(0,0,0,0.52)";
-              ctx.fillRect(x + 10, y + cellH - 12, barW, 5);
-              ctx.fillStyle = "#34d399";
-              ctx.fillRect(x + 10, y + cellH - 12, barW * progress, 5);
-            } else {
-              ctx.fillStyle = "rgba(12, 20, 16, 0.84)";
+              ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
               ctx.beginPath();
-              ctx.roundRect(x + 8, y + cellH - 19, cellW - 16, 14, 6);
+              ctx.roundRect(x + 10, y + cellH - 12, barW, 5, 3);
+              ctx.fill();
+
+              ctx.fillStyle = "#34d399";
+              ctx.beginPath();
+              ctx.roundRect(x + 10, y + cellH - 12, Math.max(4, barW * progress), 5, 3);
+              ctx.fill();
+            } else {
+              ctx.fillStyle = "rgba(10, 18, 14, 0.86)";
+              ctx.beginPath();
+              ctx.roundRect(x + 8, y + cellH - 20, cellW - 16, 15, 6);
               ctx.fill();
               ctx.fillStyle = p.mutations.length ? "#fde047" : "#ecfdf5";
               ctx.font = "bold 10px sans-serif";
@@ -1807,19 +2140,6 @@
             }
           }
           ctx.restore();
-        }
-
-        // Активные устройства на участке
-        if (state.devices.length > 0) {
-          state.devices.forEach((d, idx) => {
-            const item = GEAR_ITEMS.find(g => g.id === d.id);
-            if (!item) return;
-            const dx = logicalW / 2 - ((state.devices.length - 1) * 14) + idx * 28;
-            const dy = 22 + Math.sin(ts / 300 + idx) * 2;
-            ctx.font = "17px sans-serif";
-            ctx.textAlign = "center";
-            ctx.fillText(item.emoji, dx, dy);
-          });
         }
 
         // Погодные частицы
