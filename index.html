@@ -5,20 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Pocket Garden</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0c1815;
-      --panel: #13221e;
-      --panel-2: #192d28;
-      --panel-3: #213b34;
-      --border: rgba(255, 255, 255, 0.1);
-      --border-bright: #3be093;
-      --text: #f3fff9;
-      --muted: #93b3a8;
-      --accent: #35d48a;
-      --accent-dark: #1d9960;
-      --gold: #ffcf48;
-      --danger: #ff6666;
+      --bg-top: #266b4c;
+      --bg-bot: #174732;
+      --card: #f4fbf6;
+      --card-2: #e3f4e9;
+      --card-3: #d0ebda;
+      --ink: #1b3b2b;
+      --ink-muted: #527a66;
+      --outline: #1f4d36;
+      --accent: #38d984;
+      --accent-dark: #1fa861;
+      --gold: #ffd24c;
+      --gold-dark: #c98600;
+      --danger: #ff6b6b;
+      --danger-dark: #c93b3b;
     }
 
     * {
@@ -33,9 +38,9 @@
       height: 100%;
       height: 100dvh;
       overflow: hidden;
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-bot);
+      color: var(--ink);
+      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     .app {
@@ -46,10 +51,10 @@
       flex-direction: column;
       padding: max(8px, env(safe-area-inset-top)) 10px max(8px, env(safe-area-inset-bottom));
       gap: 8px;
-      background: radial-gradient(circle at 50% 0%, #16302a 0%, #0a1412 100%);
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%);
     }
 
-    /* ENLARGED VECTOR ICONS */
+    /* ENLARGED CARTOON VECTOR ICONS */
     .svg-ico {
       width: 22px;
       height: 22px;
@@ -80,19 +85,19 @@
       flex-shrink: 0;
     }
 
-    /* HEADER */
+    /* CHUNKY CARTOON HEADER */
     .header {
-      background: linear-gradient(180deg, #192e29 0%, #12211d 100%);
-      border: 1.5px solid #26453d;
-      border-bottom-width: 3px;
-      border-radius: 16px;
+      background: var(--card);
+      border: 2.5px solid var(--outline);
+      border-bottom-width: 5px;
+      border-radius: 20px;
       padding: 7px 11px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
       flex-shrink: 0;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      box-shadow: inset 0 2px 0 #ffffff, 0 4px 12px rgba(12, 38, 26, 0.22);
     }
 
     .profile {
@@ -105,15 +110,17 @@
     .avatar {
       width: 42px;
       height: 42px;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #35d48a, #178250);
-      border: 2px solid #8ff7c7;
+      border-radius: 15px;
+      background: linear-gradient(180deg, #54e898 0%, #27b86b 100%);
+      border: 2.5px solid var(--outline);
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 900;
-      font-size: 16px;
-      color: #072116;
+      font-size: 17px;
+      color: #ffffff;
+      text-shadow: 0 1px 0 var(--outline);
       overflow: hidden;
       flex-shrink: 0;
     }
@@ -136,27 +143,28 @@
     }
 
     .profile-name {
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 13.5px;
+      font-weight: 900;
+      color: var(--ink);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .lvl-pill {
-      background: rgba(53, 212, 138, 0.18);
-      border: 1px solid #35d48a;
-      color: #9efad0;
-      font-size: 9.5px;
+      background: #ffd859;
+      border: 1.8px solid var(--outline);
+      color: #4a2c00;
+      font-size: 10px;
       font-weight: 900;
-      padding: 1px 5px;
-      border-radius: 6px;
+      padding: 1px 6px;
+      border-radius: 8px;
       flex-shrink: 0;
     }
 
     .profile-record {
-      font-size: 10.5px;
-      color: var(--gold);
+      font-size: 11px;
+      color: #9e6200;
       font-weight: 800;
       margin-top: 2px;
       display: flex;
@@ -175,39 +183,40 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      background: rgba(10, 20, 18, 0.72);
-      border: 1.5px solid rgba(255, 255, 255, 0.12);
-      border-radius: 11px;
+      background: var(--card-2);
+      border: 2px solid var(--outline);
+      border-radius: 13px;
       padding: 4px 8px;
       font-size: 11px;
-      font-weight: 800;
-      color: #e3faf0;
+      font-weight: 900;
+      color: var(--ink);
     }
 
     .weather-bar {
       width: 22px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.16);
+      height: 5px;
+      background: rgba(31, 77, 54, 0.18);
       border-radius: 4px;
       overflow: hidden;
     }
 
     .weather-bar-fill {
       height: 100%;
-      background: var(--accent);
+      background: var(--accent-dark);
       width: 100%;
       transition: width 0.4s linear;
     }
 
     .coins-badge {
-      background: linear-gradient(180deg, #ffde6b 0%, #f5b518 100%);
-      border: 2px solid #fff2ba;
-      border-bottom: 3px solid #b57700;
-      color: #382000;
+      background: linear-gradient(180deg, #ffe47a 0%, #ffbe2e 100%);
+      border: 2.5px solid var(--outline);
+      border-bottom-width: 4px;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.7);
+      color: #422400;
       padding: 4px 10px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-weight: 900;
-      font-size: 13px;
+      font-size: 13.5px;
       display: flex;
       align-items: center;
       gap: 5px;
@@ -243,12 +252,13 @@
       flex: 1;
       min-height: 0;
       width: 100%;
-      border-radius: 18px;
+      border-radius: 22px;
       overflow: hidden;
-      border: 2px solid #24423a;
-      background: #102622;
+      border: 3px solid var(--outline);
+      border-bottom-width: 5px;
+      background: #46b556;
       position: relative;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.42);
+      box-shadow: 0 6px 18px rgba(10, 32, 22, 0.28);
     }
 
     canvas {
@@ -278,46 +288,47 @@
     }
 
     .hud-chip {
-      background: rgba(13, 26, 23, 0.88);
-      border: 1.5px solid rgba(255, 255, 255, 0.14);
+      background: rgba(244, 251, 246, 0.94);
+      border: 2px solid var(--outline);
+      border-bottom-width: 3.5px;
       padding: 4px 10px;
-      border-radius: 11px;
-      font-size: 11px;
-      font-weight: 800;
-      color: #ebfff6;
+      border-radius: 13px;
+      font-size: 11.5px;
+      font-weight: 900;
+      color: var(--ink);
       display: flex;
       align-items: center;
       gap: 5px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 1.5px 0 #ffffff, 0 3px 6px rgba(15, 46, 31, 0.18);
     }
 
     .hud-chip.clickable {
       pointer-events: auto;
       cursor: pointer;
-      background: linear-gradient(180deg, #1f4239, #152e28);
-      border-color: #46e098;
+      background: linear-gradient(180deg, #ffffff 0%, #e1f7ea 100%);
     }
 
     .hud-chip.clickable:active {
-      transform: scale(0.96);
+      transform: translateY(1.5px);
+      border-bottom-width: 2px;
     }
 
     .hud-chip.harvest-quick {
       pointer-events: auto;
       cursor: pointer;
-      background: linear-gradient(180deg, #3be093, #1ea868);
-      border-color: #b5ffdc;
-      color: #062115;
+      background: linear-gradient(180deg, #5ef0a2 0%, #2ecc78 100%);
+      border-color: var(--outline);
+      color: #0d331f;
     }
 
     .hud-chip.order-chip {
       pointer-events: auto;
       cursor: pointer;
-      background: rgba(25, 45, 40, 0.92);
-      border-color: rgba(255, 207, 72, 0.55);
-      color: #ffe9a3;
-      font-size: 10.5px;
-      padding: 3px 9px;
+      background: linear-gradient(180deg, #fff9e6 0%, #ffefc2 100%);
+      border-color: var(--outline);
+      color: #593600;
+      font-size: 11px;
+      padding: 3px 10px;
       margin: 0 auto;
     }
 
@@ -329,20 +340,21 @@
     }
 
     .device-chip {
-      background: rgba(13, 26, 23, 0.92);
-      border: 1.5px solid #ffcf48;
-      color: #fff5cc;
+      background: #fff8e1;
+      border: 2px solid var(--outline);
+      color: #4d2e00;
       font-size: 10px;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 9px;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       gap: 4px;
       font-variant-numeric: tabular-nums;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     }
 
-    /* 3-BUTTON TOOLBAR (STYLE MATCHING ORIGINAL SCREENSHOT) */
+    /* 3-BUTTON CHUNKY CARTOON TOOLBAR */
     .toolbar {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -351,43 +363,46 @@
     }
 
     .tool-btn {
-      background: linear-gradient(180deg, #1b2e29 0%, #142420 100%);
-      border: 2px solid #28423b;
-      border-bottom-width: 4px;
-      color: var(--text);
-      border-radius: 16px;
-      padding: 8px 6px;
-      font-size: 12px;
-      font-weight: 800;
+      background: linear-gradient(180deg, #ffffff 0%, #e4f5eb 100%);
+      border: 2.5px solid var(--outline);
+      border-bottom-width: 5px;
+      box-shadow: inset 0 2px 0 #ffffff, 0 3px 8px rgba(12, 38, 26, 0.2);
+      color: var(--ink);
+      border-radius: 18px;
+      padding: 7px 6px;
+      font-size: 12.5px;
+      font-weight: 900;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
       cursor: pointer;
-      transition: transform 0.1s;
+      transition: transform 0.08s;
     }
 
     .tool-btn:active {
       transform: translateY(2px);
-      border-bottom-width: 2px;
+      border-bottom-width: 2.5px;
     }
 
     .tool-btn.active {
-      background: linear-gradient(180deg, #215946 0%, #174032 100%);
-      border-color: #46e098;
-      color: #ffffff;
+      background: linear-gradient(180deg, #63f2a5 0%, #2ecc78 100%);
+      border-color: var(--outline);
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.65), 0 4px 10px rgba(12, 38, 26, 0.25);
+      color: #0b301d;
     }
 
     .tool-btn.danger.active {
-      background: linear-gradient(180deg, #8c2e2e 0%, #631d1d 100%);
-      border-color: #ff8f8f;
-      color: #ffe5e5;
+      background: linear-gradient(180deg, #ff8f8f 0%, #f25555 100%);
+      border-color: var(--outline);
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.55);
+      color: #3d0808;
     }
 
     .tool-btn .sub {
       font-size: 10.5px;
-      color: var(--muted);
-      font-weight: 700;
+      color: var(--ink-muted);
+      font-weight: 800;
       max-width: 106px;
       white-space: nowrap;
       overflow: hidden;
@@ -395,17 +410,23 @@
     }
 
     .tool-btn.active .sub {
-      color: #8cf7c5;
+      color: #0f472b;
     }
 
-    /* SUBPAGES */
+    .tool-btn.danger.active .sub {
+      color: #4f0b0b;
+    }
+
+    /* SUBPAGES (SHOP, GEAR, BACKPACK) */
     .subpage {
-      background: var(--panel);
-      border: 2px solid #243d36;
-      border-radius: 18px;
+      background: var(--card);
+      border: 2.5px solid var(--outline);
+      border-bottom-width: 5px;
+      border-radius: 22px;
       padding: 12px;
       gap: 10px;
       overflow: hidden;
+      box-shadow: inset 0 2px 0 #ffffff, 0 6px 18px rgba(10, 32, 22, 0.25);
     }
 
     .panel-header {
@@ -417,21 +438,22 @@
     }
 
     .panel-title {
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 16.5px;
+      font-weight: 900;
+      color: var(--ink);
       display: flex;
       align-items: center;
       gap: 7px;
     }
 
     .timer-badge {
-      background: var(--panel-2);
-      border: 1.5px solid #2b4a41;
+      background: var(--card-2);
+      border: 2px solid var(--outline);
       padding: 4px 10px;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 11px;
-      color: #9efad0;
-      font-weight: 800;
+      color: var(--ink);
+      font-weight: 900;
       font-variant-numeric: tabular-nums;
     }
 
@@ -444,21 +466,22 @@
     }
 
     .filter-btn {
-      background: var(--panel-2);
-      border: 1.5px solid #28453d;
-      color: var(--muted);
-      border-radius: 10px;
+      background: var(--card-2);
+      border: 2px solid var(--outline);
+      border-bottom-width: 3px;
+      color: var(--ink-muted);
+      border-radius: 12px;
       padding: 5px 10px;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       white-space: nowrap;
       cursor: pointer;
     }
 
     .filter-btn.active {
-      background: var(--accent-dark);
-      border-color: #46e098;
-      color: #fff;
+      background: linear-gradient(180deg, #54e898 0%, #29c270 100%);
+      color: #0b301d;
+      font-weight: 900;
     }
 
     .scroll-list {
@@ -472,24 +495,26 @@
     }
 
     .item-card {
-      background: linear-gradient(180deg, #1b302b 0%, #142420 100%);
-      border: 2px solid #28453d;
-      border-bottom-width: 3px;
-      border-radius: 15px;
+      background: #ffffff;
+      border: 2px solid var(--outline);
+      border-bottom-width: 4px;
+      border-radius: 17px;
       padding: 9px 11px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      box-shadow: 0 2px 6px rgba(27, 59, 43, 0.08);
     }
 
     .item-card.out-of-stock {
-      opacity: 0.48;
+      opacity: 0.55;
+      background: #eaf2ed;
     }
 
     .item-card.selected-card {
-      border-color: #46e098;
-      background: linear-gradient(180deg, #214f41 0%, #17382e 100%);
+      border-color: var(--outline);
+      background: linear-gradient(180deg, #e8fff1 0%, #ccf7de 100%);
     }
 
     .item-left {
@@ -503,9 +528,9 @@
     .item-thumb {
       width: 58px;
       height: 58px;
-      border-radius: 14px;
-      background: #101f1b;
-      border: 1.5px solid #2c4d44;
+      border-radius: 15px;
+      background: linear-gradient(180deg, #e6f7ed 0%, #cfead9 100%);
+      border: 2px solid var(--outline);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -525,41 +550,45 @@
     }
 
     .item-name {
-      font-size: 13.5px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--ink);
     }
 
     .tag {
-      font-size: 9px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 6px;
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 7px;
+      border: 1.5px solid rgba(27, 59, 43, 0.25);
       text-transform: uppercase;
     }
 
-    .rarity-common { background: rgba(203, 213, 225, 0.2); color: #e2e8f0; }
-    .rarity-uncommon { background: rgba(56, 189, 248, 0.24); color: #7dd3fc; }
-    .rarity-rare { background: rgba(192, 132, 252, 0.24); color: #e9d5ff; }
-    .rarity-epic { background: rgba(244, 114, 182, 0.26); color: #fbcfe8; }
-    .rarity-legendary { background: rgba(255, 207, 72, 0.26); color: #fef08a; }
-    .rarity-mythical { background: rgba(255, 102, 102, 0.28); color: #fecaca; }
+    .rarity-common { background: #e2e8f0; color: #334155; }
+    .rarity-uncommon { background: #bae6fd; color: #0369a1; }
+    .rarity-rare { background: #e9d5ff; color: #6b21a8; }
+    .rarity-epic { background: #fbcfe8; color: #9d174d; }
+    .rarity-legendary { background: #fef08a; color: #854d0e; }
+    .rarity-mythical { background: #fecaca; color: #991b1b; }
 
     .item-meta {
       font-size: 11px;
-      color: var(--muted);
+      color: var(--ink-muted);
+      font-weight: 700;
       margin-top: 3px;
       line-height: 1.35;
     }
 
     .buy-btn {
-      background: linear-gradient(180deg, #42e396 0%, #1eb06a 100%);
-      border: 1.5px solid #a8ffd5;
-      border-bottom: 3px solid #117042;
-      color: #052415;
+      background: linear-gradient(180deg, #5ef0a2 0%, #29c270 100%);
+      border: 2px solid var(--outline);
+      border-bottom-width: 4px;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.65);
+      color: #0b301d;
       font-weight: 900;
       font-size: 12.5px;
       padding: 8px 12px;
-      border-radius: 11px;
+      border-radius: 13px;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
@@ -569,23 +598,30 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .buy-btn:disabled {
-      background: #1c332d;
-      border-color: #27473f;
+    .buy-btn:active:not(:disabled) {
+      transform: translateY(2px);
       border-bottom-width: 2px;
-      color: #5b8075;
+    }
+
+    .buy-btn:disabled {
+      background: #dce8e1;
+      border-color: #8aa899;
+      border-bottom-width: 2px;
+      box-shadow: none;
+      color: #6b8a7b;
       cursor: not-allowed;
     }
 
     .sell-all-btn {
-      background: linear-gradient(180deg, #ffde6b 0%, #f5b518 100%);
-      border: 1.5px solid #fff2ba;
-      border-bottom: 3px solid #b57700;
-      color: #382000;
+      background: linear-gradient(180deg, #ffe47a 0%, #ffbe2e 100%);
+      border: 2px solid var(--outline);
+      border-bottom-width: 4px;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.7);
+      color: #422400;
       font-weight: 900;
       font-size: 12px;
       padding: 7px 12px;
-      border-radius: 11px;
+      border-radius: 13px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -593,15 +629,16 @@
     }
 
     .sell-all-btn:disabled {
-      opacity: 0.42;
+      opacity: 0.45;
       cursor: not-allowed;
     }
 
     .empty-state {
       text-align: center;
       padding: 36px 12px;
-      color: var(--muted);
-      font-size: 13px;
+      color: var(--ink-muted);
+      font-weight: 800;
+      font-size: 13.5px;
       line-height: 1.5;
     }
 
@@ -610,45 +647,50 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      background: var(--panel);
-      border: 2px solid #243d36;
-      border-radius: 17px;
+      background: var(--card);
+      border: 2.5px solid var(--outline);
+      border-bottom-width: 5px;
+      border-radius: 20px;
       padding: 5px;
       flex-shrink: 0;
+      box-shadow: inset 0 2px 0 #ffffff, 0 4px 12px rgba(12, 38, 26, 0.22);
     }
 
     .nav-btn {
-      border: 1.5px solid transparent;
+      border: 2px solid transparent;
       background: transparent;
-      color: var(--muted);
-      border-radius: 12px;
-      padding: 6px 4px;
+      color: var(--ink-muted);
+      border-radius: 14px;
+      padding: 5px 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 900;
       cursor: pointer;
       position: relative;
     }
 
     .nav-btn.active {
-      background: linear-gradient(180deg, #289e6b 0%, #1b754e 100%);
-      border-color: #6df5b7;
-      color: #fff;
+      background: linear-gradient(180deg, #5ef0a2 0%, #29c270 100%);
+      border-color: var(--outline);
+      border-bottom-width: 3px;
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.65);
+      color: #0b301d;
     }
 
     .badge-dot {
       position: absolute;
-      top: 3px;
-      right: 11px;
-      background: var(--gold);
-      color: #2b1800;
+      top: 2px;
+      right: 10px;
+      background: #ffcf48;
+      border: 1.5px solid var(--outline);
+      color: #3d2200;
       font-size: 9.5px;
       font-weight: 900;
-      padding: 1px 5px;
-      border-radius: 7px;
+      padding: 0 5px;
+      border-radius: 8px;
       display: none;
     }
 
@@ -660,7 +702,7 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(6, 14, 12, 0.82);
+      background: rgba(13, 36, 25, 0.62);
       backdrop-filter: blur(3px);
       display: none;
       align-items: center;
@@ -679,36 +721,40 @@
     }
 
     .modal {
-      background: var(--panel);
-      border: 2px solid #2c4d44;
-      border-radius: 20px;
+      background: var(--card);
+      border: 3px solid var(--outline);
+      border-bottom-width: 6px;
+      border-radius: 24px;
       padding: 16px;
       width: 100%;
       max-width: 360px;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      box-shadow: inset 0 2px 0 #ffffff, 0 12px 30px rgba(10, 30, 20, 0.35);
     }
 
     .modal-backdrop.sheet .modal {
       max-width: 520px;
-      border-radius: 22px 22px 0 0;
+      border-radius: 26px 26px 0 0;
       border-bottom: none;
       max-height: 75dvh;
       padding-bottom: max(16px, env(safe-area-inset-bottom));
     }
 
     .modal-title {
-      font-size: 15px;
-      font-weight: 800;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--ink);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .modal-body {
-      font-size: 13px;
-      color: #d6f7ea;
+      font-size: 13.5px;
+      color: var(--ink);
+      font-weight: 700;
       line-height: 1.45;
     }
 
@@ -719,45 +765,48 @@
     }
 
     .btn-secondary {
-      background: var(--panel-3);
-      border: 1.5px solid #355e53;
-      color: var(--text);
+      background: #ffffff;
+      border: 2px solid var(--outline);
+      border-bottom-width: 3.5px;
+      color: var(--ink);
       padding: 8px 13px;
-      border-radius: 10px;
-      font-weight: 700;
+      border-radius: 12px;
+      font-weight: 900;
       font-size: 12px;
       cursor: pointer;
     }
 
     .btn-danger {
-      background: linear-gradient(180deg, #ff7070, #d93838);
-      border: 1.5px solid #ffb3b3;
-      color: #fff;
+      background: linear-gradient(180deg, #ff8585 0%, #eb4d4d 100%);
+      border: 2px solid var(--outline);
+      border-bottom-width: 3.5px;
+      color: #ffffff;
       padding: 8px 13px;
-      border-radius: 10px;
-      font-weight: 800;
+      border-radius: 12px;
+      font-weight: 900;
       font-size: 12px;
       cursor: pointer;
     }
 
     .toast {
       position: fixed;
-      top: 60px;
+      top: 62px;
       left: 50%;
       transform: translateX(-50%) translateY(-12px);
-      background: #142b26;
-      border: 2px solid #46e098;
-      color: #fff;
-      padding: 7px 14px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 800;
+      background: #fffdf5;
+      border: 2.5px solid var(--outline);
+      border-bottom-width: 4px;
+      color: var(--ink);
+      padding: 7px 15px;
+      border-radius: 15px;
+      font-size: 12.5px;
+      font-weight: 900;
       opacity: 0;
       pointer-events: none;
       transition: 0.2s ease;
       z-index: 200;
       white-space: nowrap;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 8px 20px rgba(10, 32, 22, 0.25);
     }
 
     .toast.show {
@@ -815,7 +864,7 @@
               <button id="selectedSeedHud" class="hud-chip clickable">
                 <span id="hudSeedIcon"></span>
                 <span id="hudSeedText">Морковь: 3</span>
-                <span style="font-size:9px;opacity:0.85;">▼</span>
+                <span style="font-size:9px;opacity:0.8;">▼</span>
               </button>
               <button id="readyCountBtn" class="hud-chip">
                 <span id="hudBasketIco"></span>
@@ -910,7 +959,7 @@
       </section>
     </main>
 
-    <!-- BOTTOM NAVIGATION (ORIGINAL STYLE ICONS) -->
+    <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
       <button class="nav-btn active" data-view="garden">
         <span id="navIcoGarden"></span>
@@ -984,25 +1033,25 @@
       } catch (e) {}
     }
 
-    // --- ENLARGED CARTOON VECTOR ICONS (MATCHING ORIGINAL SCREENSHOT) ---
+    // --- CHUNKY CARTOON VECTOR ICONS ---
     const ICONS = {
-      coin: `<svg class="svg-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffcf48" stroke="#996300" stroke-width="2"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#b57700" stroke-width="1.6"/><path d="M12 7.5v9M9.8 10h4.4M9.8 14h4.4" stroke="#7a4e00" stroke-width="1.8" stroke-linecap="round"/></svg>`,
-      trophy: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="#ffcf48" stroke="#996300" stroke-width="1.8"/><path d="M7 6H4a2 2 0 0 0 0 4h3M17 6h3a2 2 0 0 1 0 4h-3M12 15v4M8 20h8" stroke="#ffcf48" stroke-width="2.2" stroke-linecap="round"/></svg>`,
-      houseSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff7052" stroke="#7a2514" stroke-width="1.8" stroke-linejoin="round"/><rect x="6" y="11" width="12" height="9" rx="1.5" fill="#f5e6c8" stroke="#6e5735" stroke-width="1.6"/><rect x="10" y="14" width="4" height="6" fill="#8c5327"/></svg>`,
-      basketSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M4 11h16l-1.5 8h-13L4 11z" fill="#c97b36" stroke="#5c3314" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 11l2-5M16 11l-2-5" stroke="#eab308" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9" r="2.2" fill="#ff5c5c"/><circle cx="15" cy="9" r="2.2" fill="#4ade80"/></svg>`,
-      sproutSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 20V11" stroke="#46e098" stroke-width="2.4" stroke-linecap="round"/><path d="M12 12.5c-4.5 0-7-2.6-7-6 4.2 0 7 2 7 6z" fill="#35d48a" stroke="#0d4f32" stroke-width="1.5"/><path d="M12 10.5c4.5 0 7-2.6 7-6-4.2 0-7 2-7 6z" fill="#7cf7bd" stroke="#0d4f32" stroke-width="1.5"/></svg>`,
-      sprout: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M12 21V11" stroke="#46e098" stroke-width="2.8" stroke-linecap="round"/><path d="M12 12.5c-5.2 0-7.8-2.9-7.8-6.8 4.6 0 7.8 2.3 7.8 6.8z" fill="#35d48a" stroke="#0d4f32" stroke-width="1.6"/><path d="M12 10.5c5.2 0 7.8-2.9 7.8-6.8-4.6 0-7.8 2.3-7.8 6.8z" fill="#7cf7bd" stroke="#0d4f32" stroke-width="1.6"/></svg>`,
-      gearTool: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#94a3b8" stroke="#1e293b" stroke-width="1.8"/><circle cx="12" cy="12" r="2" fill="#0f172a"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M19.1 4.9l-2.2 2.2M7.1 16.9l-2.2 2.2" stroke="#cbd5e1" stroke-width="2.6" stroke-linecap="round"/></svg>`,
-      shovel: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M14 4l6 6M17 7l-7 7" stroke="#f1f5f9" stroke-width="2.6" stroke-linecap="round"/><path d="M9 13l2 2-4.5 4.5a2.1 2.1 0 0 1-3-3L8 12z" fill="#ff7070" stroke="#7f1d1d" stroke-width="1.7"/></svg>`,
-      gardenNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff7052" stroke="#7a2514" stroke-width="1.8" stroke-linejoin="round"/><rect x="5" y="11" width="14" height="9" rx="2" fill="#f5e6c8" stroke="#6e5735" stroke-width="1.7"/><rect x="10" y="14" width="4" height="6" fill="#8c5327"/><circle cx="18" cy="17" r="3.5" fill="#35d48a" stroke="#0d4f32" stroke-width="1.4"/></svg>`,
-      shopNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 9l2-5h14l2 5" fill="#35d48a" stroke="#0d4f32" stroke-width="1.7"/><rect x="4" y="9" width="16" height="11" rx="2" fill="#f5e6c8" stroke="#6e5735" stroke-width="1.7"/><rect x="9" y="13" width="6" height="7" fill="#8c5327"/></svg>`,
-      gearNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.8" fill="#cbd5e1" stroke="#1e293b" stroke-width="1.7"/><circle cx="12" cy="12" r="1.8" fill="#0f172a"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2" stroke="#cbd5e1" stroke-width="2.4" stroke-linecap="round"/></svg>`,
-      bagNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="13" rx="4" fill="#e63946" stroke="#7f1d1d" stroke-width="1.8"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7" fill="none" stroke="#fca5a5" stroke-width="2.2" stroke-linecap="round"/><rect x="8" y="12" width="8" height="5" rx="1.5" fill="#c1121f" stroke="#7f1d1d" stroke-width="1.4"/></svg>`,
-      sun: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#ffcf48"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" stroke="#ffcf48" stroke-width="2.2" stroke-linecap="round"/></svg>`,
-      rain: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M6 15a4 4 0 0 1 0-8 5 5 0 0 1 9.7-1.5A4 4 0 0 1 18 15H6z" fill="#93c5fd"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/></svg>`,
-      frost: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1" stroke="#bae6fd" stroke-width="2.2" stroke-linecap="round"/></svg>`,
-      storm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="#fde047" stroke="#ca8a04" stroke-width="1.5"/></svg>`,
-      meteor: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><circle cx="16" cy="16" r="4" fill="#fde047"/><path d="M13 13L4 4M15 10L8 3M10 15L3 8" stroke="#fef08a" stroke-width="2.2" stroke-linecap="round"/></svg>`
+      coin: `<svg class="svg-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ffd24c" stroke="#1f4d36" stroke-width="2.2"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#c98600" stroke-width="1.6"/><path d="M12 7.5v9M9.8 10h4.4M9.8 14h4.4" stroke="#7a4e00" stroke-width="2" stroke-linecap="round"/></svg>`,
+      trophy: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="#ffd24c" stroke="#1f4d36" stroke-width="2"/><path d="M7 6H4a2 2 0 0 0 0 4h3M17 6h3a2 2 0 0 1 0 4h-3M12 15v4M8 20h8" stroke="#c98600" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+      houseSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff7452" stroke="#1f4d36" stroke-width="2" stroke-linejoin="round"/><rect x="6" y="11" width="12" height="9" rx="2" fill="#fff3d6" stroke="#1f4d36" stroke-width="1.8"/><rect x="10" y="14" width="4" height="6" fill="#a66332"/></svg>`,
+      basketSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M4 11h16l-1.5 8h-13L4 11z" fill="#d9873c" stroke="#1f4d36" stroke-width="2" stroke-linejoin="round"/><path d="M8 11l2-5M16 11l-2-5" stroke="#c98600" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9" r="2.4" fill="#ff5c5c" stroke="#1f4d36" stroke-width="1.2"/><circle cx="15" cy="9" r="2.4" fill="#4ade80" stroke="#1f4d36" stroke-width="1.2"/></svg>`,
+      sproutSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 20V11" stroke="#1fa861" stroke-width="2.6" stroke-linecap="round"/><path d="M12 12.5c-4.5 0-7-2.6-7-6 4.2 0 7 2 7 6z" fill="#38d984" stroke="#1f4d36" stroke-width="1.7"/><path d="M12 10.5c4.5 0 7-2.6 7-6-4.2 0-7 2-7 6z" fill="#7cf7bd" stroke="#1f4d36" stroke-width="1.7"/></svg>`,
+      sprout: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M12 21V11" stroke="#1fa861" stroke-width="3" stroke-linecap="round"/><path d="M12 12.5c-5.2 0-7.8-2.9-7.8-6.8 4.6 0 7.8 2.3 7.8 6.8z" fill="#38d984" stroke="#1f4d36" stroke-width="1.8"/><path d="M12 10.5c5.2 0 7.8-2.9 7.8-6.8-4.6 0-7.8 2.3-7.8 6.8z" fill="#7cf7bd" stroke="#1f4d36" stroke-width="1.8"/></svg>`,
+      gearTool: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#7dd3fc" stroke="#1f4d36" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="#1f4d36"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M19.1 4.9l-2.2 2.2M7.1 16.9l-2.2 2.2" stroke="#1f4d36" stroke-width="2.6" stroke-linecap="round"/></svg>`,
+      shovel: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M14 4l6 6M17 7l-7 7" stroke="#8c5327" stroke-width="2.8" stroke-linecap="round"/><path d="M9 13l2 2-4.5 4.5a2.1 2.1 0 0 1-3-3L8 12z" fill="#ff7575" stroke="#1f4d36" stroke-width="1.9"/></svg>`,
+      gardenNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff7452" stroke="#1f4d36" stroke-width="2" stroke-linejoin="round"/><rect x="5" y="11" width="14" height="9" rx="2.5" fill="#fff3d6" stroke="#1f4d36" stroke-width="1.9"/><rect x="10" y="14" width="4" height="6" fill="#a66332"/><circle cx="18" cy="17" r="3.8" fill="#38d984" stroke="#1f4d36" stroke-width="1.7"/></svg>`,
+      shopNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 9l2-5h14l2 5" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.9" stroke-linejoin="round"/><rect x="4" y="9" width="16" height="11" rx="2.5" fill="#fff3d6" stroke="#1f4d36" stroke-width="1.9"/><rect x="9" y="13" width="6" height="7" fill="#a66332"/></svg>`,
+      gearNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#7dd3fc" stroke="#1f4d36" stroke-width="1.9"/><circle cx="12" cy="12" r="1.8" fill="#1f4d36"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2" stroke="#1f4d36" stroke-width="2.4" stroke-linecap="round"/></svg>`,
+      bagNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="13" rx="4.5" fill="#ff6b6b" stroke="#1f4d36" stroke-width="1.9"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7" fill="none" stroke="#1f4d36" stroke-width="2.2" stroke-linecap="round"/><rect x="8" y="12" width="8" height="5" rx="2" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.6"/></svg>`,
+      sun: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5.2" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.7"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8" stroke="#e09400" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+      rain: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M6 15a4 4 0 0 1 0-8 5 5 0 0 1 9.7-1.5A4 4 0 0 1 18 15H6z" fill="#7dd3fc" stroke="#1f4d36" stroke-width="1.7"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+      frost: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1" stroke="#0284c7" stroke-width="2.3" stroke-linecap="round"/></svg>`,
+      storm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
+      meteor: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><circle cx="16" cy="16" r="4.5" fill="#ffd24c" stroke="#1f4d36" stroke-width="1.7"/><path d="M13 13L4 4M15 10L8 3M10 15L3 8" stroke="#e09400" stroke-width="2.2" stroke-linecap="round"/></svg>`
     };
 
     function bindStaticIcons() {
@@ -1026,79 +1075,80 @@
     // --- 24 CROPS ---
     const CROPS = [
       // Common
-      { id: "carrot", name: "Морковь", shape: "carrot", color: "#ff7a1a", leaf: "#3be093", rarity: "common", rarityLabel: "Обычная", cost: 50, baseSell: 85, growSec: 10, multi: false, minKg: 0.4, maxKg: 2.4, stockChance: 1.0, maxStock: 8 },
-      { id: "radish", name: "Редис", shape: "round", color: "#f43f5e", leaf: "#4ade80", rarity: "common", rarityLabel: "Обычный", cost: 120, baseSell: 205, growSec: 14, multi: false, minKg: 0.3, maxKg: 2.0, stockChance: 1.0, maxStock: 7 },
-      { id: "potato", name: "Картофель", shape: "oval", color: "#d99b52", leaf: "#22c55e", rarity: "common", rarityLabel: "Обычный", cost: 260, baseSell: 440, growSec: 18, multi: false, minKg: 0.8, maxKg: 3.8, stockChance: 0.95, maxStock: 6 },
-      { id: "strawberry", name: "Клубника", shape: "berry", color: "#ff3b5c", leaf: "#22c55e", rarity: "common", rarityLabel: "Обычная", cost: 550, baseSell: 340, growSec: 20, multi: true, minKg: 0.2, maxKg: 1.6, stockChance: 0.92, maxStock: 5 },
+      { id: "carrot", name: "Морковь", shape: "carrot", color: "#ff8224", leaf: "#38d984", rarity: "common", rarityLabel: "Обычная", cost: 50, baseSell: 85, growSec: 10, multi: false, minKg: 0.4, maxKg: 2.4, stockChance: 1.0, maxStock: 8 },
+      { id: "radish", name: "Редис", shape: "round", color: "#ff4d6d", leaf: "#38d984", rarity: "common", rarityLabel: "Обычный", cost: 120, baseSell: 205, growSec: 14, multi: false, minKg: 0.3, maxKg: 2.0, stockChance: 1.0, maxStock: 7 },
+      { id: "potato", name: "Картофель", shape: "oval", color: "#e3a857", leaf: "#38d984", rarity: "common", rarityLabel: "Обычный", cost: 260, baseSell: 440, growSec: 18, multi: false, minKg: 0.8, maxKg: 3.8, stockChance: 0.95, maxStock: 6 },
+      { id: "strawberry", name: "Клубника", shape: "berry", color: "#ff3b5c", leaf: "#38d984", rarity: "common", rarityLabel: "Обычная", cost: 550, baseSell: 340, growSec: 20, multi: true, minKg: 0.2, maxKg: 1.6, stockChance: 0.92, maxStock: 5 },
       // Uncommon
-      { id: "corn", name: "Кукуруза", shape: "corn", color: "#facc15", leaf: "#22c55e", rarity: "uncommon", rarityLabel: "Необычная", cost: 1200, baseSell: 2050, growSec: 26, multi: false, minKg: 1.0, maxKg: 5.0, stockChance: 0.85, maxStock: 5 },
-      { id: "tomato", name: "Томатный куст", shape: "round", color: "#ef4444", leaf: "#16a34a", rarity: "uncommon", rarityLabel: "Необычный", cost: 2400, baseSell: 1450, growSec: 30, multi: true, minKg: 0.8, maxKg: 4.2, stockChance: 0.80, maxStock: 4 },
-      { id: "pepper", name: "Острый перец", shape: "pepper", color: "#dc2626", leaf: "#22c55e", rarity: "uncommon", rarityLabel: "Необычный", cost: 4800, baseSell: 2900, growSec: 34, multi: true, minKg: 0.3, maxKg: 2.2, stockChance: 0.75, maxStock: 4 },
-      { id: "blueberry", name: "Черника", shape: "cluster", color: "#3b82f6", leaf: "#22c55e", rarity: "uncommon", rarityLabel: "Необычная", cost: 9200, baseSell: 5500, growSec: 38, multi: true, minKg: 0.5, maxKg: 3.2, stockChance: 0.70, maxStock: 4 },
+      { id: "corn", name: "Кукуруза", shape: "corn", color: "#ffd43b", leaf: "#38d984", rarity: "uncommon", rarityLabel: "Необычная", cost: 1200, baseSell: 2050, growSec: 26, multi: false, minKg: 1.0, maxKg: 5.0, stockChance: 0.85, maxStock: 5 },
+      { id: "tomato", name: "Томатный куст", shape: "round", color: "#ff5252", leaf: "#2ecc71", rarity: "uncommon", rarityLabel: "Необычный", cost: 2400, baseSell: 1450, growSec: 30, multi: true, minKg: 0.8, maxKg: 4.2, stockChance: 0.80, maxStock: 4 },
+      { id: "pepper", name: "Острый перец", shape: "pepper", color: "#f03e3e", leaf: "#38d984", rarity: "uncommon", rarityLabel: "Необычный", cost: 4800, baseSell: 2900, growSec: 34, multi: true, minKg: 0.3, maxKg: 2.2, stockChance: 0.75, maxStock: 4 },
+      { id: "blueberry", name: "Черника", shape: "cluster", color: "#4dabf7", leaf: "#38d984", rarity: "uncommon", rarityLabel: "Необычная", cost: 9200, baseSell: 5500, growSec: 38, multi: true, minKg: 0.5, maxKg: 3.2, stockChance: 0.70, maxStock: 4 },
       // Rare
-      { id: "pumpkin", name: "Тыква-гигант", shape: "pumpkin", color: "#f97316", leaf: "#15803d", rarity: "rare", rarityLabel: "Редкая", cost: 18500, baseSell: 31500, growSec: 48, multi: false, minKg: 5.0, maxKg: 35.0, stockChance: 0.60, maxStock: 3 },
-      { id: "watermelon", name: "Сахарный арбуз", shape: "melon", color: "#16a34a", leaf: "#4ade80", rarity: "rare", rarityLabel: "Редкий", cost: 36000, baseSell: 61000, growSec: 56, multi: false, minKg: 6.0, maxKg: 42.0, stockChance: 0.52, maxStock: 3 },
-      { id: "grape", name: "Виноградная лоза", shape: "cluster", color: "#9333ea", leaf: "#22c55e", rarity: "rare", rarityLabel: "Редкая", cost: 68000, baseSell: 41000, growSec: 60, multi: true, minKg: 1.2, maxKg: 7.0, stockChance: 0.46, maxStock: 2 },
-      { id: "peach", name: "Персиковое дерево", shape: "peach", color: "#fb923c", leaf: "#22c55e", rarity: "rare", rarityLabel: "Редкое", cost: 125000, baseSell: 75000, growSec: 68, multi: true, minKg: 1.5, maxKg: 9.0, stockChance: 0.40, maxStock: 2 },
+      { id: "pumpkin", name: "Тыква-гигант", shape: "pumpkin", color: "#ff922b", leaf: "#2b8a3e", rarity: "rare", rarityLabel: "Редкая", cost: 18500, baseSell: 31500, growSec: 48, multi: false, minKg: 5.0, maxKg: 35.0, stockChance: 0.60, maxStock: 3 },
+      { id: "watermelon", name: "Сахарный арбуз", shape: "melon", color: "#37b24d", leaf: "#8ce99a", rarity: "rare", rarityLabel: "Редкий", cost: 36000, baseSell: 61000, growSec: 56, multi: false, minKg: 6.0, maxKg: 42.0, stockChance: 0.52, maxStock: 3 },
+      { id: "grape", name: "Виноградная лоза", shape: "cluster", color: "#ae3ec9", leaf: "#38d984", rarity: "rare", rarityLabel: "Редкая", cost: 68000, baseSell: 41000, growSec: 60, multi: true, minKg: 1.2, maxKg: 7.0, stockChance: 0.46, maxStock: 2 },
+      { id: "peach", name: "Персиковое дерево", shape: "peach", color: "#ffa94d", leaf: "#38d984", rarity: "rare", rarityLabel: "Редкое", cost: 125000, baseSell: 75000, growSec: 68, multi: true, minKg: 1.5, maxKg: 9.0, stockChance: 0.40, maxStock: 2 },
       // Epic
-      { id: "pineapple", name: "Королевский ананас", shape: "pineapple", color: "#eab308", leaf: "#16a34a", rarity: "epic", rarityLabel: "Эпический", cost: 240000, baseSell: 410000, growSec: 80, multi: false, minKg: 3.0, maxKg: 18.0, stockChance: 0.34, maxStock: 2 },
-      { id: "cacao", name: "Какао-дерево", shape: "oval", color: "#92400e", leaf: "#22c55e", rarity: "epic", rarityLabel: "Эпическое", cost: 450000, baseSell: 270000, growSec: 90, multi: true, minKg: 1.8, maxKg: 11.0, stockChance: 0.28, maxStock: 2 },
-      { id: "mango", name: "Манговое дерево", shape: "peach", color: "#f59e0b", leaf: "#16a34a", rarity: "epic", rarityLabel: "Эпическое", cost: 820000, baseSell: 490000, growSec: 100, multi: true, minKg: 2.0, maxKg: 14.0, stockChance: 0.24, maxStock: 2 },
-      { id: "truffle", name: "Черный трюфель", shape: "mushroom", color: "#475569", leaf: "#cbd5e1", rarity: "epic", rarityLabel: "Эпический", cost: 1450000, baseSell: 2450000, growSec: 115, multi: false, minKg: 0.5, maxKg: 5.5, stockChance: 0.19, maxStock: 2 },
+      { id: "pineapple", name: "Королевский ананас", shape: "pineapple", color: "#fcc419", leaf: "#2f9e44", rarity: "epic", rarityLabel: "Эпический", cost: 240000, baseSell: 410000, growSec: 80, multi: false, minKg: 3.0, maxKg: 18.0, stockChance: 0.34, maxStock: 2 },
+      { id: "cacao", name: "Какао-дерево", shape: "oval", color: "#b5651d", leaf: "#38d984", rarity: "epic", rarityLabel: "Эпическое", cost: 450000, baseSell: 270000, growSec: 90, multi: true, minKg: 1.8, maxKg: 11.0, stockChance: 0.28, maxStock: 2 },
+      { id: "mango", name: "Манговое дерево", shape: "peach", color: "#fab005", leaf: "#2f9e44", rarity: "epic", rarityLabel: "Эпическое", cost: 820000, baseSell: 490000, growSec: 100, multi: true, minKg: 2.0, maxKg: 14.0, stockChance: 0.24, maxStock: 2 },
+      { id: "truffle", name: "Черный трюфель", shape: "mushroom", color: "#64748b", leaf: "#e2e8f0", rarity: "epic", rarityLabel: "Эпический", cost: 1450000, baseSell: 2450000, growSec: 115, multi: false, minKg: 0.5, maxKg: 5.5, stockChance: 0.19, maxStock: 2 },
       // Legendary
-      { id: "dragonfruit", name: "Драконий фрукт", shape: "dragon", color: "#ec4899", leaf: "#4ade80", rarity: "legendary", rarityLabel: "Легендарный", cost: 2800000, baseSell: 1680000, growSec: 130, multi: true, minKg: 4.0, maxKg: 28.0, stockChance: 0.15, maxStock: 1 },
-      { id: "saffron", name: "Крокус шафрана", shape: "flower", color: "#a855f7", leaf: "#facc15", rarity: "legendary", rarityLabel: "Легендарный", cost: 5200000, baseSell: 8800000, growSec: 145, multi: false, minKg: 0.2, maxKg: 2.8, stockChance: 0.12, maxStock: 1 },
-      { id: "goldapple", name: "Золотая яблоня", shape: "peach", color: "#fde047", leaf: "#4ade80", rarity: "legendary", rarityLabel: "Легендарная", cost: 9500000, baseSell: 5700000, growSec: 160, multi: true, minKg: 3.5, maxKg: 24.0, stockChance: 0.09, maxStock: 1 },
-      { id: "sakura", name: "Древняя сакура", shape: "flower", color: "#f472b6", leaf: "#fbcfe8", rarity: "legendary", rarityLabel: "Легендарная", cost: 17500000, baseSell: 10500000, growSec: 180, multi: true, minKg: 2.0, maxKg: 16.0, stockChance: 0.07, maxStock: 1 },
+      { id: "dragonfruit", name: "Драконий фрукт", shape: "dragon", color: "#f06595", leaf: "#69db7c", rarity: "legendary", rarityLabel: "Легендарный", cost: 2800000, baseSell: 1680000, growSec: 130, multi: true, minKg: 4.0, maxKg: 28.0, stockChance: 0.15, maxStock: 1 },
+      { id: "saffron", name: "Крокус шафрана", shape: "flower", color: "#be4bdb", leaf: "#ffd43b", rarity: "legendary", rarityLabel: "Легендарный", cost: 5200000, baseSell: 8800000, growSec: 145, multi: false, minKg: 0.2, maxKg: 2.8, stockChance: 0.12, maxStock: 1 },
+      { id: "goldapple", name: "Золотая яблоня", shape: "peach", color: "#ffe066", leaf: "#69db7c", rarity: "legendary", rarityLabel: "Легендарная", cost: 9500000, baseSell: 5700000, growSec: 160, multi: true, minKg: 3.5, maxKg: 24.0, stockChance: 0.09, maxStock: 1 },
+      { id: "sakura", name: "Древняя сакура", shape: "flower", color: "#ff87b2", leaf: "#ffdeeb", rarity: "legendary", rarityLabel: "Легендарная", cost: 17500000, baseSell: 10500000, growSec: 180, multi: true, minKg: 2.0, maxKg: 16.0, stockChance: 0.07, maxStock: 1 },
       // Mythical
-      { id: "starfruit", name: "Звездная карамбола", shape: "star", color: "#fde047", leaf: "#38bdf8", rarity: "mythical", rarityLabel: "Мифический", cost: 32000000, baseSell: 19200000, growSec: 200, multi: true, minKg: 2.5, maxKg: 30.0, stockChance: 0.05, maxStock: 1 },
-      { id: "moonlotus", name: "Лунный лотос", shape: "flower", color: "#38bdf8", leaf: "#bae6fd", rarity: "mythical", rarityLabel: "Мифический", cost: 55000000, baseSell: 33000000, growSec: 225, multi: true, minKg: 2.5, maxKg: 48.0, stockChance: 0.035, maxStock: 1 },
-      { id: "celestialtree", name: "Небесное древо", shape: "star", color: "#34d399", leaf: "#fde047", rarity: "mythical", rarityLabel: "Мифическое", cost: 80000000, baseSell: 48000000, growSec: 260, multi: true, minKg: 5.0, maxKg: 70.0, stockChance: 0.02, maxStock: 1 },
-      { id: "voidorchid", name: "Орхидея пустоты", shape: "flower", color: "#c084fc", leaf: "#f43f5e", rarity: "mythical", rarityLabel: "Мифическая", cost: 120000000, baseSell: 210000000, growSec: 300, multi: false, minKg: 1.0, maxKg: 14.0, stockChance: 0.015, maxStock: 1 }
+      { id: "starfruit", name: "Звездная карамбола", shape: "star", color: "#ffe066", leaf: "#4dabf7", rarity: "mythical", rarityLabel: "Мифический", cost: 32000000, baseSell: 19200000, growSec: 200, multi: true, minKg: 2.5, maxKg: 30.0, stockChance: 0.05, maxStock: 1 },
+      { id: "moonlotus", name: "Лунный лотос", shape: "flower", color: "#4dabf7", leaf: "#d0ebff", rarity: "mythical", rarityLabel: "Мифический", cost: 55000000, baseSell: 33000000, growSec: 225, multi: true, minKg: 2.5, maxKg: 48.0, stockChance: 0.035, maxStock: 1 },
+      { id: "celestialtree", name: "Небесное древо", shape: "star", color: "#38d984", leaf: "#ffe066", rarity: "mythical", rarityLabel: "Мифическое", cost: 80000000, baseSell: 48000000, growSec: 260, multi: true, minKg: 5.0, maxKg: 70.0, stockChance: 0.02, maxStock: 1 },
+      { id: "voidorchid", name: "Орхидея пустоты", shape: "flower", color: "#cc5de8", leaf: "#ff6b6b", rarity: "mythical", rarityLabel: "Мифическая", cost: 120000000, baseSell: 210000000, growSec: 300, multi: false, minKg: 1.0, maxKg: 14.0, stockChance: 0.015, maxStock: 1 }
     ];
 
+    // SOFT EYE-PLEASING CARTOON MEADOW PALETTES PER WEATHER
     const WEATHERS = [
-      { id: "clear", name: "Ясно", iconKey: "sun", weight: 42, bgTop: "#132f29", bgBot: "#0c1f1b" },
-      { id: "rain", name: "Дождь", iconKey: "rain", weight: 24, bgTop: "#122a36", bgBot: "#0b1b22" },
-      { id: "frost", name: "Заморозки", iconKey: "frost", weight: 15, bgTop: "#15333a", bgBot: "#0d2024" },
-      { id: "storm", name: "Гроза", iconKey: "storm", weight: 12, bgTop: "#1c1a33", bgBot: "#100f1f" },
-      { id: "meteor", name: "Звездопад", iconKey: "meteor", weight: 7, bgTop: "#201836", bgBot: "#110d1d" }
+      { id: "clear", name: "Ясно", iconKey: "sun", weight: 42, grassTop: "#64cf6e", grassBot: "#48ad54", tuft: "#3b9445" },
+      { id: "rain", name: "Дождь", iconKey: "rain", weight: 24, grassTop: "#49a882", grassBot: "#358767", tuft: "#296b51" },
+      { id: "frost", name: "Заморозки", iconKey: "frost", weight: 15, grassTop: "#77c9b8", grassBot: "#56ab9b", tuft: "#438c7e" },
+      { id: "storm", name: "Гроза", iconKey: "storm", weight: 12, grassTop: "#458c7e", grassBot: "#31695e", tuft: "#245249" },
+      { id: "meteor", name: "Звездопад", iconKey: "meteor", weight: 7, grassTop: "#4b8a78", grassBot: "#34695b", tuft: "#275247" }
     ];
 
     const GEAR_ITEMS = [
-      { id: "watering_can", category: "growth", mode: "plot", name: "Лейка садовода", shortName: "Лейка", color: "#38bdf8", rarity: "common", rarityLabel: "Базовый", cost: 350, stockChance: 1.0, maxStock: 6, desc: "Применяется на растущую грядку: мгновенно +40% к прогрессу роста." },
-      { id: "growth_fertilizer", category: "growth", mode: "plot", name: "Био-удобрение", shortName: "Удобрение", color: "#4ade80", rarity: "uncommon", rarityLabel: "Необычный", cost: 3200, stockChance: 0.85, maxStock: 4, desc: "Применяется на грядку: +75% роста и +25% к итоговому весу плода." },
-      { id: "sprinkler_basic", category: "growth", mode: "garden", name: "Базовый спринклер", shortName: "Спринклер", color: "#60a5fa", rarity: "rare", rarityLabel: "Редкий", cost: 18000, durationSec: 180, stockChance: 0.65, maxStock: 2, desc: "Работает 3 мин: +35% скорость роста и +20% вес всех плодов." },
-      { id: "giant_elixir", category: "growth", mode: "plot", name: "Эликсир гиганта", shortName: "Эликсир", color: "#f472b6", rarity: "epic", rarityLabel: "Эпический", cost: 75000, stockChance: 0.45, maxStock: 2, desc: "Применяется на грядку: увеличивает вес и размер плода в 2.5x–3.5x." },
-      { id: "sprinkler_gold", category: "mutation", mode: "garden", name: "Золотой спринклер", shortName: "Зол. спринкл.", color: "#ffcf48", rarity: "epic", rarityLabel: "Эпический", cost: 190000, durationSec: 240, stockChance: 0.35, maxStock: 2, desc: "Работает 4 мин: +65% скорость роста и x3 шанс на Gold/Rainbow мутации." },
-      { id: "lightning_rod", category: "mutation", mode: "garden", name: "Громоотвод", shortName: "Громоотвод", color: "#c084fc", rarity: "legendary", rarityLabel: "Легендарный", cost: 520000, durationSec: 300, stockChance: 0.22, maxStock: 1, desc: "Работает 5 мин: притягивает молнии в грозу (шанс Shocked x20 выше в 3 раза)." },
-      { id: "star_prism", category: "mutation", mode: "garden", name: "Звездная призма", shortName: "Призма", color: "#fde047", rarity: "mythical", rarityLabel: "Мифический", cost: 1400000, durationSec: 300, stockChance: 0.14, maxStock: 1, desc: "Работает 5 мин: усиливает шанс на Starlit (x35) и Rainbow (x10) в 3 раза." },
-      { id: "collector_drone", category: "auto", mode: "garden", name: "Дрон-сборщик", shortName: "Дрон", color: "#34d399", rarity: "legendary", rarityLabel: "Легендарный", cost: 380000, durationSec: 240, stockChance: 0.25, maxStock: 1, desc: "Работает 4 мин: автоматически собирает созревшие плоды и начисляет монеты." },
-      { id: "expand_plot", category: "auto", mode: "instant", name: "Новая грядка", shortName: "Участок", color: "#fb923c", rarity: "rare", rarityLabel: "Участок", cost: 3500, stockChance: 1.0, maxStock: 1, desc: "Расширяет ваш сад на +1 грядку (максимум 15 грядок)." }
+      { id: "watering_can", category: "growth", mode: "plot", name: "Лейка садовода", shortName: "Лейка", color: "#4dabf7", rarity: "common", rarityLabel: "Базовый", cost: 350, stockChance: 1.0, maxStock: 6, desc: "Применяется на растущую грядку: мгновенно +40% к прогрессу роста." },
+      { id: "growth_fertilizer", category: "growth", mode: "plot", name: "Био-удобрение", shortName: "Удобрение", color: "#51cf66", rarity: "uncommon", rarityLabel: "Необычный", cost: 3200, stockChance: 0.85, maxStock: 4, desc: "Применяется на грядку: +75% роста и +25% к итоговому весу плода." },
+      { id: "sprinkler_basic", category: "growth", mode: "garden", name: "Базовый спринклер", shortName: "Спринклер", color: "#74c0fc", rarity: "rare", rarityLabel: "Редкий", cost: 18000, durationSec: 180, stockChance: 0.65, maxStock: 2, desc: "Работает 3 мин: +35% скорость роста и +20% вес всех плодов." },
+      { id: "giant_elixir", category: "growth", mode: "plot", name: "Эликсир гиганта", shortName: "Эликсир", color: "#f783ac", rarity: "epic", rarityLabel: "Эпический", cost: 75000, stockChance: 0.45, maxStock: 2, desc: "Применяется на грядку: увеличивает вес и размер плода в 2.5x–3.5x." },
+      { id: "sprinkler_gold", category: "mutation", mode: "garden", name: "Золотой спринклер", shortName: "Зол. спринкл.", color: "#ffd43b", rarity: "epic", rarityLabel: "Эпический", cost: 190000, durationSec: 240, stockChance: 0.35, maxStock: 2, desc: "Работает 4 мин: +65% скорость роста и x3 шанс на Gold/Rainbow мутации." },
+      { id: "lightning_rod", category: "mutation", mode: "garden", name: "Громоотвод", shortName: "Громоотвод", color: "#cc5de8", rarity: "legendary", rarityLabel: "Легендарный", cost: 520000, durationSec: 300, stockChance: 0.22, maxStock: 1, desc: "Работает 5 мин: притягивает молнии в грозу (шанс Shocked x20 выше в 3 раза)." },
+      { id: "star_prism", category: "mutation", mode: "garden", name: "Звездная призма", shortName: "Призма", color: "#ffe066", rarity: "mythical", rarityLabel: "Мифический", cost: 1400000, durationSec: 300, stockChance: 0.14, maxStock: 1, desc: "Работает 5 мин: усиливает шанс на Starlit (x35) и Rainbow (x10) в 3 раза." },
+      { id: "collector_drone", category: "auto", mode: "garden", name: "Дрон-сборщик", shortName: "Дрон", color: "#38d984", rarity: "legendary", rarityLabel: "Легендарный", cost: 380000, durationSec: 240, stockChance: 0.25, maxStock: 1, desc: "Работает 4 мин: автоматически собирает созревшие плоды и начисляет монеты." },
+      { id: "expand_plot", category: "auto", mode: "instant", name: "Новая грядка", shortName: "Участок", color: "#ffa94d", rarity: "rare", rarityLabel: "Участок", cost: 3500, stockChance: 1.0, maxStock: 1, desc: "Расширяет ваш сад на +1 грядку (максимум 15 грядок)." }
     ];
 
     const SHOP_REFRESH_MS = 5 * 60 * 1000;
-    const SAVE_KEY = "pocket_garden_save_v10";
+    const SAVE_KEY = "pocket_garden_save_v11";
 
-    // --- PROCEDURAL CARTOON PLANT ILLUSTRATION (ALWAYS CLEARLY VISIBLE!) ---
-    function drawCropIllustration(ctx, crop, cx, cy, radius, progress = 1) {
+    // --- CUTE EXPRESSIVE CARTOON PLANT ILLUSTRATION ---
+    function drawCropIllustration(ctx, crop, cx, cy, radius, progress = 1, showCuteFace = false) {
       ctx.save();
       ctx.translate(cx, cy);
 
-      // Even at 0% growth, the plant is 65% of full size so you immediately recognize it!
+      // Even at 0% growth, plant is 65% of full size so you immediately see what's growing
       const growthScale = progress < 1 ? (0.65 + progress * 0.35) : 1;
       ctx.scale(growthScale, growthScale);
 
-      // Soil mound & sprout leaves underneath while growing
+      // Cozy soil mound & sprout leaves underneath while growing
       if (progress < 1) {
-        ctx.fillStyle = "#2b160a";
+        ctx.fillStyle = "#3b1e0c";
         ctx.beginPath();
         ctx.ellipse(0, radius * 0.65, radius * 0.65, radius * 0.24, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = "#35d48a";
-        ctx.strokeStyle = "#0f3d28";
-        ctx.lineWidth = 1.6;
+        ctx.fillStyle = "#51cf66";
+        ctx.strokeStyle = "#1b3b2b";
+        ctx.lineWidth = 1.8;
         ctx.beginPath();
         ctx.ellipse(-radius * 0.45, radius * 0.55, radius * 0.28, radius * 0.13, -0.35, 0, Math.PI * 2);
         ctx.ellipse(radius * 0.45, radius * 0.55, radius * 0.28, radius * 0.13, 0.35, 0, Math.PI * 2);
@@ -1107,12 +1157,12 @@
       }
 
       const r = radius * 0.84;
-      ctx.strokeStyle = "#1b140e";
-      ctx.lineWidth = Math.max(2.1, r * 0.11);
+      ctx.strokeStyle = "#261408";
+      ctx.lineWidth = Math.max(2.3, r * 0.12);
       ctx.lineJoin = "round";
 
       const drawTopLeaf = (yOff = -r * 0.85) => {
-        ctx.fillStyle = crop.leaf || "#35d48a";
+        ctx.fillStyle = crop.leaf || "#38d984";
         ctx.beginPath();
         ctx.ellipse(-r * 0.32, yOff, r * 0.38, r * 0.2, -0.45, 0, Math.PI * 2);
         ctx.ellipse(r * 0.32, yOff, r * 0.38, r * 0.2, 0.45, 0, Math.PI * 2);
@@ -1124,19 +1174,19 @@
         drawTopLeaf(-r * 0.72);
         ctx.fillStyle = crop.color;
         ctx.beginPath();
-        ctx.moveTo(-r * 0.52, -r * 0.65);
-        ctx.quadraticCurveTo(0, -r * 0.84, r * 0.52, -r * 0.65);
+        ctx.moveTo(-r * 0.54, -r * 0.65);
+        ctx.quadraticCurveTo(0, -r * 0.84, r * 0.54, -r * 0.65);
         ctx.lineTo(0, r * 0.98);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
-        ctx.strokeStyle = "rgba(124, 45, 18, 0.5)";
+        ctx.strokeStyle = "rgba(124, 45, 18, 0.45)";
         ctx.lineWidth = 1.8;
         ctx.beginPath();
-        ctx.moveTo(-r * 0.24, -r * 0.2);
-        ctx.lineTo(r * 0.1, -r * 0.2);
-        ctx.moveTo(-r * 0.15, r * 0.22);
-        ctx.lineTo(r * 0.14, r * 0.22);
+        ctx.moveTo(-r * 0.24, -r * 0.22);
+        ctx.lineTo(r * 0.1, -r * 0.22);
+        ctx.moveTo(-r * 0.14, r * 0.28);
+        ctx.lineTo(r * 0.12, r * 0.28);
         ctx.stroke();
       } else if (crop.shape === "berry") {
         drawTopLeaf(-r * 0.78);
@@ -1148,8 +1198,8 @@
         ctx.quadraticCurveTo(-r * 0.78, r * 0.35, -r * 0.76, -r * 0.55);
         ctx.fill();
         ctx.stroke();
-        ctx.fillStyle = "#fef08a";
-        [[-0.25, -0.15], [0.25, -0.15], [0, 0.15], [-0.2, 0.42], [0.2, 0.42]].forEach(([sx, sy]) => {
+        ctx.fillStyle = "#fff3bf";
+        [[-0.32, -0.2], [0.32, -0.2], [-0.24, 0.42], [0.24, 0.42]].forEach(([sx, sy]) => {
           ctx.beginPath();
           ctx.arc(r * sx, r * sy, r * 0.08, 0, Math.PI * 2);
           ctx.fill();
@@ -1157,25 +1207,25 @@
       } else if (crop.shape === "corn") {
         ctx.fillStyle = crop.color;
         ctx.beginPath();
-        ctx.ellipse(0, 0, r * 0.5, r * 0.88, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, r * 0.52, r * 0.88, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
         ctx.fillStyle = crop.leaf;
         ctx.beginPath();
-        ctx.moveTo(-r * 0.6, r * 0.1);
+        ctx.moveTo(-r * 0.62, r * 0.12);
         ctx.quadraticCurveTo(-r * 0.48, r * 0.94, 0, r * 0.98);
-        ctx.quadraticCurveTo(r * 0.48, r * 0.94, r * 0.6, r * 0.1);
-        ctx.quadraticCurveTo(0, r * 0.52, -r * 0.6, r * 0.1);
+        ctx.quadraticCurveTo(r * 0.48, r * 0.94, r * 0.62, r * 0.12);
+        ctx.quadraticCurveTo(0, r * 0.54, -r * 0.62, r * 0.12);
         ctx.fill();
         ctx.stroke();
       } else if (crop.shape === "pepper") {
         drawTopLeaf(-r * 0.75);
         ctx.fillStyle = crop.color;
         ctx.beginPath();
-        ctx.moveTo(-r * 0.36, -r * 0.65);
-        ctx.quadraticCurveTo(r * 0.58, -r * 0.65, r * 0.48, r * 0.35);
+        ctx.moveTo(-r * 0.38, -r * 0.65);
+        ctx.quadraticCurveTo(r * 0.6, -r * 0.65, r * 0.5, r * 0.35);
         ctx.quadraticCurveTo(r * 0.36, r * 0.98, -r * 0.16, r * 0.94);
-        ctx.quadraticCurveTo(-r * 0.58, r * 0.25, -r * 0.36, -r * 0.65);
+        ctx.quadraticCurveTo(-r * 0.6, r * 0.25, -r * 0.38, -r * 0.65);
         ctx.fill();
         ctx.stroke();
       } else if (crop.shape === "cluster") {
@@ -1203,7 +1253,7 @@
         ctx.arc(0, 0, r * 0.88, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
-        ctx.strokeStyle = "#14532d";
+        ctx.strokeStyle = "#1b4d36";
         ctx.beginPath();
         ctx.arc(0, 0, r * 0.48, -Math.PI * 0.42, Math.PI * 0.42);
         ctx.stroke();
@@ -1223,7 +1273,7 @@
         ctx.fill();
         ctx.stroke();
       } else if (crop.shape === "mushroom") {
-        ctx.fillStyle = "#f1f5f9";
+        ctx.fillStyle = "#fff8eb";
         ctx.beginPath();
         ctx.roundRect(-r * 0.28, 0, r * 0.56, r * 0.8, 6);
         ctx.fill();
@@ -1246,7 +1296,7 @@
         }
         ctx.fillStyle = crop.leaf;
         ctx.beginPath();
-        ctx.arc(0, 0, r * 0.34, 0, Math.PI * 2);
+        ctx.arc(0, 0, r * 0.36, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       } else if (crop.shape === "star" || crop.shape === "dragon") {
@@ -1254,7 +1304,7 @@
         ctx.beginPath();
         const spikes = crop.shape === "star" ? 5 : 6;
         for (let i = 0; i < spikes * 2; i++) {
-          const rad = i % 2 === 0 ? r * 0.95 : r * 0.48;
+          const rad = i % 2 === 0 ? r * 0.95 : r * 0.5;
           const ang = (i * Math.PI) / spikes - Math.PI / 2;
           if (i === 0) ctx.moveTo(Math.cos(ang) * rad, Math.sin(ang) * rad);
           else ctx.lineTo(Math.cos(ang) * rad, Math.sin(ang) * rad);
@@ -1266,23 +1316,58 @@
         drawTopLeaf(-r * 0.76);
         ctx.fillStyle = crop.color;
         ctx.beginPath();
-        ctx.ellipse(0, r * 0.08, r * 0.6, r * 0.78, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, r * 0.08, r * 0.62, r * 0.78, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       } else {
         drawTopLeaf(-r * 0.78);
         ctx.fillStyle = crop.color;
         ctx.beginPath();
-        ctx.arc(0, r * 0.08, r * 0.8, 0, Math.PI * 2);
+        ctx.arc(0, r * 0.08, r * 0.82, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       }
 
       // Glossy cartoon highlight
-      ctx.fillStyle = "rgba(255, 255, 255, 0.42)";
+      ctx.fillStyle = "rgba(255, 255, 255, 0.48)";
       ctx.beginPath();
-      ctx.ellipse(-r * 0.24, -r * 0.18, r * 0.2, r * 0.11, -0.5, 0, Math.PI * 2);
+      ctx.ellipse(-r * 0.26, -r * 0.22, r * 0.21, r * 0.11, -0.5, 0, Math.PI * 2);
       ctx.fill();
+
+      // Cute kawaii cartoon eyes & rosy cheeks when ripe!
+      if (showCuteFace && progress >= 1 && r >= 12) {
+        const eyeY = crop.shape === "carrot" ? -r * 0.12 : r * 0.06;
+        const eyeDist = r * 0.22;
+
+        // Rosy cheeks
+        ctx.fillStyle = "rgba(255, 105, 135, 0.55)";
+        ctx.beginPath();
+        ctx.ellipse(-eyeDist * 1.35, eyeY + r * 0.11, r * 0.11, r * 0.065, 0, 0, Math.PI * 2);
+        ctx.ellipse(eyeDist * 1.35, eyeY + r * 0.11, r * 0.11, r * 0.065, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Eyes
+        ctx.fillStyle = "#1f1209";
+        ctx.beginPath();
+        ctx.arc(-eyeDist, eyeY, r * 0.095, 0, Math.PI * 2);
+        ctx.arc(eyeDist, eyeY, r * 0.095, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Eye sparkles
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(-eyeDist - r * 0.03, eyeY - r * 0.03, r * 0.035, 0, Math.PI * 2);
+        ctx.arc(eyeDist - r * 0.03, eyeY - r * 0.03, r * 0.035, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Happy little smile
+        ctx.strokeStyle = "#1f1209";
+        ctx.lineWidth = Math.max(1.5, r * 0.075);
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.arc(0, eyeY + r * 0.05, r * 0.12, 0.15 * Math.PI, 0.85 * Math.PI);
+        ctx.stroke();
+      }
 
       ctx.restore();
     }
@@ -1291,13 +1376,13 @@
       ctx.save();
       ctx.translate(cx, cy);
       const r = radius * 0.76;
-      ctx.strokeStyle = "#0e211c";
-      ctx.lineWidth = 2.3;
+      ctx.strokeStyle = "#1f4d36";
+      ctx.lineWidth = 2.4;
 
       if (gear.id === "watering_can") {
         ctx.fillStyle = gear.color;
         ctx.beginPath();
-        ctx.roundRect(-r * 0.48, -r * 0.28, r * 0.94, r * 0.88, 6);
+        ctx.roundRect(-r * 0.48, -r * 0.28, r * 0.94, r * 0.88, 7);
         ctx.fill();
         ctx.stroke();
         ctx.beginPath();
@@ -1310,7 +1395,7 @@
         ctx.arc(0, r * 0.22, r * 0.65, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
-        ctx.fillStyle = "#e2e8f0";
+        ctx.fillStyle = "#fff8eb";
         ctx.fillRect(-r * 0.24, -r * 0.76, r * 0.48, r * 0.44);
         ctx.strokeRect(-r * 0.24, -r * 0.76, r * 0.48, r * 0.44);
       } else if (gear.id === "sprinkler_basic" || gear.id === "sprinkler_gold") {
@@ -1322,14 +1407,15 @@
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
-        ctx.fillStyle = "#bae6fd";
+        ctx.fillStyle = "#4dabf7";
         ctx.beginPath();
-        ctx.arc(-r * 0.52, -r * 0.56, r * 0.2, 0, Math.PI * 2);
-        ctx.arc(r * 0.52, -r * 0.56, r * 0.2, 0, Math.PI * 2);
+        ctx.arc(-r * 0.52, -r * 0.56, r * 0.22, 0, Math.PI * 2);
+        ctx.arc(r * 0.52, -r * 0.56, r * 0.22, 0, Math.PI * 2);
         ctx.fill();
+        ctx.stroke();
       } else if (gear.id === "lightning_rod") {
         ctx.strokeStyle = gear.color;
-        ctx.lineWidth = 3.6;
+        ctx.lineWidth = 3.8;
         ctx.beginPath();
         ctx.moveTo(0, -r * 0.92);
         ctx.lineTo(0, r * 0.86);
@@ -1358,13 +1444,13 @@
         ctx.fill();
         ctx.stroke();
       } else {
-        ctx.fillStyle = "#7a4927";
+        ctx.fillStyle = "#b56b32";
         ctx.beginPath();
-        ctx.roundRect(-r * 0.72, -r * 0.72, r * 1.44, r * 1.44, 7);
+        ctx.roundRect(-r * 0.72, -r * 0.72, r * 1.44, r * 1.44, 8);
         ctx.fill();
         ctx.stroke();
-        ctx.strokeStyle = "#46e098";
-        ctx.lineWidth = 3.2;
+        ctx.strokeStyle = "#5ef0a2";
+        ctx.lineWidth = 3.4;
         ctx.beginPath();
         ctx.moveTo(0, -r * 0.4);
         ctx.lineTo(0, r * 0.4);
@@ -1422,8 +1508,8 @@
 
     function createDefaultState() {
       const now = Date.now();
-      const base = {
-        version: 10,
+      return {
+        version: 11,
         coins: 120,
         xp: 0,
         bestFruitValue: 0,
@@ -1441,7 +1527,6 @@
         order: { cropId: "carrot", target: 2, progress: 0 },
         lastTimestamp: now
       };
-      return base;
     }
 
     function getPlayerLevel() {
@@ -1492,22 +1577,22 @@
       const rodMult = hasRod ? 3 : 1;
 
       if (Math.random() < 0.012 * prismMult) {
-        mutations.push({ id: "rainbow", name: "Rainbow", mult: 10, color: "#f472b6" });
+        mutations.push({ id: "rainbow", name: "Rainbow", mult: 10, color: "#f06595" });
       } else if (Math.random() < 0.04 * goldMult) {
-        mutations.push({ id: "gold", name: "Gold", mult: 3, color: "#ffcf48" });
+        mutations.push({ id: "gold", name: "Gold", mult: 3, color: "#ffd43b" });
       }
 
       if (weatherId === "rain" && Math.random() < 0.5) {
-        mutations.push({ id: "wet", name: "Wet", mult: 1.5, color: "#38bdf8" });
+        mutations.push({ id: "wet", name: "Wet", mult: 1.5, color: "#4dabf7" });
       }
       if (weatherId === "frost" && Math.random() < 0.4) {
-        mutations.push({ id: "frozen", name: "Frozen", mult: 5, color: "#7dd3fc" });
+        mutations.push({ id: "frozen", name: "Frozen", mult: 5, color: "#74c0fc" });
       }
       if (weatherId === "storm" && Math.random() < 0.18 * rodMult) {
-        mutations.push({ id: "shocked", name: "Shocked", mult: 20, color: "#c084fc" });
+        mutations.push({ id: "shocked", name: "Shocked", mult: 20, color: "#cc5de8" });
       }
       if (weatherId === "meteor" && Math.random() < 0.14 * prismMult) {
-        mutations.push({ id: "starlit", name: "Starlit", mult: 35, color: "#fde047" });
+        mutations.push({ id: "starlit", name: "Starlit", mult: 35, color: "#ffe066" });
       }
 
       return { weight, mutations };
@@ -1584,8 +1669,8 @@
       try {
         const raw =
           localStorage.getItem(SAVE_KEY) ||
-          localStorage.getItem("pocket_garden_save_v9") ||
-          localStorage.getItem("pocket_garden_save_v8");
+          localStorage.getItem("pocket_garden_save_v10") ||
+          localStorage.getItem("pocket_garden_save_v9");
 
         if (!raw) {
           def.shop.stock = generateSeedStock();
@@ -1775,10 +1860,10 @@
         `Соберите с грядок: <strong>${crop.name} (${ord.progress}/${ord.target} шт.)</strong>.<br><br>` +
         `Награда за выполнение заказа:<br>` +
         `• Бонус <strong>+${formatNumber(bonusCoins)} монет</strong><br>` +
-        `• Опыт садовода <strong>+45 XP</strong> (каждый уровень даёт +5% к продаже всех плодов)`,
+        `• Опыт садовода <strong>+45 XP</strong> (+5% к продаже за каждый уровень)`,
         [
           {
-            label: "Сменить заказ (бесплатно)",
+            label: "Сменить заказ",
             className: "btn-secondary",
             onClick: () => {
               state.order = generateOrder(state);
@@ -1786,7 +1871,7 @@
               showToast("Заказ обновлён!");
             }
           },
-          { label: "Понятно", className: "buy-btn" }
+          { label: "Отлично!", className: "buy-btn" }
         ]
       );
     };
@@ -1834,7 +1919,7 @@
           `;
 
           card.querySelector(".item-thumb").appendChild(
-            createMiniThumbCanvas((g, x, y, r) => drawCropIllustration(g, crop, x, y, r, 1))
+            createMiniThumbCanvas((g, x, y, r) => drawCropIllustration(g, crop, x, y, r, 1, true))
           );
 
           card.onclick = () => {
@@ -2009,15 +2094,20 @@
       document.getElementById("weatherProgress").style.width = leftPct + "%";
     }
 
-    // --- CANVAS FLOATING POPUPS & PARTICLES ---
+    // --- CARTOON SQUASH-AND-STRETCH, POPUPS & PARTICLES ---
     const floatingPopups = [];
     const burstParticles = [];
+    const plotBounce = Array(15).fill(0);
 
-    function spawnFloatingText(x, y, text, color = "#46e098") {
+    function triggerPlotBounce(idx, strength = 1) {
+      if (idx >= 0 && idx < 15) plotBounce[idx] = strength;
+    }
+
+    function spawnFloatingText(x, y, text, color = "#38d984") {
       floatingPopups.push({ x, y, text, color, life: 1.0 });
     }
 
-    function spawnBurst(x, y, color = "#35d48a", count = 10) {
+    function spawnBurst(x, y, color = "#38d984", count = 10) {
       for (let i = 0; i < count; i++) {
         const ang = (Math.PI * 2 * i) / count + Math.random() * 0.4;
         const spd = 1.4 + Math.random() * 2.6;
@@ -2025,8 +2115,8 @@
           x,
           y,
           vx: Math.cos(ang) * spd,
-          vy: Math.sin(ang) * spd - 1.2,
-          r: 2.5 + Math.random() * 2.5,
+          vy: Math.sin(ang) * spd - 1.3,
+          r: 2.8 + Math.random() * 2.5,
           color,
           life: 1.0
         });
@@ -2097,6 +2187,7 @@
             const stats = rollFruitStatsWithContext(crop, p, state.weather.id, activeIds);
             p.weight = stats.weight;
             p.mutations = stats.mutations;
+            triggerPlotBounce(i, 1.0);
           }
         }
 
@@ -2109,7 +2200,7 @@
             if (val > state.bestFruitValue) state.bestFruitValue = val;
             if (plotRects[i]) {
               const r = plotRects[i];
-              spawnFloatingText(r.x + r.w / 2, r.y + r.h / 2, `+${formatNumber(val)}`, "#ffcf48");
+              spawnFloatingText(r.x + r.w / 2, r.y + r.h / 2, `+${formatNumber(val)}`, "#ffd24c");
             }
             if (crop.multi) {
               p.ready = false;
@@ -2152,7 +2243,6 @@
         readyText.textContent = `${readyCount}`;
       }
 
-      // Order banner
       const ord = state.order || { cropId: "carrot", target: 2, progress: 0 };
       const ordCrop = getCrop(ord.cropId) || CROPS[0];
       const ordReward = Math.round(ordCrop.baseSell * ord.target * 1.6);
@@ -2186,7 +2276,7 @@
           .map(d => {
             const g = getGear(d.id);
             if (!g) return "";
-            return `<div class="device-chip"><span style="width:7px;height:7px;border-radius:50%;background:${g.color};display:inline-block;"></span>${g.shortName} • ${formatTimeLeft(d.endAt - now)}</div>`;
+            return `<div class="device-chip"><span style="width:7px;height:7px;border-radius:50%;background:${g.color};border:1px solid #1f4d36;display:inline-block;"></span>${g.shortName} • ${formatTimeLeft(d.endAt - now)}</div>`;
           })
           .join("");
       }
@@ -2222,6 +2312,7 @@
 
       if (value > state.bestFruitValue) state.bestFruitValue = value;
       trackOrderProgress(crop.id);
+      triggerPlotBounce(idx, 1.1);
 
       const harvestedWeight = p.weight;
       const harvestedMuts = [...p.mutations];
@@ -2229,7 +2320,7 @@
       if (plotRects[idx]) {
         const r = plotRects[idx];
         spawnBurst(r.x + r.w / 2, r.y + r.h / 2, crop.color, 12);
-        spawnFloatingText(r.x + r.w / 2, r.y + r.h * 0.4, `+${harvestedWeight} кг`, "#46e098");
+        spawnFloatingText(r.x + r.w / 2, r.y + r.h * 0.4, `+${harvestedWeight} кг`, "#63f2a5");
       }
 
       if (crop.multi) {
@@ -2295,6 +2386,7 @@
               onClick: () => {
                 state.coins += refund;
                 state.plots[idx] = createEmptyPlot();
+                triggerPlotBounce(idx, 0.9);
                 if (rect) spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#854d27", 10);
                 saveState();
                 haptic("medium");
@@ -2327,28 +2419,29 @@
         }
 
         state.gearInventory[gItem.id]--;
+        triggerPlotBounce(idx, 1.0);
         const maxMs = p.growDuration * 1000;
 
         if (gItem.id === "watering_can") {
           p.progressMs = Math.min(maxMs, p.progressMs + maxMs * 0.40);
           if (rect) {
-            spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#38bdf8", 10);
-            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, "+40% рост", "#7dd3fc");
+            spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#4dabf7", 10);
+            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, "+40% рост", "#a5d8ff");
           }
           showToast("Полито (+40% роста)");
         } else if (gItem.id === "growth_fertilizer") {
           p.progressMs = Math.min(maxMs, p.progressMs + maxMs * 0.75);
           p.giantBoost = Number((p.giantBoost * 1.25).toFixed(2));
           if (rect) {
-            spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#4ade80", 12);
-            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, "+75% / +25% вес", "#86efac");
+            spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#51cf66", 12);
+            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, "+75% / +25% вес", "#b2f2bb");
           }
           showToast("Удобрено (+75% роста и +25% вес)");
         } else if (gItem.id === "giant_elixir") {
           p.giantBoost = Number((p.giantBoost * (2.5 + Math.random())).toFixed(2));
           if (rect) {
-            spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#f472b6", 14);
-            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, `Размер ${p.giantBoost}x`, "#fbcfe8");
+            spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#f783ac", 14);
+            spawnFloatingText(rect.x + rect.w / 2, rect.y + rect.h * 0.35, `Размер ${p.giantBoost}x`, "#fcc2d7");
           }
           showToast("Эликсир гиганта применён!");
         }
@@ -2385,7 +2478,8 @@
           mutations: [],
           giantBoost: 1
         };
-        if (rect) spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#7c4722", 8);
+        triggerPlotBounce(idx, 1.0);
+        if (rect) spawnBurst(rect.x + rect.w / 2, rect.y + rect.h / 2, "#8c5327", 8);
         ensureValidSelectedSeed(state);
         haptic("light");
         saveState();
@@ -2444,7 +2538,7 @@
         `;
 
         card.querySelector(".item-thumb").appendChild(
-          createMiniThumbCanvas((g, x, y, r) => drawCropIllustration(g, crop, x, y, r, 1))
+          createMiniThumbCanvas((g, x, y, r) => drawCropIllustration(g, crop, x, y, r, 1, true))
         );
 
         card.querySelector(".buy-btn").onclick = () => {
@@ -2572,8 +2666,8 @@
       sorted.forEach(item => {
         const crop = getCrop(item.cropId);
         const mutHtml = item.mutations && item.mutations.length
-          ? item.mutations.map(m => `<span class="tag" style="background:rgba(255,255,255,0.12);color:${m.color}">${m.name} x${m.mult}</span>`).join(" ")
-          : `<span class="tag" style="background:rgba(255,255,255,0.08);color:#93b3a8">Стандарт</span>`;
+          ? item.mutations.map(m => `<span class="tag" style="background:${m.color};color:#1b3b2b">${m.name} x${m.mult}</span>`).join(" ")
+          : `<span class="tag rarity-common">Стандарт</span>`;
 
         const card = document.createElement("div");
         card.className = "item-card";
@@ -2583,7 +2677,7 @@
             <div class="item-info">
               <div class="item-title-row">
                 <span class="item-name">${item.name}</span>
-                <span style="font-size:11px;color:#9efad0;font-weight:700;">${item.weight} кг</span>
+                <span style="font-size:11.5px;color:#1fa861;font-weight:900;">${item.weight} кг</span>
               </div>
               <div class="item-meta" style="margin-top:4px;">${mutHtml}</div>
             </div>
@@ -2593,7 +2687,7 @@
 
         if (crop) {
           card.querySelector(".item-thumb").appendChild(
-            createMiniThumbCanvas((g, x, y, r) => drawCropIllustration(g, crop, x, y, r, 1))
+            createMiniThumbCanvas((g, x, y, r) => drawCropIllustration(g, crop, x, y, r, 1, true))
           );
         }
 
@@ -2691,7 +2785,7 @@
       };
     });
 
-    // --- ORIGINAL-STYLE CARTOON GARDEN RENDERER ---
+    // --- LUSH CARTOON MEADOW & WOODEN GARDEN RENDERER ---
     const canvasContainer = document.getElementById("canvasContainer");
     const canvas = document.getElementById("gardenCanvas");
     const ctx = canvas.getContext("2d");
@@ -2716,12 +2810,19 @@
       window.addEventListener("resize", resizeCanvas);
     }
 
-    const fireflies = Array.from({ length: 22 }, () => ({
+    const meadowDecos = Array.from({ length: 28 }, (_, idx) => ({
+      rx: ((idx * 73) % 100) / 100,
+      ry: ((idx * 41) % 100) / 100,
+      isFlower: idx % 4 === 0,
+      flowerColor: idx % 8 === 0 ? "#fff3bf" : "#ffc9c9"
+    }));
+
+    const pollenMotes = Array.from({ length: 18 }, () => ({
       x: Math.random() * 500,
       y: Math.random() * 700,
-      r: 1.8 + Math.random() * 2.2,
+      r: 2.2 + Math.random() * 2.2,
       phase: Math.random() * Math.PI * 2,
-      vx: (Math.random() - 0.5) * 0.35,
+      vx: (Math.random() - 0.5) * 0.4,
       vy: -0.15 - Math.random() * 0.25
     }));
 
@@ -2729,20 +2830,21 @@
       x: Math.random() * 500,
       y: Math.random() * 700,
       speed: 2 + Math.random() * 3.5,
-      size: 1.5 + Math.random() * 2
+      size: 1.8 + Math.random() * 2
     }));
 
     function drawLockVector(cx, cy) {
       ctx.save();
       ctx.translate(cx, cy);
-      ctx.strokeStyle = "rgba(180, 224, 208, 0.45)";
-      ctx.fillStyle = "rgba(180, 224, 208, 0.2)";
-      ctx.lineWidth = 2.2;
+      ctx.strokeStyle = "#1f4d36";
+      ctx.fillStyle = "#fff8eb";
+      ctx.lineWidth = 2.4;
       ctx.beginPath();
-      ctx.arc(0, -5, 6, Math.PI, 0);
+      ctx.arc(0, -5, 6.5, Math.PI, 0);
       ctx.stroke();
+      ctx.fillStyle = "#ffd24c";
       ctx.beginPath();
-      ctx.roundRect(-8, -3, 16, 13, 3.5);
+      ctx.roundRect(-8.5, -3, 17, 13.5, 4);
       ctx.fill();
       ctx.stroke();
       ctx.restore();
@@ -2752,19 +2854,43 @@
       if (currentView === "garden") {
         const wObj = WEATHERS.find(w => w.id === state.weather.id) || WEATHERS[0];
 
-        // Глубокий хвойно-изумрудный фон как в первоначальном дизайне
+        // Soft, eye-pleasing sunny meadow grass gradient
         const grad = ctx.createLinearGradient(0, 0, 0, logicalH);
-        grad.addColorStop(0, wObj.bgTop);
-        grad.addColorStop(1, wObj.bgBot);
+        grad.addColorStop(0, wObj.grassTop);
+        grad.addColorStop(1, wObj.grassBot);
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, logicalW, logicalH);
+
+        // Decorative cartoon grass tufts & tiny meadow daisies
+        meadowDecos.forEach(d => {
+          const mx = d.rx * logicalW;
+          const my = d.ry * logicalH;
+          ctx.strokeStyle = wObj.tuft;
+          ctx.lineWidth = 2;
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.moveTo(mx - 4, my);
+          ctx.lineTo(mx - 6, my - 5);
+          ctx.moveTo(mx, my);
+          ctx.lineTo(mx, my - 6);
+          ctx.moveTo(mx + 4, my);
+          ctx.lineTo(mx + 6, my - 5);
+          ctx.stroke();
+
+          if (d.isFlower) {
+            ctx.fillStyle = d.flowerColor;
+            ctx.beginPath();
+            ctx.arc(mx + 6, my - 2, 2.6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
 
         const hasDevices = state.devices.length > 0;
         const topOffset = hasDevices ? 82 : 60;
         const cols = 3;
         const rows = 5;
-        const padX = 11;
-        const padBottom = 10;
+        const padX = 12;
+        const padBottom = 11;
         const gap = 8;
         const cellW = (logicalW - padX * 2 - gap * (cols - 1)) / cols;
         const cellH = (logicalH - topOffset - padBottom - gap * (rows - 1)) / rows;
@@ -2781,16 +2907,24 @@
           const unlocked = i < state.unlockedPlots;
           const p = state.plots[i];
 
+          // Decay bounce animation smoothly
+          if (plotBounce[i] > 0.005) {
+            plotBounce[i] *= 0.86;
+          } else {
+            plotBounce[i] = 0;
+          }
+          const bounceWave = Math.sin(plotBounce[i] * Math.PI * 3) * plotBounce[i] * 0.14;
+
           ctx.save();
 
           if (!unlocked) {
             ctx.beginPath();
-            ctx.roundRect(x, y, cellW, cellH, 14);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.03)";
+            ctx.roundRect(x, y, cellW, cellH, 16);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.18)";
             ctx.fill();
-            ctx.setLineDash([5, 5]);
-            ctx.strokeStyle = "rgba(152, 191, 178, 0.22)";
-            ctx.lineWidth = 1.6;
+            ctx.setLineDash([6, 5]);
+            ctx.strokeStyle = "rgba(31, 77, 54, 0.45)";
+            ctx.lineWidth = 2;
             ctx.stroke();
             ctx.setLineDash([]);
             drawLockVector(x + cellW / 2, y + cellH / 2);
@@ -2798,41 +2932,46 @@
             continue;
           }
 
-          // Нижняя тень грядки
+          // Ground drop shadow under raised wooden garden bed
           ctx.beginPath();
-          ctx.roundRect(x, y + 3, cellW, cellH, 14);
-          ctx.fillStyle = "#261409";
+          ctx.roundRect(x, y + 4, cellW, cellH, 16);
+          ctx.fillStyle = "rgba(24, 58, 36, 0.35)";
           ctx.fill();
 
-          // Шоколадно-земляная грядка
+          // Warm wooden raised garden bed frame
           ctx.beginPath();
-          ctx.roundRect(x, y, cellW, cellH, 14);
-          ctx.fillStyle = p.cropId ? "#472916" : "#3d2312";
+          ctx.roundRect(x, y, cellW, cellH, 16);
+          ctx.fillStyle = "#c4783b";
           ctx.fill();
-
-          // Контур грядки
           ctx.strokeStyle = activeTool === "shovel" && p.cropId
-            ? "#ff7070"
+            ? "#e03131"
             : activeTool === "gear" && p.cropId && !p.ready
-              ? "#ffcf48"
+              ? "#f59f00"
               : p.ready
-                ? "#46e098"
-                : "#633b21";
-          ctx.lineWidth = p.ready ? 2.4 : 1.8;
+                ? "#2b8a3e"
+                : "#3b200d";
+          ctx.lineWidth = p.ready ? 2.8 : 2.2;
           ctx.stroke();
 
-          // Горизонтальные бороздки грядки
-          ctx.strokeStyle = "rgba(24, 11, 4, 0.45)";
-          ctx.lineWidth = 1.6;
+          // Rich cozy soil bed inside wooden border
+          const inset = 4.5;
+          ctx.beginPath();
+          ctx.roundRect(x + inset, y + inset, cellW - inset * 2, cellH - inset * 2, 12);
+          ctx.fillStyle = p.cropId ? "#6b3e1e" : "#5c3418";
+          ctx.fill();
+
+          // Cartoon soil furrows
+          ctx.strokeStyle = "rgba(43, 21, 7, 0.4)";
+          ctx.lineWidth = 1.8;
           ctx.lineCap = "round";
           ctx.beginPath();
-          ctx.moveTo(x + 12, y + cellH * 0.34);
-          ctx.lineTo(x + cellW - 12, y + cellH * 0.34);
-          ctx.moveTo(x + 12, y + cellH * 0.64);
-          ctx.lineTo(x + cellW - 12, y + cellH * 0.64);
+          ctx.moveTo(x + 14, y + cellH * 0.35);
+          ctx.lineTo(x + cellW - 14, y + cellH * 0.35);
+          ctx.moveTo(x + 14, y + cellH * 0.65);
+          ctx.lineTo(x + cellW - 14, y + cellH * 0.65);
           ctx.stroke();
 
-          // Растение на грядке (ВСЕГДА крупно видно какое растение посажено!)
+          // Plant rendering (ALWAYS clearly shows what crop is growing!)
           if (p.cropId) {
             const crop = getCrop(p.cropId);
             const maxMs = p.growDuration * 1000;
@@ -2841,12 +2980,12 @@
             if (p.ready) {
               const auraColor = p.mutations && p.mutations.length > 0
                 ? p.mutations[p.mutations.length - 1].color
-                : "#46e098";
-              const pulse = 0.86 + Math.sin(ts / 220 + i) * 0.14;
-              const radius = Math.min(cellW, cellH) * 0.4 * pulse;
+                : "#fff3bf";
+              const pulse = 0.88 + Math.sin(ts / 220 + i) * 0.12;
+              const radius = Math.min(cellW, cellH) * 0.38 * pulse;
               ctx.beginPath();
               ctx.arc(x + cellW / 2, y + cellH / 2 + 2, radius, 0, Math.PI * 2);
-              ctx.fillStyle = auraColor + "36";
+              ctx.fillStyle = auraColor + "55";
               ctx.fill();
             }
 
@@ -2857,69 +2996,83 @@
               scale = 1.06 + ratio * 0.42;
             }
 
-            const bob = p.ready ? Math.sin(ts / 240 + i) * 2.5 : 0;
-            drawCropIllustration(ctx, crop, x + cellW / 2, y + cellH / 2 + 3 + bob, baseRadius * scale, progress);
+            const bob = p.ready ? Math.sin(ts / 230 + i) * 2.5 : 0;
 
-            // Верхняя плашка с названием и процентом роста
+            // Apply squash & stretch bounce around plot center
+            ctx.save();
+            ctx.translate(x + cellW / 2, y + cellH / 2 + 3 + bob);
+            ctx.scale(1 + bounceWave, 1 - bounceWave);
+            drawCropIllustration(ctx, crop, 0, 0, baseRadius * scale, progress, true);
+            ctx.restore();
+
+            // Cream cartoon label pill at top of bed
             const shortLabel = crop.name.split(" ")[0];
-            ctx.fillStyle = "rgba(11, 24, 21, 0.85)";
+            ctx.fillStyle = "rgba(244, 251, 246, 0.94)";
+            ctx.strokeStyle = "#1f4d36";
+            ctx.lineWidth = 1.5;
             ctx.beginPath();
-            ctx.roundRect(x + 5, y + 4, cellW - 10, 14, 5);
+            ctx.roundRect(x + 5, y + 4, cellW - 10, 14, 6);
             ctx.fill();
+            ctx.stroke();
 
-            ctx.fillStyle = p.ready ? (p.mutations.length ? "#ffcf48" : "#7cf7bd") : "#e3faf0";
-            ctx.font = "800 9px sans-serif";
+            ctx.fillStyle = p.ready ? "#19713b" : "#1b3b2b";
+            ctx.font = "900 9px Nunito, sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             if (!p.ready) {
               const pct = Math.floor(progress * 100);
-              ctx.fillText(`${shortLabel} ${pct}%`, x + cellW / 2, y + 11);
+              ctx.fillText(`${shortLabel} ${pct}%`, x + cellW / 2, y + 11.2);
 
-              // Фирменная мятная полоска прогресса внизу грядки
+              // Chunky mint progress bar at bottom
               const barW = cellW - 22;
-              ctx.fillStyle = "rgba(15, 8, 4, 0.7)";
+              ctx.fillStyle = "#2b1507";
               ctx.beginPath();
-              ctx.roundRect(x + 11, y + cellH - 10, barW, 5, 2.5);
+              ctx.roundRect(x + 11, y + cellH - 11, barW, 6, 3);
               ctx.fill();
 
-              ctx.fillStyle = "#35d48a";
+              ctx.fillStyle = "#5ef0a2";
               ctx.beginPath();
-              ctx.roundRect(x + 11, y + cellH - 10, Math.max(5, barW * progress), 5, 2.5);
+              ctx.roundRect(x + 11.5, y + cellH - 10.5, Math.max(5, (barW - 1) * progress), 5, 2.5);
               ctx.fill();
             } else {
-              ctx.fillText(shortLabel, x + cellW / 2, y + 11);
+              ctx.fillText(shortLabel, x + cellW / 2, y + 11.2);
 
-              ctx.fillStyle = "rgba(11, 24, 21, 0.92)";
+              // Weight badge pill at bottom
+              ctx.fillStyle = p.mutations.length ? "#fff3bf" : "#e3f9ec";
+              ctx.strokeStyle = "#1f4d36";
+              ctx.lineWidth = 1.5;
               ctx.beginPath();
-              ctx.roundRect(x + 7, y + cellH - 18, cellW - 14, 13, 5);
+              ctx.roundRect(x + 7, y + cellH - 18, cellW - 14, 13.5, 6);
               ctx.fill();
-              ctx.fillStyle = p.mutations.length ? "#ffcf48" : "#46e098";
-              ctx.font = "800 9.5px sans-serif";
-              ctx.fillText(`${p.weight} кг`, x + cellW / 2, y + cellH - 11.5);
+              ctx.stroke();
+
+              ctx.fillStyle = p.mutations.length ? "#8c5200" : "#125c30";
+              ctx.font = "900 9.5px Nunito, sans-serif";
+              ctx.fillText(`${p.weight} кг`, x + cellW / 2, y + cellH - 11.2);
             }
           }
           ctx.restore();
         }
 
-        // Светлячки / белые огоньки как на первоначальном скриншоте
-        fireflies.forEach(f => {
+        // Warm sunny pollen motes floating gently
+        pollenMotes.forEach(f => {
           f.x += f.vx;
           f.y += f.vy;
           f.phase += 0.04;
           if (f.y < -10) { f.y = logicalH + 10; f.x = Math.random() * logicalW; }
           if (f.x < -10) f.x = logicalW + 10;
           if (f.x > logicalW + 10) f.x = -10;
-          const alpha = 0.35 + Math.sin(f.phase) * 0.3;
-          ctx.fillStyle = `rgba(220, 255, 240, ${Math.max(0.1, alpha)})`;
+          const alpha = 0.4 + Math.sin(f.phase) * 0.3;
+          ctx.fillStyle = `rgba(255, 250, 210, ${Math.max(0.15, alpha)})`;
           ctx.beginPath();
           ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
           ctx.fill();
         });
 
-        // Погодные эффекты
+        // Weather particles
         if (state.weather.id === "rain" || state.weather.id === "storm") {
-          ctx.strokeStyle = "rgba(186, 230, 253, 0.5)";
-          ctx.lineWidth = 1.6;
+          ctx.strokeStyle = "rgba(219, 244, 255, 0.72)";
+          ctx.lineWidth = 2;
           ctx.lineCap = "round";
           drops.forEach(d => {
             d.y += d.speed * 2.3;
@@ -2931,7 +3084,7 @@
             ctx.stroke();
           });
         } else if (state.weather.id === "frost") {
-          ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
+          ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
           drops.forEach(d => {
             d.y += d.speed * 0.5;
             d.x += Math.sin(ts / 500 + d.y) * 0.4;
@@ -2941,8 +3094,8 @@
             ctx.fill();
           });
         } else if (state.weather.id === "meteor") {
-          ctx.strokeStyle = "rgba(255, 224, 102, 0.8)";
-          ctx.lineWidth = 2;
+          ctx.strokeStyle = "rgba(255, 232, 117, 0.9)";
+          ctx.lineWidth = 2.4;
           ctx.lineCap = "round";
           drops.slice(0, 8).forEach(d => {
             d.y += d.speed * 2.8;
@@ -2955,7 +3108,7 @@
           });
         }
 
-        // Частицы
+        // Burst particles
         for (let i = burstParticles.length - 1; i >= 0; i--) {
           const bp = burstParticles[i];
           bp.x += bp.vx;
@@ -2968,13 +3121,16 @@
           }
           ctx.globalAlpha = Math.max(0, bp.life);
           ctx.fillStyle = bp.color;
+          ctx.strokeStyle = "#1f4d36";
+          ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.arc(bp.x, bp.y, bp.r, 0, Math.PI * 2);
           ctx.fill();
+          ctx.stroke();
           ctx.globalAlpha = 1;
         }
 
-        // Всплывающие тексты
+        // Floating cartoon popups
         for (let i = floatingPopups.length - 1; i >= 0; i--) {
           const fp = floatingPopups[i];
           fp.y -= 0.85;
@@ -2985,10 +3141,10 @@
           }
           ctx.save();
           ctx.globalAlpha = Math.max(0, fp.life);
-          ctx.font = "900 12px sans-serif";
+          ctx.font = "900 13px Nunito, sans-serif";
           ctx.textAlign = "center";
-          ctx.strokeStyle = "#081714";
-          ctx.lineWidth = 3;
+          ctx.strokeStyle = "#1f4d36";
+          ctx.lineWidth = 3.5;
           ctx.strokeText(fp.text, fp.x, fp.y);
           ctx.fillStyle = fp.color;
           ctx.fillText(fp.text, fp.x, fp.y);
