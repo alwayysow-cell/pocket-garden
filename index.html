@@ -673,7 +673,7 @@
       line-height: 1.5;
     }
 
-    /* LIVE COIN LEADERBOARD (STRICTLY NO LEAGUES) */
+    /* LIVE COIN LEADERBOARD (ONLINE + OFFLINE PLAYERS, NO LEAGUES) */
     .lb-summary-card {
       background: linear-gradient(180deg, #352d42 0%, #282233 100%);
       border: 2px solid var(--outline);
@@ -725,6 +725,10 @@
     .lb-row.is-me {
       background: linear-gradient(180deg, #423347 0%, #322638 100%);
       border-color: #ff8c42;
+    }
+
+    .lb-row.is-offline {
+      opacity: 0.88;
     }
 
     .lb-row.flash-update {
@@ -795,7 +799,7 @@
       object-fit: cover;
     }
 
-    .online-badge {
+    .status-dot {
       position: absolute;
       bottom: -1px;
       right: -1px;
@@ -804,6 +808,10 @@
       border-radius: 50%;
       background: #2dd4bf;
       border: 2px solid var(--card-2);
+    }
+
+    .status-dot.offline {
+      background: #64748b;
     }
 
     .lb-name-wrap {
@@ -823,6 +831,10 @@
       font-size: 10.5px;
       font-weight: 800;
       color: var(--ink-muted);
+    }
+
+    .lb-sub .online-txt {
+      color: #2dd4bf;
     }
 
     .lb-coins {
@@ -1160,12 +1172,12 @@
         <div id="bagList" class="scroll-list"></div>
       </section>
 
-      <!-- 5. LIVE COIN LEADERBOARD VIEW (NO LEAGUES) -->
+      <!-- 5. LIVE COIN LEADERBOARD VIEW (ONLINE + OFFLINE, NO LEAGUES) -->
       <section id="view-top" class="view subpage">
         <div class="panel-header">
           <div class="panel-title">
             <span id="icoTitleTop"></span>
-            <span>Живой топ монет</span>
+            <span>Топ игроков</span>
           </div>
           <div class="timer-badge" id="liveStatusBadge">
             <span id="liveDot" class="live-dot connecting"></span>
@@ -1267,7 +1279,7 @@
       sproutSm: `<svg class="svg-ico-sm" viewBox="0 0 24 24"><path d="M12 20V11" stroke="#2dd4bf" stroke-width="2.6" stroke-linecap="round"/><path d="M12 12.5c-4.5 0-7-2.6-7-6 4.2 0 7 2 7 6z" fill="#2dd4bf" stroke="#0d0b10" stroke-width="1.7"/><path d="M12 10.5c4.5 0 7-2.6 7-6-4.2 0-7 2-7 6z" fill="#99f6e4" stroke="#0d0b10" stroke-width="1.7"/></svg>`,
       sprout: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M12 21V11" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round"/><path d="M12 12.5c-5.2 0-7.8-2.9-7.8-6.8 4.6 0 7.8 2.3 7.8 6.8z" fill="#2dd4bf" stroke="#0d0b10" stroke-width="1.8"/><path d="M12 10.5c5.2 0 7.8-2.9 7.8-6.8-4.6 0-7.8 2.3-7.8 6.8z" fill="#99f6e4" stroke="#0d0b10" stroke-width="1.8"/></svg>`,
       gearTool: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#ffca3a" stroke="#0d0b10" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="#0d0b10"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M19.1 4.9l-2.2 2.2M7.1 16.9l-2.2 2.2" stroke="#d8d2e3" stroke-width="2.5" stroke-linecap="round"/></svg>`,
-      shovel: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M14 4l6 6M17 7l-7 7" stroke="#c27d48" stroke-width="2.8" stroke-linecap="round"/><path d="M9 13l2 2-4.5 4.5a2.1 2.1 0 0 1-3-3L8 12z" fill="#ff7582" stroke="#0d0b10" stroke-width="1.9"/></svg>`,
+      shovel: `<svg class="svg-ico-tool" viewBox="0 0 24 24"><path d="M8.5 2.5h7v2.5a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2V2.5z" fill="none" stroke="#ffca3a" stroke-width="2.2" stroke-linejoin="round"/><line x1="12" y1="7" x2="12" y2="12.5" stroke="#c27d48" stroke-width="3" stroke-linecap="round"/><path d="M6.5 12.5h11l-1.1 5.6L12 22l-4.4-3.9-1.1-5.6z" fill="#94a3b8" stroke="#0d0b10" stroke-width="2" stroke-linejoin="round"/><line x1="9.3" y1="14.5" x2="9.3" y2="17" stroke="#e2e8f0" stroke-width="1.6" stroke-linecap="round"/></svg>`,
       gardenNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7" fill="#ff8c42" stroke="#0d0b10" stroke-width="2" stroke-linejoin="round"/><rect x="5" y="11" width="14" height="9" rx="2.5" fill="#f7f4fa" stroke="#0d0b10" stroke-width="1.9"/><rect x="10" y="14" width="4" height="6" fill="#9a5b2c"/><circle cx="18" cy="17" r="3.8" fill="#2dd4bf" stroke="#0d0b10" stroke-width="1.7"/></svg>`,
       shopNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><path d="M3 9l2-5h14l2 5" fill="#ffca3a" stroke="#0d0b10" stroke-width="1.9" stroke-linejoin="round"/><rect x="4" y="9" width="16" height="11" rx="2.5" fill="#f7f4fa" stroke="#0d0b10" stroke-width="1.9"/><rect x="9" y="13" width="6" height="7" fill="#9a5b2c"/></svg>`,
       gearNav: `<svg class="svg-ico-nav" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#ffca3a" stroke="#0d0b10" stroke-width="1.9"/><circle cx="12" cy="12" r="1.8" fill="#0d0b10"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2" stroke="#d8d2e3" stroke-width="2.3" stroke-linecap="round"/></svg>`,
@@ -1353,9 +1365,10 @@
       { id: "expand_plot", category: "auto", mode: "instant", name: "Новая грядка", shortName: "Участок", color: "#ff8c42", rarity: "rare", rarityLabel: "Участок", cost: 3500, stockChance: 1.0, maxStock: 1, desc: "Расширяет ваш сад на +1 грядку (максимум 15 грядок)." }
     ];
 
-    // --- LIVE REAL-TIME COIN LEADERBOARD (NO LEAGUES) ---
+    // --- LIVE REAL-TIME + OFFLINE COIN LEADERBOARD (NO LEAGUES) ---
     const LIVE_TOPIC_PREFIX = "pocket_garden_live_top_v1/players/";
     const PLAYER_UID_KEY = "pocket_garden_player_uid_v1";
+    const LIVE_CACHE_KEY = "pocket_garden_live_players_cache_v1";
     const AVATAR_COLORS = ["#e11d48", "#9333ea", "#2563eb", "#db2777", "#d97706", "#0d9488", "#4f46e5", "#ea580c"];
 
     function getPersistentPlayerId() {
@@ -1392,6 +1405,50 @@
     let lastPublishedCoins = -1;
     let lastPublishedAt = 0;
     let publishDebounceTimer = null;
+
+    function loadCachedPlayers() {
+      try {
+        const raw = localStorage.getItem(LIVE_CACHE_KEY);
+        if (!raw) return;
+        const arr = JSON.parse(raw);
+        if (!Array.isArray(arr)) return;
+        arr.forEach(p => {
+          if (!p || !p.id || p.id === playerProfile.id) return;
+          livePlayersMap.set(String(p.id), {
+            id: String(p.id),
+            name: String(p.name || "Садовод").slice(0, 28),
+            initials: String(p.initials || "С").toUpperCase(),
+            photoUrl: p.photoUrl || null,
+            color: p.color || pickColorForId(String(p.id)),
+            coins: Math.max(0, Math.floor(Number(p.coins) || 0)),
+            lvl: Math.max(1, Math.floor(Number(p.lvl) || 1)),
+            updatedAt: Number(p.updatedAt) || (Date.now() - 3600000),
+            isMe: false
+          });
+        });
+      } catch (e) {}
+    }
+
+    function saveCachedPlayers() {
+      try {
+        const list = Array.from(livePlayersMap.values())
+          .filter(p => !p.isMe)
+          .sort((a, b) => b.coins - a.coins)
+          .slice(0, 100);
+        localStorage.setItem(LIVE_CACHE_KEY, JSON.stringify(list));
+      } catch (e) {}
+    }
+
+    function formatLastSeen(updatedAt) {
+      const diffSec = Math.max(1, Math.floor((Date.now() - (updatedAt || Date.now())) / 1000));
+      if (diffSec < 60) return "только что";
+      const mins = Math.floor(diffSec / 60);
+      if (mins < 60) return `${mins} мин. назад`;
+      const hours = Math.floor(mins / 60);
+      if (hours < 24) return `${hours} ч. назад`;
+      const days = Math.floor(hours / 24);
+      return `${days} дн. назад`;
+    }
 
     function syncSelfToLiveMap() {
       const now = Date.now();
@@ -1444,7 +1501,9 @@
     }
 
     function initLiveLeaderboard() {
+      loadCachedPlayers();
       syncSelfToLiveMap();
+
       if (typeof window.mqtt === "undefined") {
         updateLiveStatusUI();
         return;
@@ -1463,6 +1522,7 @@
           mqttClient.subscribe(LIVE_TOPIC_PREFIX + "#", { qos: 0 });
           publishMyLiveScore(true);
           updateLiveStatusUI();
+          if (currentView === "top") renderLeaderboard();
         });
 
         mqttClient.on("reconnect", () => {
@@ -1481,10 +1541,10 @@
             if (!data || !data.id || typeof data.coins !== "number") return;
             if (data.id === playerProfile.id) return;
 
-            const ageMs = Date.now() - (Number(data.updatedAt) || 0);
-            if (ageMs > 14 * 24 * 60 * 60 * 1000) return;
-
             const prev = livePlayersMap.get(data.id);
+            const incomingTs = Number(data.updatedAt) || Date.now();
+            if (prev && prev.updatedAt && incomingTs < prev.updatedAt) return;
+
             const changed = !prev || prev.coins !== data.coins;
 
             livePlayersMap.set(data.id, {
@@ -1495,9 +1555,11 @@
               color: data.color || pickColorForId(String(data.id)),
               coins: Math.max(0, Math.floor(data.coins)),
               lvl: Math.max(1, Math.floor(Number(data.lvl) || 1)),
-              updatedAt: Number(data.updatedAt) || Date.now(),
+              updatedAt: incomingTs,
               isMe: false
             });
+
+            saveCachedPlayers();
 
             if (changed) {
               recentlyUpdatedIds.add(data.id);
@@ -1515,6 +1577,7 @@
 
       setInterval(() => {
         if (isLiveConnected) publishMyLiveScore(true);
+        if (currentView === "top") renderLeaderboard();
       }, 15000);
     }
 
@@ -1538,7 +1601,7 @@
       const now = Date.now();
       let count = 0;
       livePlayersMap.forEach(p => {
-        if (p.isMe || now - (p.updatedAt || 0) < 45000) count++;
+        if (p.isMe || now - (p.updatedAt || 0) < 50000) count++;
       });
       return Math.max(1, count);
     }
@@ -1548,12 +1611,15 @@
       const text = document.getElementById("liveStatusText");
       if (!dot || !text) return;
 
+      const online = getOnlinePlayersCount();
+      const total = livePlayersMap.size;
+
       if (isLiveConnected) {
         dot.classList.remove("connecting");
-        text.textContent = `Live • В сети: ${getOnlinePlayersCount()}`;
+        text.textContent = `В сети: ${online} • Всего: ${total}`;
       } else {
         dot.classList.add("connecting");
-        text.textContent = "Подключение...";
+        text.textContent = `Офлайн • Всего: ${total}`;
       }
     }
 
@@ -3145,7 +3211,7 @@
       });
     }
 
-    // --- RENDER LIVE COIN LEADERBOARD (STRICTLY NO LEAGUES) ---
+    // --- RENDER LIVE + OFFLINE COIN LEADERBOARD (NO LEAGUES) ---
     function renderLeaderboard() {
       updateLiveStatusUI();
       const { rank, total, board } = getMyLeaderboardRank();
@@ -3154,7 +3220,7 @@
       if (rank === 1) {
         summaryEl.innerHTML = `
           <div class="lb-summary-left">
-            <div class="lb-summary-title">Ты лидируешь в живом топе! (#1 из ${total})</div>
+            <div class="lb-summary-title">Ты лидируешь в топе! (#1 из ${total})</div>
             <div class="lb-summary-sub">Твой баланс: ${formatNumber(state.coins)} монет • Рекорд плода: ${formatNumber(state.bestFruitValue)}</div>
           </div>
           <div class="lb-coins">${ICONS.coinSm} ${formatNumber(state.coins)}</div>
@@ -3164,7 +3230,7 @@
         const diff = Math.max(1, ahead.coins - Math.floor(state.coins) + 1);
         summaryEl.innerHTML = `
           <div class="lb-summary-left">
-            <div class="lb-summary-title">Место #${rank} • До ${ahead.name}: +${formatNumber(diff)}</div>
+            <div class="lb-summary-title">Место #${rank} из ${total} • До ${ahead.name}: +${formatNumber(diff)}</div>
             <div class="lb-summary-sub">Рекорд плода: ${formatNumber(state.bestFruitValue)} • Уровень садовода: ${getPlayerLevel()}</div>
           </div>
           <div class="lb-coins">${ICONS.coinSm} ${formatNumber(state.coins)}</div>
@@ -3178,22 +3244,30 @@
       board.forEach((entry, index) => {
         const place = index + 1;
         const rankClass = place === 1 ? "top-1" : place === 2 ? "top-2" : place === 3 ? "top-3" : "";
-        const isOnline = entry.isMe || now - (entry.updatedAt || 0) < 45000;
+        const isOnline = entry.isMe || now - (entry.updatedAt || 0) < 50000;
         const isFlashing = recentlyUpdatedIds.has(entry.id);
 
+        const statusHtml = isOnline
+          ? ` • <span class="online-txt">в сети</span>`
+          : ` • офлайн (${formatLastSeen(entry.updatedAt)})`;
+
         const row = document.createElement("div");
-        row.className = "lb-row" + (entry.isMe ? " is-me" : "") + (isFlashing ? " flash-update" : "");
+        row.className =
+          "lb-row" +
+          (entry.isMe ? " is-me" : "") +
+          (!isOnline ? " is-offline" : "") +
+          (isFlashing ? " flash-update" : "");
 
         row.innerHTML = `
           <div class="lb-left">
             <div class="lb-rank ${rankClass}">#${place}</div>
             <div class="lb-avatar-wrap">
               <div class="lb-avatar" style="background:${entry.color};"></div>
-              ${isOnline ? `<span class="online-badge" title="В сети"></span>` : ""}
+              <span class="status-dot ${isOnline ? "" : "offline"}" title="${isOnline ? "В сети" : "Офлайн"}"></span>
             </div>
             <div class="lb-name-wrap">
               <div class="lb-name">${entry.name}${entry.isMe ? " (Вы)" : ""}</div>
-              <div class="lb-sub">Ур. ${entry.lvl}${isOnline ? " • в сети" : ""}</div>
+              <div class="lb-sub">Ур. ${entry.lvl}${statusHtml}</div>
             </div>
           </div>
           <div class="lb-coins">${ICONS.coinSm} ${formatNumber(entry.coins)}</div>
