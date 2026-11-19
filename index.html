@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Pocket Garden</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
@@ -85,7 +86,7 @@
       flex-shrink: 0;
     }
 
-    /* REDESIGNED WARM DARK HEADER */
+    /* HEADER */
     .header {
       background: var(--card);
       border: 2.5px solid var(--outline);
@@ -418,7 +419,7 @@
       color: #ffe4e6;
     }
 
-    /* SUBPAGES (SHOP, GEAR, BAG, LEADERBOARD) */
+    /* SUBPAGES */
     .subpage {
       background: var(--card);
       border: 2.5px solid var(--outline);
@@ -456,6 +457,29 @@
       color: #d8d2e3;
       font-weight: 900;
       font-variant-numeric: tabular-nums;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2dd4bf;
+      box-shadow: 0 0 8px #2dd4bf;
+      animation: livePulse 1.5s infinite;
+      flex-shrink: 0;
+    }
+
+    .live-dot.connecting {
+      background: #ffca3a;
+      box-shadow: 0 0 6px #ffca3a;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.65; }
     }
 
     .filters {
@@ -649,7 +673,7 @@
       line-height: 1.5;
     }
 
-    /* LEADERBOARD STYLES (STRICTLY NO LEAGUES) */
+    /* LIVE COIN LEADERBOARD (STRICTLY NO LEAGUES) */
     .lb-summary-card {
       background: linear-gradient(180deg, #352d42 0%, #282233 100%);
       border: 2px solid var(--outline);
@@ -667,12 +691,16 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
+      min-width: 0;
     }
 
     .lb-summary-title {
       font-size: 13px;
       font-weight: 900;
       color: #ffca3a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .lb-summary-sub {
@@ -691,11 +719,17 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      transition: background 0.35s ease, border-color 0.35s ease;
     }
 
     .lb-row.is-me {
       background: linear-gradient(180deg, #423347 0%, #322638 100%);
       border-color: #ff8c42;
+    }
+
+    .lb-row.flash-update {
+      border-color: #2dd4bf;
+      background: linear-gradient(180deg, #273e42 0%, #233036 100%);
     }
 
     .lb-left {
@@ -736,6 +770,11 @@
       color: #291100;
     }
 
+    .lb-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
     .lb-avatar {
       width: 34px;
       height: 34px;
@@ -747,7 +786,6 @@
       font-size: 13px;
       font-weight: 900;
       color: #ffffff;
-      flex-shrink: 0;
       overflow: hidden;
     }
 
@@ -755,6 +793,17 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .online-badge {
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #2dd4bf;
+      border: 2px solid var(--card-2);
     }
 
     .lb-name-wrap {
@@ -983,7 +1032,7 @@
           </div>
           <div class="profile-rank-row">
             <span id="trophyIco"></span>
-            <span id="headerRankText">Место #12</span>
+            <span id="headerRankText">Место #1</span>
           </div>
         </div>
       </div>
@@ -1111,14 +1160,17 @@
         <div id="bagList" class="scroll-list"></div>
       </section>
 
-      <!-- 5. COIN LEADERBOARD VIEW (NO LEAGUES) -->
+      <!-- 5. LIVE COIN LEADERBOARD VIEW (NO LEAGUES) -->
       <section id="view-top" class="view subpage">
         <div class="panel-header">
           <div class="panel-title">
             <span id="icoTitleTop"></span>
-            <span>Лидеры по монетам</span>
+            <span>Живой топ монет</span>
           </div>
-          <div class="timer-badge" id="lbRankBadge">Твоё место: #12</div>
+          <div class="timer-badge" id="liveStatusBadge">
+            <span id="liveDot" class="live-dot connecting"></span>
+            <span id="liveStatusText">Подключение...</span>
+          </div>
         </div>
 
         <div id="lbSummaryCard" class="lb-summary-card"></div>
@@ -1281,7 +1333,6 @@
       { id: "voidorchid", name: "Орхидея пустоты", shape: "flower", color: "#cc5de8", leaf: "#ff6b6b", rarity: "mythical", rarityLabel: "Мифическая", cost: 120000000, baseSell: 210000000, growSec: 300, multi: false, minKg: 1.0, maxKg: 14.0, stockChance: 0.015, maxStock: 1 }
     ];
 
-    // WARM DARK TWILIGHT COURTYARD PALETTES PER WEATHER
     const WEATHERS = [
       { id: "clear", name: "Ясно", iconKey: "sun", weight: 42, yardTop: "#2b2633", yardBot: "#1c1821", pebble: "#3b3447" },
       { id: "rain", name: "Дождь", iconKey: "rain", weight: 24, yardTop: "#202836", yardBot: "#151b24", pebble: "#2f3a4f" },
@@ -1302,59 +1353,208 @@
       { id: "expand_plot", category: "auto", mode: "instant", name: "Новая грядка", shortName: "Участок", color: "#ff8c42", rarity: "rare", rarityLabel: "Участок", cost: 3500, stockChance: 1.0, maxStock: 1, desc: "Расширяет ваш сад на +1 грядку (максимум 15 грядок)." }
     ];
 
-    // --- COIN LEADERBOARD RIVALS (STRICTLY NO LEAGUES) ---
-    const LEADERBOARD_RIVALS = [
-      { id: "r1", name: "Артём Громов", coins: 485000000, lvl: 42, color: "#e11d48" },
-      { id: "r2", name: "Милана К.", coins: 192000000, lvl: 35, color: "#9333ea" },
-      { id: "r3", name: "Денчик Фармер", coins: 74500000, lvl: 29, color: "#2563eb" },
-      { id: "r4", name: "Соня Садовод", coins: 28400000, lvl: 24, color: "#db2777" },
-      { id: "r5", name: "Макс Ветер", coins: 9600000, lvl: 19, color: "#d97706" },
-      { id: "r6", name: "Кира Лис", coins: 3250000, lvl: 15, color: "#0d9488" },
-      { id: "r7", name: "Влад Росток", coins: 980000, lvl: 12, color: "#4f46e5" },
-      { id: "r8", name: "Алина Мёд", coins: 245000, lvl: 9, color: "#ea580c" },
-      { id: "r9", name: "Егор Тыква", coins: 54000, lvl: 6, color: "#0284c7" },
-      { id: "r10", name: "Даша Клевер", coins: 11200, lvl: 4, color: "#c026d3" },
-      { id: "r11", name: "Никита Боб", coins: 2400, lvl: 2, color: "#e11d48" },
-      { id: "r12", name: "Тимофей", coins: 450, lvl: 1, color: "#64748b" },
-      { id: "r13", name: "Полина", coins: 90, lvl: 1, color: "#475569" }
-    ];
+    // --- LIVE REAL-TIME COIN LEADERBOARD (NO LEAGUES) ---
+    const LIVE_TOPIC_PREFIX = "pocket_garden_live_top_v1/players/";
+    const PLAYER_UID_KEY = "pocket_garden_player_uid_v1";
+    const AVATAR_COLORS = ["#e11d48", "#9333ea", "#2563eb", "#db2777", "#d97706", "#0d9488", "#4f46e5", "#ea580c"];
+
+    function getPersistentPlayerId() {
+      const user = tg && tg.initDataUnsafe ? tg.initDataUnsafe.user : null;
+      if (user && user.id) return "tg_" + String(user.id);
+      let uid = localStorage.getItem(PLAYER_UID_KEY);
+      if (!uid) {
+        uid = "web_" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+        localStorage.setItem(PLAYER_UID_KEY, uid);
+      }
+      return uid;
+    }
+
+    function pickColorForId(id) {
+      let hash = 0;
+      for (let i = 0; i < id.length; i++) {
+        hash = (hash * 31 + id.charCodeAt(i)) | 0;
+      }
+      return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+    }
 
     let playerProfile = {
+      id: getPersistentPlayerId(),
       name: "Садовод",
       initials: "С",
-      photoUrl: null
+      photoUrl: null,
+      color: pickColorForId(getPersistentPlayerId())
     };
 
-    function getCoinLeaderboard() {
-      const me = {
-        id: "me",
+    const livePlayersMap = new Map();
+    const recentlyUpdatedIds = new Set();
+    let mqttClient = null;
+    let isLiveConnected = false;
+    let lastPublishedCoins = -1;
+    let lastPublishedAt = 0;
+    let publishDebounceTimer = null;
+
+    function syncSelfToLiveMap() {
+      const now = Date.now();
+      livePlayersMap.set(playerProfile.id, {
+        id: playerProfile.id,
         name: playerProfile.name,
         initials: playerProfile.initials,
         photoUrl: playerProfile.photoUrl,
+        color: playerProfile.color,
         coins: Math.floor(state.coins),
         lvl: getPlayerLevel(),
-        color: "#ff8c42",
+        updatedAt: now,
         isMe: true
-      };
+      });
+    }
 
-      const all = [
-        me,
-        ...LEADERBOARD_RIVALS.map(r => ({
-          ...r,
-          initials: r.name[0].toUpperCase(),
-          photoUrl: null,
-          isMe: false
-        }))
-      ];
+    function publishMyLiveScore(force = false) {
+      syncSelfToLiveMap();
+      if (!mqttClient || !isLiveConnected) return;
 
-      all.sort((a, b) => b.coins - a.coins);
+      const now = Date.now();
+      const currentCoins = Math.floor(state.coins);
+      if (!force && currentCoins === lastPublishedCoins && now - lastPublishedAt < 12000) {
+        return;
+      }
+
+      lastPublishedCoins = currentCoins;
+      lastPublishedAt = now;
+
+      const payload = JSON.stringify({
+        id: playerProfile.id,
+        name: playerProfile.name,
+        initials: playerProfile.initials,
+        photoUrl: playerProfile.photoUrl || null,
+        color: playerProfile.color,
+        coins: currentCoins,
+        lvl: getPlayerLevel(),
+        updatedAt: now
+      });
+
+      try {
+        mqttClient.publish(LIVE_TOPIC_PREFIX + playerProfile.id, payload, { qos: 0, retain: true });
+      } catch (e) {}
+    }
+
+    function scheduleLiveScorePublish() {
+      syncSelfToLiveMap();
+      clearTimeout(publishDebounceTimer);
+      publishDebounceTimer = setTimeout(() => publishMyLiveScore(false), 900);
+    }
+
+    function initLiveLeaderboard() {
+      syncSelfToLiveMap();
+      if (typeof window.mqtt === "undefined") {
+        updateLiveStatusUI();
+        return;
+      }
+
+      try {
+        mqttClient = window.mqtt.connect("wss://broker.emqx.io:8084/mqtt", {
+          clientId: "pg_" + playerProfile.id + "_" + Math.random().toString(16).slice(2, 6),
+          clean: true,
+          connectTimeout: 8000,
+          reconnectPeriod: 4000
+        });
+
+        mqttClient.on("connect", () => {
+          isLiveConnected = true;
+          mqttClient.subscribe(LIVE_TOPIC_PREFIX + "#", { qos: 0 });
+          publishMyLiveScore(true);
+          updateLiveStatusUI();
+        });
+
+        mqttClient.on("reconnect", () => {
+          isLiveConnected = false;
+          updateLiveStatusUI();
+        });
+
+        mqttClient.on("offline", () => {
+          isLiveConnected = false;
+          updateLiveStatusUI();
+        });
+
+        mqttClient.on("message", (topic, message) => {
+          try {
+            const data = JSON.parse(message.toString());
+            if (!data || !data.id || typeof data.coins !== "number") return;
+            if (data.id === playerProfile.id) return;
+
+            const ageMs = Date.now() - (Number(data.updatedAt) || 0);
+            if (ageMs > 14 * 24 * 60 * 60 * 1000) return;
+
+            const prev = livePlayersMap.get(data.id);
+            const changed = !prev || prev.coins !== data.coins;
+
+            livePlayersMap.set(data.id, {
+              id: String(data.id),
+              name: String(data.name || "Садовод").slice(0, 28),
+              initials: String(data.initials || (data.name ? data.name[0] : "С")).toUpperCase(),
+              photoUrl: data.photoUrl || null,
+              color: data.color || pickColorForId(String(data.id)),
+              coins: Math.max(0, Math.floor(data.coins)),
+              lvl: Math.max(1, Math.floor(Number(data.lvl) || 1)),
+              updatedAt: Number(data.updatedAt) || Date.now(),
+              isMe: false
+            });
+
+            if (changed) {
+              recentlyUpdatedIds.add(data.id);
+              setTimeout(() => recentlyUpdatedIds.delete(data.id), 1400);
+            }
+
+            updateLiveStatusUI();
+            if (currentView === "top") renderLeaderboard();
+          } catch (e) {}
+        });
+      } catch (e) {
+        isLiveConnected = false;
+        updateLiveStatusUI();
+      }
+
+      setInterval(() => {
+        if (isLiveConnected) publishMyLiveScore(true);
+      }, 15000);
+    }
+
+    function getCoinLeaderboard() {
+      syncSelfToLiveMap();
+      const all = Array.from(livePlayersMap.values());
+      all.sort((a, b) => {
+        if (b.coins !== a.coins) return b.coins - a.coins;
+        return (b.updatedAt || 0) - (a.updatedAt || 0);
+      });
       return all;
     }
 
     function getMyLeaderboardRank() {
       const board = getCoinLeaderboard();
-      const idx = board.findIndex(x => x.isMe);
-      return { rank: idx + 1, total: board.length, board };
+      const idx = board.findIndex(x => x.id === playerProfile.id);
+      return { rank: idx >= 0 ? idx + 1 : 1, total: board.length, board };
+    }
+
+    function getOnlinePlayersCount() {
+      const now = Date.now();
+      let count = 0;
+      livePlayersMap.forEach(p => {
+        if (p.isMe || now - (p.updatedAt || 0) < 45000) count++;
+      });
+      return Math.max(1, count);
+    }
+
+    function updateLiveStatusUI() {
+      const dot = document.getElementById("liveDot");
+      const text = document.getElementById("liveStatusText");
+      if (!dot || !text) return;
+
+      if (isLiveConnected) {
+        dot.classList.remove("connecting");
+        text.textContent = `Live • В сети: ${getOnlinePlayersCount()}`;
+      } else {
+        dot.classList.add("connecting");
+        text.textContent = "Подключение...";
+      }
     }
 
     const SHOP_REFRESH_MS = 5 * 60 * 1000;
@@ -1980,6 +2180,7 @@
       try {
         state.lastTimestamp = Date.now();
         localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+        scheduleLiveScorePublish();
       } catch (e) {}
     }
 
@@ -2028,6 +2229,7 @@
           img.onload = () => {
             avatarEl.innerHTML = "";
             avatarEl.appendChild(img);
+            publishMyLiveScore(true);
           };
           img.onerror = () => {
             playerProfile.photoUrl = null;
@@ -2037,6 +2239,7 @@
       } else {
         avatarEl.textContent = "С";
       }
+      syncSelfToLiveMap();
     }
 
     document.getElementById("headerProfileBtn").onclick = () => {
@@ -2465,8 +2668,8 @@
       document.getElementById("coinsDisplay").textContent = formatNumber(state.coins);
       document.getElementById("plotCountText").textContent = `${state.unlockedPlots} / 15`;
 
-      const { rank } = getMyLeaderboardRank();
-      document.getElementById("headerRankText").textContent = `Место #${rank}`;
+      const { rank, total } = getMyLeaderboardRank();
+      document.getElementById("headerRankText").textContent = `Место #${rank} из ${total}`;
       if (currentView === "top" && (rank !== lastRenderedRank || Math.floor(state.coins) !== lastRenderedCoinsForLb)) {
         lastRenderedRank = rank;
         lastRenderedCoinsForLb = Math.floor(state.coins);
@@ -2942,16 +3145,16 @@
       });
     }
 
-    // --- RENDER COIN LEADERBOARD (STRICTLY NO LEAGUES) ---
+    // --- RENDER LIVE COIN LEADERBOARD (STRICTLY NO LEAGUES) ---
     function renderLeaderboard() {
+      updateLiveStatusUI();
       const { rank, total, board } = getMyLeaderboardRank();
-      document.getElementById("lbRankBadge").textContent = `Место: #${rank} из ${total}`;
 
       const summaryEl = document.getElementById("lbSummaryCard");
       if (rank === 1) {
         summaryEl.innerHTML = `
           <div class="lb-summary-left">
-            <div class="lb-summary-title">Ты на 1 месте по монетам!</div>
+            <div class="lb-summary-title">Ты лидируешь в живом топе! (#1 из ${total})</div>
             <div class="lb-summary-sub">Твой баланс: ${formatNumber(state.coins)} монет • Рекорд плода: ${formatNumber(state.bestFruitValue)}</div>
           </div>
           <div class="lb-coins">${ICONS.coinSm} ${formatNumber(state.coins)}</div>
@@ -2961,7 +3164,7 @@
         const diff = Math.max(1, ahead.coins - Math.floor(state.coins) + 1);
         summaryEl.innerHTML = `
           <div class="lb-summary-left">
-            <div class="lb-summary-title">До #${rank - 1} (${ahead.name}): +${formatNumber(diff)} монет</div>
+            <div class="lb-summary-title">Место #${rank} • До ${ahead.name}: +${formatNumber(diff)}</div>
             <div class="lb-summary-sub">Рекорд плода: ${formatNumber(state.bestFruitValue)} • Уровень садовода: ${getPlayerLevel()}</div>
           </div>
           <div class="lb-coins">${ICONS.coinSm} ${formatNumber(state.coins)}</div>
@@ -2970,21 +3173,27 @@
 
       const list = document.getElementById("lbList");
       list.innerHTML = "";
+      const now = Date.now();
 
       board.forEach((entry, index) => {
         const place = index + 1;
         const rankClass = place === 1 ? "top-1" : place === 2 ? "top-2" : place === 3 ? "top-3" : "";
+        const isOnline = entry.isMe || now - (entry.updatedAt || 0) < 45000;
+        const isFlashing = recentlyUpdatedIds.has(entry.id);
 
         const row = document.createElement("div");
-        row.className = "lb-row" + (entry.isMe ? " is-me" : "");
+        row.className = "lb-row" + (entry.isMe ? " is-me" : "") + (isFlashing ? " flash-update" : "");
 
         row.innerHTML = `
           <div class="lb-left">
             <div class="lb-rank ${rankClass}">#${place}</div>
-            <div class="lb-avatar" style="background:${entry.color};"></div>
+            <div class="lb-avatar-wrap">
+              <div class="lb-avatar" style="background:${entry.color};"></div>
+              ${isOnline ? `<span class="online-badge" title="В сети"></span>` : ""}
+            </div>
             <div class="lb-name-wrap">
               <div class="lb-name">${entry.name}${entry.isMe ? " (Вы)" : ""}</div>
-              <div class="lb-sub">Ур. ${entry.lvl}</div>
+              <div class="lb-sub">Ур. ${entry.lvl}${isOnline ? " • в сети" : ""}</div>
             </div>
           </div>
           <div class="lb-coins">${ICONS.coinSm} ${formatNumber(entry.coins)}</div>
@@ -3446,6 +3655,7 @@
     // --- BOOT ---
     bindStaticIcons();
     initProfile();
+    initLiveLeaderboard();
     resizeCanvas();
     updateToolButtons();
     gameTick();
